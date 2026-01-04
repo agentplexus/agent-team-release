@@ -1,0 +1,26 @@
+{
+  "ir_version": "1.0",
+  "project": "prepush",
+  "repository": "https://github.com/grokify/prepush",
+  "releases": [
+    {
+      "version": "0.1.0",
+      "date": "2026-01-04",
+      "added": [
+        { "description": "Multi-language pre-push hook with auto-detection" },
+        { "description": "Go checks: `gofmt`, `golangci-lint`, `go test`, local replace directive detection" },
+        { "description": "TypeScript/JavaScript checks: `eslint`, `prettier`, `tsc --noEmit`, `npm test`" },
+        { "description": "Language detection for Go, TypeScript, JavaScript, Python, Rust, Swift" },
+        { "description": "Monorepo support with multiple language detection per repository" },
+        { "description": "Configuration via `.prepush.yaml` with per-language settings" },
+        { "description": "CLI flags: `--verbose`, `--no-test`, `--no-lint`, `--no-format`, `--coverage`" }
+      ],
+      "documentation": [
+        { "description": "README with installation, usage, and configuration examples" }
+      ],
+      "tests": [
+        { "description": "Unit tests for detect, config, and checks packages" }
+      ]
+    }
+  ]
+}
