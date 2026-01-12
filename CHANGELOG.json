@@ -1,8 +1,50 @@
 {
   "ir_version": "1.0",
-  "project": "prepush",
-  "repository": "https://github.com/grokify/prepush",
+  "project": "release-agent",
+  "repository": "https://github.com/grokify/release-agent",
   "releases": [
+    {
+      "version": "0.3.0",
+      "date": "2026-01-12",
+      "highlights": [
+        { "description": "Complete transformation from pre-push validation tool to release automation platform with workflow engine, Claude Code integration, and multi-platform plugin support" }
+      ],
+      "added": [
+        { "description": "CLI restructure with Cobra framework and 7 commands: `check`, `validate`, `release`, `changelog`, `readme`, `roadmap`, `version`" },
+        { "description": "Release workflow engine with 9-step process: validate → check → changelog → commit → push → CI wait → tag" },
+        { "description": "Comprehensive validation command with 4 areas: QA, Documentation, Release, Security" },
+        { "description": "Team status report format (`--format team`) with template-based box output" },
+        { "description": "Report package (`pkg/report`) with structured data types and text/template renderer" },
+        { "description": "Actions framework with `Run()`, `Propose()`, `Apply()` pattern" },
+        { "description": "ChangelogAction with schangelog integration" },
+        { "description": "RoadmapAction with sroadmap integration" },
+        { "description": "ReadmeAction for badge and version updates" },
+        { "description": "Interactive mode with `--interactive` flag for Claude Code" },
+        { "description": "JSON output mode with `--json` flag" },
+        { "description": "TOON output format (Token-Oriented Object Notation) ~8x more token-efficient" },
+        { "description": "Claude Code plugin with commands, skills, agents, and hooks" },
+        { "description": "Gemini plugin support via platform adapters" },
+        { "description": "SecurityChecker: LICENSE, govulncheck, dependency audit, secret detection" },
+        { "description": "DocChecker: README, PRD, TRD, release notes, changelog validation" },
+        { "description": "ReleaseChecker: version format, git status, CI configuration" },
+        { "description": "Error handling compliance check (detects `_ = err` patterns)" },
+        { "description": "Git wrapper package with tag, commit, push, status operations" },
+        { "description": "CI status checking via gh CLI with WaitForCI support" },
+        { "description": "GoReleaser configuration for multi-platform builds" },
+        { "description": "Homebrew formula" }
+      ],
+      "changed": [
+        { "description": "Module path from `github.com/grokify/prepush` to `github.com/grokify/release-agent`" },
+        { "description": "Package structure from flat to `cmd/` and `pkg/` layout" },
+        { "description": "Configuration file from `.prepush.yaml` to `.releaseagent.yaml`" }
+      ],
+      "documentation": [
+        { "description": "Updated README with all new commands and features" },
+        { "description": "Updated PRD with completed feature status" },
+        { "description": "Updated TRD with new architecture and interfaces" },
+        { "description": "Added release notes for v0.3.0" }
+      ]
+    },
     {
       "version": "0.2.0",
       "date": "2026-01-04",

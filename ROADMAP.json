@@ -1,0 +1,698 @@
+{
+  "ir_version": "1.0",
+  "project": "Release Agent",
+  "repository": "https://github.com/grokify/release-agent",
+
+  "legend": {
+    "completed": {"emoji": "✅", "description": "Completed"},
+    "in_progress": {"emoji": "🚧", "description": "In Progress"},
+    "planned": {"emoji": "📋", "description": "Planned"},
+    "future": {"emoji": "💡", "description": "Under Consideration"}
+  },
+
+  "areas": [
+    {"id": "core", "name": "Core", "priority": 1},
+    {"id": "actions", "name": "Actions", "priority": 2},
+    {"id": "workflow", "name": "Workflow", "priority": 3},
+    {"id": "claude", "name": "Claude Code Integration", "priority": 4},
+    {"id": "marketplace", "name": "Marketplace & Distribution", "priority": 5},
+    {"id": "languages", "name": "Language Support", "priority": 6},
+    {"id": "stability", "name": "API Stability", "priority": 7}
+  ],
+
+  "phases": [
+    {
+      "id": "v0.1",
+      "name": "v0.1.0 - Foundation",
+      "status": "completed",
+      "order": 1,
+      "description": "Initial release with Go and TypeScript validation checks"
+    },
+    {
+      "id": "v0.2",
+      "name": "v0.2.0 - Rename & Restructure",
+      "status": "completed",
+      "order": 2,
+      "description": "Rename prepush to release-agent with new directory structure"
+    },
+    {
+      "id": "v0.3",
+      "name": "v0.3.0 - Release Automation Platform",
+      "status": "completed",
+      "order": 3,
+      "description": "Complete transformation with Cobra CLI, workflow engine, actions, interactive mode, and plugin system"
+    },
+    {
+      "id": "v0.4",
+      "name": "v0.4.0 - Marketplace Publishing",
+      "status": "planned",
+      "order": 4,
+      "description": "Publish to Claude Code and Gemini CLI marketplaces"
+    },
+    {
+      "id": "v0.5",
+      "name": "v0.5.0 - API Generalization",
+      "status": "planned",
+      "order": 5,
+      "description": "Generalize Options and Config for multi-language extensibility"
+    },
+    {
+      "id": "v0.6",
+      "name": "v0.6.0 - Python Support",
+      "status": "planned",
+      "order": 6,
+      "description": "Add Python checker with pytest, ruff, black"
+    },
+    {
+      "id": "v0.7",
+      "name": "v0.7.0 - Rust Support",
+      "status": "planned",
+      "order": 7,
+      "description": "Add Rust checker with cargo build, test, clippy"
+    },
+    {
+      "id": "v0.8",
+      "name": "v0.8.0 - Production Feedback",
+      "status": "planned",
+      "order": 8,
+      "description": "Incorporate feedback from production usage"
+    },
+    {
+      "id": "v1.0",
+      "name": "v1.0.0 - Stable API",
+      "status": "planned",
+      "order": 9,
+      "description": "Stable interfaces with backwards compatibility commitment"
+    },
+    {
+      "id": "future",
+      "name": "Future",
+      "status": "future",
+      "order": 99,
+      "description": "Post v1.0 enhancements"
+    }
+  ],
+
+  "items": [
+    {
+      "id": "multi-lang-detect",
+      "title": "Multi-language detection",
+      "description": "Auto-detect Go, TypeScript, JavaScript, Python, Rust, Swift",
+      "status": "completed",
+      "version": "0.1.0",
+      "phase": "v0.1",
+      "area": "core",
+      "type": "Added",
+      "priority": "high"
+    },
+    {
+      "id": "go-checks",
+      "title": "Go validation checks",
+      "description": "Build, test, lint, format, mod tidy, local replace detection",
+      "status": "completed",
+      "version": "0.1.0",
+      "phase": "v0.1",
+      "area": "languages",
+      "type": "Added",
+      "priority": "high"
+    },
+    {
+      "id": "ts-checks",
+      "title": "TypeScript/JavaScript checks",
+      "description": "ESLint, Prettier, tsc, npm test",
+      "status": "completed",
+      "version": "0.1.0",
+      "phase": "v0.1",
+      "area": "languages",
+      "type": "Added",
+      "priority": "high"
+    },
+    {
+      "id": "config-file",
+      "title": "Configuration file support",
+      "description": "`.releaseagent.yaml` for customization",
+      "status": "completed",
+      "version": "0.1.0",
+      "phase": "v0.1",
+      "area": "core",
+      "type": "Added",
+      "priority": "medium"
+    },
+    {
+      "id": "rename-repo",
+      "title": "Rename repository to release-agent",
+      "description": "Update module path to github.com/grokify/release-agent",
+      "status": "completed",
+      "version": "0.2.0",
+      "phase": "v0.2",
+      "area": "core",
+      "type": "Changed",
+      "priority": "high"
+    },
+    {
+      "id": "cmd-structure",
+      "title": "Restructure to cmd/releaseagent",
+      "description": "Move main.go to cmd/releaseagent/, packages to pkg/",
+      "status": "completed",
+      "version": "0.2.0",
+      "phase": "v0.2",
+      "area": "core",
+      "type": "Changed",
+      "priority": "high"
+    },
+    {
+      "id": "prd-trd-roadmap",
+      "title": "Add PRD, TRD, ROADMAP documentation",
+      "description": "Product requirements, technical requirements, and roadmap",
+      "status": "completed",
+      "version": "0.2.0",
+      "phase": "v0.2",
+      "area": "core",
+      "type": "Added",
+      "priority": "medium"
+    },
+    {
+      "id": "cobra-cli",
+      "title": "Adopt cobra for CLI",
+      "description": "Implement subcommand structure with cobra",
+      "status": "completed",
+      "version": "0.3.0",
+      "phase": "v0.3",
+      "area": "core",
+      "type": "Changed",
+      "priority": "high"
+    },
+    {
+      "id": "check-subcommand",
+      "title": "`releaseagent check` subcommand",
+      "description": "Move validation to check subcommand",
+      "status": "completed",
+      "version": "0.3.0",
+      "phase": "v0.3",
+      "area": "core",
+      "type": "Added",
+      "priority": "high"
+    },
+    {
+      "id": "validate-subcommand",
+      "title": "`releaseagent validate` subcommand",
+      "description": "Comprehensive Go/No-Go validation across 4 areas",
+      "status": "completed",
+      "version": "0.3.0",
+      "phase": "v0.3",
+      "area": "core",
+      "type": "Added",
+      "priority": "high"
+    },
+    {
+      "id": "version-subcommand",
+      "title": "`releaseagent version` subcommand",
+      "description": "Show version information",
+      "status": "completed",
+      "version": "0.3.0",
+      "phase": "v0.3",
+      "area": "core",
+      "type": "Added",
+      "priority": "low"
+    },
+    {
+      "id": "action-interface",
+      "title": "Action interface",
+      "description": "pkg/actions with Action interface for mutating operations",
+      "status": "completed",
+      "version": "0.3.0",
+      "phase": "v0.3",
+      "area": "actions",
+      "type": "Added",
+      "priority": "high"
+    },
+    {
+      "id": "changelog-action",
+      "title": "Changelog action with schangelog",
+      "description": "Generate CHANGELOG.md via schangelog integration",
+      "status": "completed",
+      "version": "0.3.0",
+      "phase": "v0.3",
+      "area": "actions",
+      "type": "Added",
+      "priority": "high"
+    },
+    {
+      "id": "readme-action",
+      "title": "README badge updates",
+      "description": "Update coverage and version badges in README",
+      "status": "completed",
+      "version": "0.3.0",
+      "phase": "v0.3",
+      "area": "actions",
+      "type": "Added",
+      "priority": "medium"
+    },
+    {
+      "id": "roadmap-action",
+      "title": "Roadmap action with sroadmap",
+      "description": "Update ROADMAP.md via sroadmap integration",
+      "status": "completed",
+      "version": "0.3.0",
+      "phase": "v0.3",
+      "area": "actions",
+      "type": "Added",
+      "priority": "medium"
+    },
+    {
+      "id": "git-wrapper",
+      "title": "Git wrapper package",
+      "description": "pkg/git with Git struct for git operations",
+      "status": "completed",
+      "version": "0.3.0",
+      "phase": "v0.3",
+      "area": "core",
+      "type": "Added",
+      "priority": "high"
+    },
+    {
+      "id": "tag-management",
+      "title": "Tag creation and pushing",
+      "description": "Create and push release tags",
+      "status": "completed",
+      "version": "0.3.0",
+      "phase": "v0.3",
+      "area": "core",
+      "type": "Added",
+      "priority": "high"
+    },
+    {
+      "id": "ci-status",
+      "title": "CI status checking",
+      "description": "Check CI status via gh CLI before tagging",
+      "status": "completed",
+      "version": "0.3.0",
+      "phase": "v0.3",
+      "area": "core",
+      "type": "Added",
+      "priority": "medium"
+    },
+    {
+      "id": "workflow-engine",
+      "title": "Workflow engine",
+      "description": "pkg/workflow with Workflow/Runner for multi-step releases",
+      "status": "completed",
+      "version": "0.3.0",
+      "phase": "v0.3",
+      "area": "workflow",
+      "type": "Added",
+      "priority": "high"
+    },
+    {
+      "id": "release-command",
+      "title": "`releaseagent release` command",
+      "description": "Full release workflow with version argument",
+      "status": "completed",
+      "version": "0.3.0",
+      "phase": "v0.3",
+      "area": "workflow",
+      "type": "Added",
+      "priority": "high"
+    },
+    {
+      "id": "interactive-prompter",
+      "title": "Interactive prompter interface",
+      "description": "pkg/interactive with Prompter for user interaction",
+      "status": "completed",
+      "version": "0.3.0",
+      "phase": "v0.3",
+      "area": "claude",
+      "type": "Added",
+      "priority": "high"
+    },
+    {
+      "id": "interactive-flag",
+      "title": "`--interactive` flag",
+      "description": "Enable interactive mode for Q&A during execution",
+      "status": "completed",
+      "version": "0.3.0",
+      "phase": "v0.3",
+      "area": "claude",
+      "type": "Added",
+      "priority": "high"
+    },
+    {
+      "id": "lint-proposals",
+      "title": "Lint fix proposals",
+      "description": "Propose lint fixes with user approval",
+      "status": "completed",
+      "version": "0.3.0",
+      "phase": "v0.3",
+      "area": "claude",
+      "type": "Added",
+      "priority": "medium"
+    },
+    {
+      "id": "json-output",
+      "title": "JSON output mode",
+      "description": "`--json` flag for structured output",
+      "status": "completed",
+      "version": "0.3.0",
+      "phase": "v0.3",
+      "area": "claude",
+      "type": "Added",
+      "priority": "high"
+    },
+    {
+      "id": "json-protocol",
+      "title": "JSON protocol for questions/proposals",
+      "description": "Structured JSON format for Claude Code parsing",
+      "status": "completed",
+      "version": "0.3.0",
+      "phase": "v0.3",
+      "area": "claude",
+      "type": "Added",
+      "priority": "high"
+    },
+    {
+      "id": "toon-output",
+      "title": "TOON output format",
+      "description": "Token-Oriented Object Notation for ~8x token reduction",
+      "status": "completed",
+      "version": "0.3.0",
+      "phase": "v0.3",
+      "area": "claude",
+      "type": "Added",
+      "priority": "high"
+    },
+    {
+      "id": "plugin-structure",
+      "title": "Claude Code plugin structure",
+      "description": "plugin/ directory with commands, skills, agents, hooks",
+      "status": "completed",
+      "version": "0.3.0",
+      "phase": "v0.3",
+      "area": "claude",
+      "type": "Added",
+      "priority": "high"
+    },
+    {
+      "id": "agent-md",
+      "title": "Release coordinator agent",
+      "description": "Agent definition for orchestrating complete releases",
+      "status": "completed",
+      "version": "0.3.0",
+      "phase": "v0.3",
+      "area": "claude",
+      "type": "Added",
+      "priority": "high"
+    },
+    {
+      "id": "deps-hook",
+      "title": "SessionStart dependency check hook",
+      "description": "Verify schangelog, sroadmap, golangci-lint installed",
+      "status": "completed",
+      "version": "0.3.0",
+      "phase": "v0.3",
+      "area": "claude",
+      "type": "Added",
+      "priority": "medium"
+    },
+    {
+      "id": "security-checker",
+      "title": "Security checker",
+      "description": "LICENSE, govulncheck, dependency audit, secret detection",
+      "status": "completed",
+      "version": "0.3.0",
+      "phase": "v0.3",
+      "area": "core",
+      "type": "Added",
+      "priority": "high"
+    },
+    {
+      "id": "doc-checker",
+      "title": "Documentation checker",
+      "description": "README, PRD, TRD, release notes, changelog validation",
+      "status": "completed",
+      "version": "0.3.0",
+      "phase": "v0.3",
+      "area": "core",
+      "type": "Added",
+      "priority": "medium"
+    },
+    {
+      "id": "release-checker",
+      "title": "Release checker",
+      "description": "Version format, git status, CI configuration validation",
+      "status": "completed",
+      "version": "0.3.0",
+      "phase": "v0.3",
+      "area": "core",
+      "type": "Added",
+      "priority": "medium"
+    },
+    {
+      "id": "error-handling-check",
+      "title": "Error handling compliance check",
+      "description": "Detect improper error discarding (_ = err patterns)",
+      "status": "completed",
+      "version": "0.3.0",
+      "phase": "v0.3",
+      "area": "languages",
+      "type": "Added",
+      "priority": "medium"
+    },
+    {
+      "id": "goreleaser",
+      "title": "GoReleaser configuration",
+      "description": "Multi-platform builds with GoReleaser",
+      "status": "completed",
+      "version": "0.3.0",
+      "phase": "v0.3",
+      "area": "marketplace",
+      "type": "Added",
+      "priority": "high"
+    },
+    {
+      "id": "homebrew",
+      "title": "Homebrew formula",
+      "description": "Publish to grokify/tap",
+      "status": "completed",
+      "version": "0.3.0",
+      "phase": "v0.3",
+      "area": "marketplace",
+      "type": "Added",
+      "priority": "medium"
+    },
+    {
+      "id": "gemini-plugin",
+      "title": "Gemini CLI plugin structure",
+      "description": "TOML-based plugin for Gemini CLI Extensions",
+      "status": "completed",
+      "version": "0.3.0",
+      "phase": "v0.3",
+      "area": "marketplace",
+      "type": "Added",
+      "priority": "medium"
+    },
+    {
+      "id": "claude-marketplace",
+      "title": "Publish to Claude Code Plugin Marketplace",
+      "description": "Submit and publish plugin to Claude Code marketplace",
+      "status": "planned",
+      "version": "0.4.0",
+      "phase": "v0.4",
+      "area": "marketplace",
+      "type": "Added",
+      "priority": "high"
+    },
+    {
+      "id": "gemini-marketplace",
+      "title": "Publish to Gemini CLI Extensions Marketplace",
+      "description": "Submit and publish extension to Gemini CLI marketplace",
+      "status": "planned",
+      "version": "0.4.0",
+      "phase": "v0.4",
+      "area": "marketplace",
+      "type": "Added",
+      "priority": "high"
+    },
+    {
+      "id": "generalize-options",
+      "title": "Generalize Options struct",
+      "description": "Replace language-specific fields with extensible Extra map[string]interface{}",
+      "status": "planned",
+      "version": "0.5.0",
+      "phase": "v0.5",
+      "area": "stability",
+      "type": "Changed",
+      "priority": "high"
+    },
+    {
+      "id": "generalize-config",
+      "title": "Generalize LanguageConfig",
+      "description": "Replace language-specific fields with extensible Options map",
+      "status": "planned",
+      "version": "0.5.0",
+      "phase": "v0.5",
+      "area": "stability",
+      "type": "Changed",
+      "priority": "high"
+    },
+    {
+      "id": "checker-stability",
+      "title": "Stabilize Checker interface",
+      "description": "Finalize Checker interface signature for v1.0 compatibility",
+      "status": "planned",
+      "version": "0.5.0",
+      "phase": "v0.5",
+      "area": "stability",
+      "type": "Changed",
+      "priority": "high"
+    },
+    {
+      "id": "python-checks",
+      "title": "Python checks",
+      "description": "pytest, ruff, black - validates generalized interfaces work",
+      "status": "planned",
+      "version": "0.6.0",
+      "phase": "v0.6",
+      "area": "languages",
+      "type": "Added",
+      "priority": "medium"
+    },
+    {
+      "id": "rust-checks",
+      "title": "Rust checks",
+      "description": "cargo build, cargo test, cargo clippy",
+      "status": "planned",
+      "version": "0.7.0",
+      "phase": "v0.7",
+      "area": "languages",
+      "type": "Added",
+      "priority": "medium"
+    },
+    {
+      "id": "production-feedback",
+      "title": "Production usage feedback",
+      "description": "Incorporate feedback from real-world usage before v1.0",
+      "status": "planned",
+      "version": "0.8.0",
+      "phase": "v0.8",
+      "area": "core",
+      "type": "Changed",
+      "priority": "high"
+    },
+    {
+      "id": "v1-stability-guarantee",
+      "title": "v1.0 stability guarantee",
+      "description": "Commit to backwards compatibility for Checker, Action, Result interfaces",
+      "status": "planned",
+      "version": "1.0.0",
+      "phase": "v1.0",
+      "area": "stability",
+      "type": "Added",
+      "priority": "high"
+    },
+    {
+      "id": "v1-cli-stability",
+      "title": "CLI command stability",
+      "description": "Commit to stable CLI commands and flags",
+      "status": "planned",
+      "version": "1.0.0",
+      "phase": "v1.0",
+      "area": "stability",
+      "type": "Added",
+      "priority": "high"
+    },
+    {
+      "id": "v1-config-stability",
+      "title": "Configuration file stability",
+      "description": "Commit to backwards-compatible .releaseagent.yaml format",
+      "status": "planned",
+      "version": "1.0.0",
+      "phase": "v1.0",
+      "area": "stability",
+      "type": "Added",
+      "priority": "high"
+    },
+    {
+      "id": "swift-checks",
+      "title": "Swift checks",
+      "description": "swift build, swift test",
+      "status": "future",
+      "phase": "future",
+      "area": "languages",
+      "type": "Added",
+      "priority": "low"
+    },
+    {
+      "id": "github-releases",
+      "title": "GitHub release creation",
+      "description": "Create GitHub releases with notes from changelog",
+      "status": "future",
+      "phase": "future",
+      "area": "workflow",
+      "type": "Added",
+      "priority": "medium"
+    },
+    {
+      "id": "gitlab-support",
+      "title": "GitLab support",
+      "description": "GitLab CI status and release creation",
+      "status": "future",
+      "phase": "future",
+      "area": "workflow",
+      "type": "Added",
+      "priority": "low"
+    }
+  ],
+
+  "sections": [
+    {
+      "id": "overview",
+      "title": "Overview",
+      "order": 1,
+      "content": [
+        {"type": "text", "value": "Release Agent evolves from a pre-push validation tool into a comprehensive release automation platform with Claude Code and Gemini CLI integration."}
+      ]
+    },
+    {
+      "id": "v1-stability",
+      "title": "v1.0 Stability Guarantee",
+      "order": 2,
+      "content": [
+        {"type": "text", "value": "Before v1.0.0, the following interfaces must be stable and extensible without breaking changes:"},
+        {"type": "list", "items": [
+          "**Checker interface**: `Check(dir, opts) []Result` - must support new languages without signature changes",
+          "**Action interface**: `Run()`, `Propose()`, `Apply()` - must support new action types",
+          "**Result struct**: Adding fields is allowed; removing/renaming is breaking",
+          "**Options struct**: Must use extensible pattern (Extra map) for language-specific options",
+          "**LanguageConfig**: Must use extensible pattern for language-specific configuration",
+          "**CLI commands**: `check`, `validate`, `release`, etc. - names and core flags are stable",
+          "**Configuration file**: `.releaseagent.yaml` format - new keys allowed, existing keys stable"
+        ]},
+        {"type": "text", "value": "The test for v1.0 readiness: Can we add Python, Rust, and Swift checkers without changing the Checker interface or Options struct?"}
+      ]
+    },
+    {
+      "id": "references",
+      "title": "References",
+      "order": 99,
+      "content": [
+        {"type": "list", "items": [
+          "[PRD.md](PRD.md) - Product requirements",
+          "[TRD.md](TRD.md) - Technical requirements",
+          "[CHANGELOG.md](CHANGELOG.md) - Release history"
+        ]}
+      ]
+    }
+  ],
+
+  "version_history": [
+    {"version": "0.1.0", "date": "2025-01-04", "status": "completed", "summary": "Initial release with Go/TS validation"},
+    {"version": "0.2.0", "date": "2026-01-04", "status": "completed", "summary": "Rename to release-agent"},
+    {"version": "0.3.0", "date": "2026-01-12", "status": "completed", "summary": "Release automation platform with workflow, actions, plugins"},
+    {"version": "0.4.0", "date": null, "status": "planned", "summary": "Marketplace publishing (Claude Code, Gemini CLI)"},
+    {"version": "0.5.0", "date": null, "status": "planned", "summary": "API generalization for multi-language"},
+    {"version": "0.6.0", "date": null, "status": "planned", "summary": "Python support"},
+    {"version": "0.7.0", "date": null, "status": "planned", "summary": "Rust support"},
+    {"version": "0.8.0", "date": null, "status": "planned", "summary": "Production feedback incorporation"},
+    {"version": "1.0.0", "date": null, "status": "planned", "summary": "Stable API with backwards compatibility commitment"}
+  ]
+}

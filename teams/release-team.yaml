@@ -1,0 +1,275 @@
+name: release-team
+description: Release validation and deployment workflow
+process: hierarchical
+manager: release-coordinator
+
+agents:
+  - pm
+  - qa
+  - documentation
+  - release
+  - security
+  - release-coordinator
+
+tasks:
+  - name: pm-validation
+    agent: pm
+    description: Product scope and version recommendation
+    subtasks:
+      - name: version-recommendation
+        description: Analyze commits and recommend semver bump
+        command: "git describe --tags --abbrev=0 && schangelog parse-commits --since=LAST_TAG"
+        required: true
+        expected_output: Recommended version determined
+
+      - name: release-scope
+        description: Verify planned features are included
+        file: "ROADMAP.md"
+        required: false
+        expected_output: Scope aligned with roadmap
+
+      - name: changelog-quality
+        description: Ensure changelog has highlights and user-facing entries (ignores empty commit fields)
+        file: "CHANGELOG.json"
+        required: true
+        expected_output: Has 1+ highlights answering "Why do I care?", entries are user-facing
+
+      - name: breaking-changes
+        description: Identify and document API/behavior changes
+        command: "git log $(git describe --tags --abbrev=0)..HEAD --grep='BREAKING CHANGE' --oneline"
+        required: true
+        expected_output: All breaking changes documented
+
+      - name: roadmap-alignment
+        description: Check release aligns with roadmap items
+        file: "ROADMAP.md"
+        required: false
+        expected_output: Release aligns with roadmap
+
+      - name: deprecation-notices
+        description: Flag deprecated features for communication
+        pattern: "Deprecated|@deprecated"
+        files: "**/*.go"
+        required: false
+        expected_output: Deprecations documented
+
+  - name: qa-validation
+    agent: qa
+    description: Quality Assurance validation
+    depends_on:
+      - pm-validation
+    subtasks:
+      - name: build
+        description: Verify project compiles successfully
+        command: "go build ./..."
+        required: true
+        expected_output: No errors
+
+      - name: tests
+        description: Run all unit and integration tests
+        command: "go test -v ./..."
+        required: true
+        expected_output: All tests pass
+
+      - name: lint
+        description: Check code passes linting rules
+        command: "golangci-lint run"
+        required: true
+        expected_output: No lint errors
+
+      - name: format
+        description: Verify code is properly formatted
+        command: "gofmt -l ."
+        required: true
+        expected_output: No output (all files formatted)
+
+      - name: mod-tidy
+        description: Ensure go.mod and go.sum are tidy
+        command: "go mod tidy -diff"
+        required: true
+        expected_output: No diff output
+
+      - name: error-handling
+        description: Check for improper error handling (discarded errors)
+        pattern: "_ = err"
+        files: "**/*.go"
+        required: true
+        expected_output: No matches (errors should be handled)
+
+      - name: local-replace
+        description: Ensure no local replace directives in go.mod
+        pattern: "replace .* => \\./"
+        files: "go.mod"
+        required: true
+        expected_output: No matches
+
+  - name: docs-validation
+    agent: documentation
+    description: Documentation validation
+    depends_on:
+      - pm-validation
+    subtasks:
+      - name: readme
+        description: README.md exists with adequate content
+        file: "README.md"
+        required: true
+
+      - name: changelog-md
+        description: CHANGELOG.md exists
+        file: "CHANGELOG.md"
+        required: true
+
+      - name: changelog-json
+        description: CHANGELOG.json exists for structured changelog
+        file: "CHANGELOG.json"
+        required: false
+
+      - name: release-notes
+        description: Release notes exist for target version (required for major/minor, optional for patch)
+        pattern: "docs/releases/*.md OR RELEASE_NOTES_*.md"
+        required: true
+        expected_output: If docs/ exists use docs/releases/vX.Y.Z.md, else RELEASE_NOTES_vX.Y.Z.md
+        human_in_loop: If missing for major/minor, prompt to create at correct location
+
+      - name: prd
+        description: Product Requirements Document exists
+        file: "PRD.md"
+        required: false
+
+      - name: trd
+        description: Technical Requirements Document exists
+        file: "TRD.md"
+        required: false
+
+  - name: release-validation
+    agent: release
+    description: Release readiness validation
+    depends_on:
+      - pm-validation
+      - qa-validation
+    subtasks:
+      - name: version-available
+        description: Target version tag does not already exist
+        command: "git tag -l vX.Y.Z"
+        required: true
+        expected_output: Empty output (tag doesn't exist yet)
+
+      - name: git-clean
+        description: Working directory has no uncommitted changes
+        command: "git status --porcelain"
+        required: false
+        expected_output: Empty output (clean working directory)
+
+      - name: git-remote
+        description: Git remote 'origin' is configured
+        command: "git remote get-url origin"
+        required: true
+        expected_output: Valid remote URL
+
+      - name: ci-config
+        description: CI configuration exists (GitHub Actions)
+        pattern: ".github/workflows/*.yml"
+        required: false
+        expected_output: At least one workflow file
+
+      - name: changelog-json
+        description: Structured changelog exists for generation
+        file: "CHANGELOG.json"
+        required: true
+
+      - name: conventional-commits
+        description: Commits follow conventional commits format
+        command: "schangelog parse-commits --since=LAST_TAG"
+        required: false
+        expected_output: All commits have valid types
+
+  - name: security-validation
+    agent: security
+    description: Security and compliance validation
+    depends_on:
+      - pm-validation
+    subtasks:
+      - name: license
+        description: LICENSE file exists in project root
+        pattern: "LICENSE*"
+        required: true
+
+      - name: vulnerability-scan
+        description: No known vulnerabilities in dependencies
+        command: "govulncheck ./..."
+        required: true
+        expected_output: No vulnerabilities found
+
+      - name: dependency-audit
+        description: Dependencies are properly tracked and not retracted
+        command: "go list -m -u -retracted all"
+        required: false
+        expected_output: No retracted versions
+
+      - name: no-secrets
+        description: No hardcoded secrets or credentials in code
+        pattern: "(password|apikey|api_key|secret|token|private_key).*=\""
+        files: "**/*.go"
+        required: false
+        expected_output: No matches (or only test fixtures)
+
+      - name: no-env-files
+        description: No .env files committed to repository
+        pattern: ".env*"
+        required: false
+        expected_output: No .env files in repo
+
+  - name: changelog-finalize
+    agent: release
+    description: Finalize changelog with commit hashes (Phase 2)
+    depends_on:
+      - qa-validation
+      - docs-validation
+      - release-validation
+      - security-validation
+    subtasks:
+      - name: link-commits
+        description: Populate commit hashes in CHANGELOG.json
+        command: "schangelog link-commits CHANGELOG.json"
+        required: true
+        expected_output: Commit hashes linked to entries
+
+      - name: generate-changelog
+        description: Generate CHANGELOG.md from CHANGELOG.json
+        command: "schangelog generate CHANGELOG.json -o CHANGELOG.md"
+        required: true
+        expected_output: CHANGELOG.md updated
+
+      - name: commit-changelog
+        description: Commit changelog updates
+        command: "git add CHANGELOG.json CHANGELOG.md && git commit -m 'docs: update changelog for vX.Y.Z'"
+        required: true
+        expected_output: Changelog committed
+
+  - name: execute-release
+    agent: release-coordinator
+    description: Execute release workflow
+    depends_on:
+      - changelog-finalize
+    subtasks:
+      - name: ci-status
+        description: CI workflows pass on current branch
+        command: "gh run list --branch $(git branch --show-current) --limit 1 --json conclusion -q '.[0].conclusion'"
+        required: true
+        expected_output: success
+
+      - name: gh-pages
+        description: MkDocs site deployed to gh-pages branch
+        command: "mkdocs gh-deploy"
+        required: false
+        expected_output: gh-pages branch is up to date
+
+      - name: create-tag
+        description: Create version tag
+        command: "git tag vX.Y.Z"
+        required: true
+
+      - name: push-tag
+        description: Push version tag to remote
+        command: "git push origin vX.Y.Z"
+        required: true
