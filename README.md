@@ -330,7 +330,7 @@ Structured box report with per-team validation results:
 ╔════════════════════════════════════════════════════════════════════════════╗
 ║                             TEAM STATUS REPORT                             ║
 ╠════════════════════════════════════════════════════════════════════════════╣
-║ Project: github.com/agentplexus/release-agent-team                                  ║
+║ Project: github.com/agentplexus/release-agent-team                         ║
 ║ Target:  v0.3.0                                                            ║
 ╠════════════════════════════════════════════════════════════════════════════╣
 ║ RELEASE VALIDATION                                                         ║
