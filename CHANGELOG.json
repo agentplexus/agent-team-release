@@ -13,26 +13,34 @@
         { "description": "Reports display teams in DAG order (PM first, parallel teams alphabetically, Release last)" }
       ],
       "added": [
-        { "description": "DAG-aware sorting for team reports using topological sort with alphabetical tie-breaking" },
-        { "description": "`DependsOn` field in TeamConfig to track DAG dependencies between validation teams" }
+        { "description": "DAG-aware sorting for team reports using topological sort with alphabetical tie-breaking", "commit": "d72d668" },
+        { "description": "`DependsOn` field in TeamConfig to track DAG dependencies between validation teams", "commit": "d72d668" },
+        { "description": "GoReleaser workflow for automated Homebrew formula publishing to `agentplexus/homebrew-tap`", "commit": "2a4352f" },
+        { "description": "Structured task definitions in agent specs with `id`, `type`, `command`, `required`, and `expected_output` fields", "commit": "3e589b7" },
+        { "description": "Typed inputs/outputs for workflow steps in team spec enabling data flow between agents", "commit": "3e589b7" },
+        { "description": "Runtime configuration in deployment spec for distributed mode (timeouts, retries, observability)", "commit": "3e589b7" },
+        { "description": "New deployment targets: `gemini-cli`, `adk-server`, `k8s-production`", "commit": "3e589b7" }
       ],
       "changed": [
-        { "description": "Report package refactored to use `multiagentspec.TeamReport`, `TeamSection`, `Check`, and `Status` types from multi-agent-spec SDK" },
-        { "description": "Renderer now uses `multiagentspec.NewRenderer` which auto-sorts teams by DAG order" },
-        { "description": "Reports include richer metadata: `$schema`, `generated_at`, `generated_by`, per-team `status`" },
-        { "description": "Security checker excludes itself from hardcoded secrets scan to prevent false positives" },
-        { "description": "Release-validation now depends on all validation steps (qa, docs, security) enabling commit and CHANGELOG workflow" }
+        { "description": "Report package refactored to use `multiagentspec.TeamReport`, `TeamSection`, `Check`, and `Status` types from multi-agent-spec SDK", "commit": "cfa5497" },
+        { "description": "Renderer now uses `multiagentspec.NewRenderer` which auto-sorts teams by DAG order", "commit": "cfa5497" },
+        { "description": "Reports include richer metadata: `$schema`, `generated_at`, `generated_by`, per-team `status`", "commit": "cfa5497" },
+        { "description": "Security checker excludes itself from hardcoded secrets scan to prevent false positives", "commit": "19d0863" },
+        { "description": "Release-validation now depends on all validation steps (qa, docs, security) enabling commit and CHANGELOG workflow", "commit": "9011cac" },
+        { "description": "Agent specs now use `requires` instead of `dependencies` for tool prerequisites", "commit": "3e589b7" },
+        { "description": "Team spec version bumped to 1.1.0 with enhanced workflow schema", "commit": "3e589b7" }
       ],
       "removed": [
-        { "description": "`pkg/report/report.go` - Types moved to multi-agent-spec" },
-        { "description": "`pkg/report/renderer.go` - Renderer moved to multi-agent-spec" },
-        { "description": "`pkg/report/ir.go` - IR types moved to multi-agent-spec" }
+        { "description": "`pkg/report/report.go` - Types moved to multi-agent-spec", "commit": "cfa5497" },
+        { "description": "`pkg/report/renderer.go` - Renderer moved to multi-agent-spec", "commit": "cfa5497" },
+        { "description": "`pkg/report/ir.go` - IR types moved to multi-agent-spec", "commit": "cfa5497" },
+        { "description": "`specs/teams/release-team.yaml` - consolidated to JSON format", "commit": "3e589b7" }
       ],
       "dependencies": [
-        { "description": "Updated `github.com/agentplexus/multi-agent-spec/sdk/go` to v0.1.2 with DAG sorting support" }
+        { "description": "Updated `github.com/agentplexus/multi-agent-spec/sdk/go` to v0.3.0", "commit": "e3ff5ef" }
       ],
       "documentation": [
-        { "description": "Added release notes for v0.5.0" }
+        { "description": "Added release notes for v0.5.0", "commit": "a1ad92e" }
       ]
     },
     {
