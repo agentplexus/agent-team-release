@@ -7,6 +7,8 @@ package main
 import (
 	"fmt"
 	"os"
+	"os/exec"
+	"strings"
 
 	"github.com/spf13/cobra"
 
@@ -190,17 +192,17 @@ func runValidate(cmd *cobra.Command, args []string) {
 
 // printTeamStatusReport prints the validation report in team status format.
 func printTeamStatusReport(vr *checks.ValidationReport, dir string) {
-	// Determine project name from git remote or directory
-	project := dir
-	if dir == "." {
-		if cwd, err := os.Getwd(); err == nil {
-			project = cwd
+	// Determine project name from git remote
+	project := getGitRemoteProject(dir)
+	if project == "" {
+		// Fall back to directory path
+		if dir == "." {
+			if cwd, err := os.Getwd(); err == nil {
+				project = cwd
+			}
+		} else {
+			project = dir
 		}
-	}
-
-	// Try to get git remote URL
-	if gitProject := getGitRemoteProject(); gitProject != "" {
-		project = gitProject
 	}
 
 	// Build target string
@@ -209,8 +211,17 @@ func printTeamStatusReport(vr *checks.ValidationReport, dir string) {
 		target = "release validation"
 	}
 
+	// Try to load team spec for phase information
+	phase := "PHASE 1: REVIEW"
+	if spec, err := report.LoadTeamSpec(dir); err == nil {
+		phases := spec.GetPhases()
+		if len(phases) > 0 {
+			phase = phases[0].Name
+		}
+	}
+
 	// Convert to team status report
-	teamReport := report.FromValidationReport(vr, project, target, "RELEASE VALIDATION")
+	teamReport := report.FromValidationReport(vr, project, target, phase)
 
 	// Render the report
 	renderer := report.NewRenderer(os.Stdout)
@@ -220,10 +231,35 @@ func printTeamStatusReport(vr *checks.ValidationReport, dir string) {
 }
 
 // getGitRemoteProject extracts the project path from git remote origin.
-func getGitRemoteProject() string {
-	// This is a simplified version - just return empty for now
-	// A full implementation would parse .git/config or run git remote get-url
-	return ""
+func getGitRemoteProject(dir string) string {
+	// Try to get git remote URL using git command
+	cmd := exec.Command("git", "-C", dir, "remote", "get-url", "origin")
+	output, err := cmd.Output()
+	if err != nil {
+		return ""
+	}
+
+	url := strings.TrimSpace(string(output))
+
+	// Convert various URL formats to github.com/org/repo format
+	// Handle: https://github.com/org/repo.git
+	//         git@github.com:org/repo.git
+	//         https://github.com/org/repo
+
+	url = strings.TrimSuffix(url, ".git")
+
+	if strings.HasPrefix(url, "https://") {
+		return strings.TrimPrefix(url, "https://")
+	}
+
+	if strings.HasPrefix(url, "git@") {
+		// git@github.com:org/repo -> github.com/org/repo
+		url = strings.TrimPrefix(url, "git@")
+		url = strings.Replace(url, ":", "/", 1)
+		return url
+	}
+
+	return url
 }
 
 // runQAChecks runs all QA checks for detected languages.
