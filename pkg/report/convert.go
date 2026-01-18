@@ -13,21 +13,26 @@ import (
 	"github.com/agentplexus/release-agent-team/pkg/checks"
 )
 
-// TeamConfig maps validation areas to team IDs and names.
+// TeamConfig maps validation areas to team IDs, names, and DAG dependencies.
 type TeamConfig struct {
-	Area checks.ValidationArea
-	ID   string
-	Name string
+	Area      checks.ValidationArea
+	ID        string
+	Name      string
+	DependsOn []string
 }
 
-// DefaultTeamConfigs returns the default team configurations.
+// DefaultTeamConfigs returns the default team configurations with DAG dependencies.
+// The DAG structure follows team.json:
+// - pm-validation: no dependencies (runs first)
+// - qa-validation, docs-validation, security-validation: depend on pm-validation (run in parallel)
+// - release-validation: depends on all others (runs last)
 func DefaultTeamConfigs() []TeamConfig {
 	return []TeamConfig{
-		{Area: checks.AreaPM, ID: "pm-validation", Name: "pm"},
-		{Area: checks.AreaQA, ID: "qa-validation", Name: "qa"},
-		{Area: checks.AreaDocumentation, ID: "docs-validation", Name: "documentation"},
-		{Area: checks.AreaSecurity, ID: "security-validation", Name: "security"},
-		{Area: checks.AreaRelease, ID: "release-validation", Name: "release"},
+		{Area: checks.AreaPM, ID: "pm-validation", Name: "pm", DependsOn: nil},
+		{Area: checks.AreaQA, ID: "qa-validation", Name: "qa", DependsOn: []string{"pm-validation"}},
+		{Area: checks.AreaDocumentation, ID: "docs-validation", Name: "documentation", DependsOn: []string{"pm-validation"}},
+		{Area: checks.AreaSecurity, ID: "security-validation", Name: "security", DependsOn: []string{"pm-validation"}},
+		{Area: checks.AreaRelease, ID: "release-validation", Name: "release", DependsOn: []string{"pm-validation", "qa-validation", "docs-validation", "security-validation"}},
 	}
 }
 
@@ -93,10 +98,11 @@ func FromValidationReport(vr *checks.ValidationReport, project, target, phase st
 		}
 
 		team := multiagentspec.TeamSection{
-			ID:      config.ID,
-			Name:    config.Name,
-			AgentID: config.Name,
-			Checks:  teamChecks,
+			ID:        config.ID,
+			Name:      config.Name,
+			AgentID:   config.Name,
+			DependsOn: config.DependsOn,
+			Checks:    teamChecks,
 		}
 		team.Status = team.OverallStatus()
 		teams = append(teams, team)
