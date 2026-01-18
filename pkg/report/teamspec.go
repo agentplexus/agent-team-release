@@ -14,41 +14,16 @@ import (
 	multiagentspec "github.com/agentplexus/multi-agent-spec/sdk/go"
 )
 
-// TeamSpec represents the team.json specification.
-type TeamSpec struct {
-	Schema       string       `json:"$schema,omitempty"`
-	Name         string       `json:"name"`
-	Version      string       `json:"version"`
-	Description  string       `json:"description"`
-	Agents       []string     `json:"agents"`
-	Orchestrator string       `json:"orchestrator"`
-	Workflow     WorkflowSpec `json:"workflow"`
-	Context      string       `json:"context"`
-}
-
-// WorkflowSpec represents the workflow definition.
-type WorkflowSpec struct {
-	Type  string     `json:"type"` // "dag" or "sequential"
-	Steps []StepSpec `json:"steps"`
-}
-
-// StepSpec represents a single workflow step.
-type StepSpec struct {
-	Name      string   `json:"name"`
-	Agent     string   `json:"agent"`
-	DependsOn []string `json:"depends_on,omitempty"`
-	Outputs   []string `json:"outputs,omitempty"`
-}
-
 // LoadTeamSpec loads a team.json file from the given directory.
-func LoadTeamSpec(dir string) (*TeamSpec, error) {
+// Returns a multiagentspec.Team parsed from the JSON file.
+func LoadTeamSpec(dir string) (*multiagentspec.Team, error) {
 	path := filepath.Join(dir, "team.json")
 	data, err := os.ReadFile(path)
 	if err != nil {
 		return nil, fmt.Errorf("reading team.json: %w", err)
 	}
 
-	var spec TeamSpec
+	var spec multiagentspec.Team
 	if err := json.Unmarshal(data, &spec); err != nil {
 		return nil, fmt.Errorf("parsing team.json: %w", err)
 	}
@@ -57,9 +32,12 @@ func LoadTeamSpec(dir string) (*TeamSpec, error) {
 }
 
 // GetValidationSteps returns only the validation steps (excludes execute-release).
-func (s *TeamSpec) GetValidationSteps() []StepSpec {
-	var steps []StepSpec
-	for _, step := range s.Workflow.Steps {
+func GetValidationSteps(team *multiagentspec.Team) []multiagentspec.Step {
+	if team.Workflow == nil {
+		return nil
+	}
+	var steps []multiagentspec.Step
+	for _, step := range team.Workflow.Steps {
 		// Exclude execution steps, only include validation steps
 		if step.Name != "execute-release" {
 			steps = append(steps, step)
@@ -68,16 +46,26 @@ func (s *TeamSpec) GetValidationSteps() []StepSpec {
 	return steps
 }
 
+// Phase represents a workflow phase containing multiple steps.
+type Phase struct {
+	Name  string
+	Steps []multiagentspec.Step
+}
+
 // GetPhases groups steps into phases based on dependencies.
 // Phase 1 (REVIEW): Steps with no dependencies or only pm-validation dependency
 // Phase 2 (EXECUTE): Steps that depend on validation completion
-func (s *TeamSpec) GetPhases() []Phase {
+func GetPhases(team *multiagentspec.Team) []Phase {
 	phases := []Phase{
-		{Name: "PHASE 1: REVIEW", Steps: []StepSpec{}},
-		{Name: "PHASE 2: EXECUTE", Steps: []StepSpec{}},
+		{Name: "PHASE 1: REVIEW", Steps: []multiagentspec.Step{}},
+		{Name: "PHASE 2: EXECUTE", Steps: []multiagentspec.Step{}},
 	}
 
-	for _, step := range s.Workflow.Steps {
+	if team.Workflow == nil {
+		return phases
+	}
+
+	for _, step := range team.Workflow.Steps {
 		if step.Name == "execute-release" {
 			phases[1].Steps = append(phases[1].Steps, step)
 		} else {
@@ -88,26 +76,20 @@ func (s *TeamSpec) GetPhases() []Phase {
 	return phases
 }
 
-// Phase represents a workflow phase containing multiple steps.
-type Phase struct {
-	Name  string
-	Steps []StepSpec
-}
-
 // BuildReportFromSpec creates a TeamReport ensuring all steps from the spec are present.
 // Results that don't have corresponding validation data are marked as SKIP.
-func BuildReportFromSpec(spec *TeamSpec, results map[string][]multiagentspec.TaskResult, project, version string) *multiagentspec.TeamReport {
+func BuildReportFromSpec(spec *multiagentspec.Team, results map[string][]multiagentspec.TaskResult, project, version string) *multiagentspec.TeamReport {
 	var teams []multiagentspec.TeamSection
 
 	// Get phases for display
-	phases := spec.GetPhases()
+	phases := GetPhases(spec)
 	phaseName := "PHASE 1: REVIEW"
 	if len(phases) > 0 {
 		phaseName = phases[0].Name
 	}
 
 	// Build teams from spec, ensuring all steps are represented
-	for _, step := range spec.GetValidationSteps() {
+	for _, step := range GetValidationSteps(spec) {
 		tasks, hasResults := results[step.Name]
 
 		team := multiagentspec.TeamSection{

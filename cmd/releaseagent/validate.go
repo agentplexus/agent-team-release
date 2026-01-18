@@ -215,7 +215,7 @@ func printTeamStatusReport(vr *checks.ValidationReport, dir string) {
 	// Try to load team spec for phase information
 	phase := "PHASE 1: REVIEW"
 	if spec, err := report.LoadTeamSpec(dir); err == nil {
-		phases := spec.GetPhases()
+		phases := report.GetPhases(spec)
 		if len(phases) > 0 {
 			phase = phases[0].Name
 		}
