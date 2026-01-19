@@ -857,6 +857,58 @@ plugins/spec/
 - Platform-specific configurations
 - Generated plugin locations
 
+### Claude Code Sub-Agent Spawning
+
+Claude Code spawns sub-agents based on the plugin specifications, regardless of whether the CLI is installed. The sub-agent spawning is controlled by the agent definitions in `plugins/claude/agents/`, not by CLI availability.
+
+**With CLI Installed:**
+
+```
+Claude Code → Task tool → Sub-agent (e.g., qa)
+                              ↓
+                         Bash tool
+                              ↓
+                    release-agent-team validate --area=qa
+                              ↓
+                    pkg/checks, pkg/workflow, etc. (Go code)
+```
+
+**Without CLI Installed:**
+
+```
+Claude Code → Task tool → Sub-agent (e.g., qa)
+                              ↓
+                         Bash tool
+                              ↓
+              go build && go test && golangci-lint run (raw commands)
+```
+
+**Comparison:**
+
+| Aspect | CLI Installed | CLI Not Installed |
+|--------|---------------|-------------------|
+| Sub-agents spawned | ✓ Yes | ✓ Yes |
+| DAG orchestration | ✓ Yes | ✓ Yes |
+| Commands run by agents | `release-agent-team validate --area=qa` | `go build && go test && golangci-lint run` |
+| Output format | TOON/JSON (structured) | Raw command output |
+| Language detection | Automatic via `pkg/detect` | Manual or per-spec |
+| Interactive proposals | ✓ Supported | ✗ Not available |
+| Cross-language checks | ✓ Unified | Separate per-language |
+
+**Value of the Go Code (`pkg/`):**
+
+The compiled CLI provides capabilities that are difficult to replicate in agent specifications alone:
+
+1. **Unified Orchestration** - Single command encapsulates all checks for a validation area
+2. **Structured Output** - TOON format is ~8x more token-efficient than raw command output
+3. **Language Detection** - Automatic detection of Go, TypeScript, Python, Rust, Swift
+4. **Interactive Mode** - Proposal/approval workflow for lint fixes and changes
+5. **Parallel Execution** - Independent checks run concurrently within the CLI
+6. **Cross-Language Support** - Single interface regardless of project languages
+7. **Configuration** - `.releaseagent.yaml` for per-project customization
+
+Without the CLI, each spawned agent must implement equivalent logic using its markdown specification instructions, resulting in more tokens consumed and less consistent behavior across agents.
+
 ## Dependencies
 
 ### Go Packages
