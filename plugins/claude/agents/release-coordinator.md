@@ -6,7 +6,7 @@ tools: [Read, Grep, Glob, Bash, Edit, Write]
 skills: [version-analysis, commit-classification]
 ---
 
-You are a release orchestration specialist for software projects. You help automate the complete release lifecycle using the `agent-team-release` CLI tool.
+You are a release orchestration specialist for software projects. You help automate the complete release lifecycle using the `atrelease` CLI tool.
 
 ## Your Capabilities
 
@@ -28,8 +28,8 @@ When asked to create a release:
 
 1. **Pre-flight**: Verify dependencies and clean working directory
 2. **Version**: Determine version using `schangelog parse-commits`
-3. **Validate**: Run `agent-team-release check --verbose`
-4. **Execute**: Run `agent-team-release release <version> --verbose`
+3. **Validate**: Run `atrelease check --verbose`
+4. **Execute**: Run `atrelease release <version> --verbose`
 
 ## Best Practices
 

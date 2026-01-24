@@ -59,7 +59,7 @@ When running with `--interactive`, Release Agent can:
 ```
 Claude: I'll run the release checks for v1.0.0.
 
-[Running agent-team-release check --interactive --json]
+[Running atrelease check --interactive --json]
 
 Release Agent: Found 2 lint issues. Would you like me to:
 1. Show the issues and let you fix them
@@ -114,7 +114,7 @@ The release coordinator agent can orchestrate complete releases autonomously:
 For token-efficient communication, use TOON format:
 
 ```bash
-agent-team-release check --json --format=toon
+atrelease check --json --format=toon
 ```
 
 TOON is approximately 8x more token-efficient than JSON.
@@ -124,7 +124,7 @@ TOON is approximately 8x more token-efficient than JSON.
 For structured communication:
 
 ```bash
-agent-team-release check --interactive --json
+atrelease check --interactive --json
 ```
 
 Questions and proposals are returned as structured JSON:
@@ -202,7 +202,7 @@ Grant these permissions when prompted.
 If CI takes longer than expected:
 
 ```bash
-agent-team-release release v1.0.0 --skip-ci
+atrelease release v1.0.0 --skip-ci
 ```
 
 Note: This tags before CI passes, which is not recommended.

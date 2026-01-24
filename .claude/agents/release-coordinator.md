@@ -62,17 +62,17 @@ After all validations pass:
 
 ### Full Release (recommended)
 ```bash
-agent-team-release release vX.Y.Z --verbose
+atrelease release vX.Y.Z --verbose
 ```
 
 ### Dry Run First
 ```bash
-agent-team-release release vX.Y.Z --dry-run --verbose
+atrelease release vX.Y.Z --dry-run --verbose
 ```
 
 ### Validation Only
 ```bash
-agent-team-release check --verbose
+atrelease check --verbose
 ```
 
 ## Output Format

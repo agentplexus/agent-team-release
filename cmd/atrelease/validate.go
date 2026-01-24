@@ -45,11 +45,11 @@ Validation Areas:
 The PM agent runs first and produces the version recommendation. Other agents depend on PM.
 
 Examples:
-  agent-team-release validate                    # Validate current directory
-  agent-team-release validate --version v0.2.0   # Include version-specific checks
-  agent-team-release validate --skip-qa          # Skip QA checks
-  agent-team-release validate --format team      # Team status report format
-  agent-team-release validate -v                 # Verbose output`,
+  atrelease validate                    # Validate current directory
+  atrelease validate --version v0.2.0   # Include version-specific checks
+  atrelease validate --skip-qa          # Skip QA checks
+  atrelease validate --format team      # Team status report format
+  atrelease validate -v                 # Verbose output`,
 	Args: cobra.MaximumNArgs(1),
 	Run:  runValidate,
 }

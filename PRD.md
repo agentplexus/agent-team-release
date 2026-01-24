@@ -93,7 +93,7 @@ As a developer, I want a single command to handle the entire release so that I d
 
 **Acceptance Criteria:**
 
-- `agent-team-release release v1.2.0` runs complete workflow
+- `atrelease release v1.2.0` runs complete workflow
 - Validates all checks pass before proceeding
 - Generates changelog for the release
 - Creates release commit with proper message
@@ -155,8 +155,8 @@ As a platform operator, I want agents defined in a portable specification so tha
 | TypeScript/JavaScript checks | P0 | Complete |
 | Configuration file support | P0 | Complete |
 | Adopt cobra for CLI | P0 | Complete |
-| `agent-team-release check` subcommand | P0 | Complete |
-| `agent-team-release version` subcommand | P0 | Complete |
+| `atrelease check` subcommand | P0 | Complete |
+| `atrelease version` subcommand | P0 | Complete |
 
 ### Phase 2: Actions
 
@@ -167,16 +167,16 @@ As a platform operator, I want agents defined in a portable specification so tha
 | sroadmap integration | P1 | Complete |
 | Coverage badge updates | P1 | Complete |
 | README version updates | P1 | Complete |
-| `agent-team-release changelog` command | P0 | Complete |
-| `agent-team-release readme` command | P1 | Complete |
-| `agent-team-release roadmap` command | P1 | Complete |
+| `atrelease changelog` command | P0 | Complete |
+| `atrelease readme` command | P1 | Complete |
+| `atrelease roadmap` command | P1 | Complete |
 
 ### Phase 3: Release Workflow
 
 | Feature | Priority | Status |
 |---------|----------|--------|
 | Workflow engine | P0 | Complete |
-| `agent-team-release release` command | P0 | Complete |
+| `atrelease release` command | P0 | Complete |
 | CI status checking | P1 | Complete |
 | Tag creation | P0 | Complete |
 | Git wrapper package | P0 | Complete |
@@ -302,33 +302,33 @@ release:
 
 ```bash
 # Validation
-agent-team-release check [directory]
-agent-team-release check --no-test --no-lint
-agent-team-release check --go-no-go
-agent-team-release validate --version=v1.0.0
-agent-team-release validate --skip-qa --skip-docs --skip-security
-agent-team-release validate --format team  # Team status report
+atrelease check [directory]
+atrelease check --no-test --no-lint
+atrelease check --go-no-go
+atrelease validate --version=v1.0.0
+atrelease validate --skip-qa --skip-docs --skip-security
+atrelease validate --format team  # Team status report
 
 # Actions
-agent-team-release changelog [--since=v1.0.0]
-agent-team-release readme [--version=v1.1.0]
-agent-team-release roadmap
+atrelease changelog [--since=v1.0.0]
+atrelease readme [--version=v1.1.0]
+atrelease roadmap
 
 # Release workflow
-agent-team-release release v1.1.0
-agent-team-release release v1.1.0 --skip-ci
-agent-team-release release v1.1.0 --dry-run
+atrelease release v1.1.0
+atrelease release v1.1.0 --skip-ci
+atrelease release v1.1.0 --dry-run
 
 # Interactive mode (for Claude Code)
-agent-team-release check --interactive
-agent-team-release release v1.1.0 --interactive
+atrelease check --interactive
+atrelease release v1.1.0 --interactive
 
 # Output formats
-agent-team-release check --json --format=toon
-agent-team-release release v1.1.0 --json --format=json
+atrelease check --json --format=toon
+atrelease release v1.1.0 --json --format=json
 
 # Version
-agent-team-release version
+atrelease version
 ```
 
 ### Validation Areas

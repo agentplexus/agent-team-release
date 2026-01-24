@@ -83,10 +83,10 @@ Executes the complete release workflow:
 
 ```bash
 # Dry run (preview without changes)
-agent-team-release release v1.0.0 --dry-run
+atrelease release v1.0.0 --dry-run
 
 # Interactive mode (approve each step)
-agent-team-release release v1.0.0 --interactive
+atrelease release v1.0.0 --interactive
 ```
 
 ### /release-agent:check
@@ -112,7 +112,7 @@ The extension expects these CLI tools to be installed:
 
 | Tool | Purpose |
 |------|---------|
-| `agent-team-release` | Release automation CLI |
+| `atrelease` | Release automation CLI |
 | `schangelog` | Structured changelog generator |
 | `sroadmap` | Roadmap management |
 | `golangci-lint` | Go linter (for Go projects) |

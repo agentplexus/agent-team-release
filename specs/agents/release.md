@@ -255,17 +255,17 @@ After all Phase 1 validations pass and fixes are committed:
 
 **Phase 2 Sign-off:** GO if all three steps complete successfully.
 
-## Using releaseagent CLI
+## Using atrelease CLI
 
 ```bash
 # Full release workflow
-agent-team-release release vX.Y.Z
+atrelease release vX.Y.Z
 
 # Dry run first
-agent-team-release release vX.Y.Z --dry-run
+atrelease release vX.Y.Z --dry-run
 
 # Skip CI wait (use with caution)
-agent-team-release release vX.Y.Z --skip-ci
+atrelease release vX.Y.Z --skip-ci
 ```
 
 ## Reporting Format

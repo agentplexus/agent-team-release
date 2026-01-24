@@ -5,7 +5,7 @@ Run validation checks for all detected languages.
 ## Usage
 
 ```bash
-agent-team-release check [directory] [flags]
+atrelease check [directory] [flags]
 ```
 
 ## Description
@@ -60,22 +60,22 @@ When TypeScript or JavaScript is detected, the following checks run:
 
 ```bash
 # Check current directory
-agent-team-release check
+atrelease check
 
 # Check specific directory
-agent-team-release check ./myproject
+atrelease check ./myproject
 
 # Verbose output
-agent-team-release check --verbose
+atrelease check --verbose
 
 # Skip tests (faster for quick checks)
-agent-team-release check --no-test
+atrelease check --no-test
 
 # Show coverage report
-agent-team-release check --coverage
+atrelease check --coverage
 
 # NASA-style Go/No-Go report
-agent-team-release check --go-no-go
+atrelease check --go-no-go
 ```
 
 ## Output

@@ -27,8 +27,8 @@ Requires sroadmap to be installed:
   go install github.com/grokify/sroadmap/cmd/sroadmap@latest
 
 Examples:
-  agent-team-release roadmap              # Regenerate ROADMAP.md
-  agent-team-release roadmap --dry-run    # Show stats without generating`,
+  atrelease roadmap              # Regenerate ROADMAP.md
+  atrelease roadmap --dry-run    # Show stats without generating`,
 	Args: cobra.MaximumNArgs(1),
 	Run:  runRoadmap,
 }

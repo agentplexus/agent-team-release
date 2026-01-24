@@ -56,7 +56,7 @@ echo ""
 
 # Required: Release Agent tools
 echo "Release Agent Tools:"
-check_required "releaseagent" "Release automation CLI" "go install github.com/grokify/release-agent/cmd/releaseagent@latest"
+check_required "atrelease" "Release automation CLI" "go install github.com/agentplexus/agent-team-release/cmd/atrelease@latest"
 check_required "schangelog" "Changelog generation" "go install github.com/grokify/structured-changelog/cmd/schangelog@latest"
 check_required "sroadmap" "Roadmap generation" "go install github.com/grokify/structured-roadmap/cmd/sroadmap@latest"
 

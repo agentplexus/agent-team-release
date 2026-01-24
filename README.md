@@ -69,80 +69,80 @@ The workflow ensures:
 ## Installation
 
 ```bash
-go install github.com/agentplexus/agent-team-release/cmd/releaseagent@latest
+go install github.com/agentplexus/agent-team-release/cmd/atrelease@latest
 ```
 
 ### Homebrew
 
 ```bash
 brew tap agentplexus/tap
-brew install agent-team-release
+brew install atrelease
 ```
 
 ## Quick Start
 
 ```bash
 # Run validation checks in current directory
-agent-team-release check
+atrelease check
 
 # Run comprehensive validation with Go/No-Go report
-agent-team-release validate --version=v1.0.0
+atrelease validate --version=v1.0.0
 
 # Execute full release workflow
-agent-team-release release v1.0.0
+atrelease release v1.0.0
 
 # Generate changelog
-agent-team-release changelog --since=v0.9.0
+atrelease changelog --since=v0.9.0
 
 # Show version
-agent-team-release version
+atrelease version
 ```
 
 ## Commands
 
-### `agent-team-release check`
+### `atrelease check`
 
 Run validation checks for all detected languages.
 
 ```bash
-agent-team-release check [directory]
+atrelease check [directory]
 
 # With options
-agent-team-release check --verbose
-agent-team-release check --no-test --no-lint
-agent-team-release check --coverage
-agent-team-release check --go-no-go  # NASA-style Go/No-Go report
+atrelease check --verbose
+atrelease check --no-test --no-lint
+atrelease check --coverage
+atrelease check --go-no-go  # NASA-style Go/No-Go report
 ```
 
-### `agent-team-release validate`
+### `atrelease validate`
 
 Run comprehensive validation across all areas (QA, Documentation, Release, Security).
 
 ```bash
-agent-team-release validate [directory]
+atrelease validate [directory]
 
 # With version-specific checks
-agent-team-release validate --version=v1.0.0
+atrelease validate --version=v1.0.0
 
 # Skip specific areas
-agent-team-release validate --skip-qa --skip-docs --skip-security
+atrelease validate --skip-qa --skip-docs --skip-security
 
 # Team status report format (template-based)
-agent-team-release validate --format team
+atrelease validate --format team
 ```
 
-### `agent-team-release release`
+### `atrelease release`
 
 Execute the full release workflow.
 
 ```bash
-agent-team-release release <version>
+atrelease release <version>
 
 # Examples
-agent-team-release release v1.0.0
-agent-team-release release v1.0.0 --dry-run      # Preview without changes
-agent-team-release release v1.0.0 --skip-ci      # Don't wait for CI
-agent-team-release release v1.0.0 --verbose
+atrelease release v1.0.0
+atrelease release v1.0.0 --dry-run      # Preview without changes
+atrelease release v1.0.0 --skip-ci      # Don't wait for CI
+atrelease release v1.0.0 --verbose
 ```
 
 **Release workflow steps:**
@@ -157,41 +157,41 @@ agent-team-release release v1.0.0 --verbose
 8. Wait for CI to pass
 9. Create and push release tag
 
-### `agent-team-release changelog`
+### `atrelease changelog`
 
 Generate or update changelog using schangelog.
 
 ```bash
-agent-team-release changelog [directory]
-agent-team-release changelog --since=v0.9.0
-agent-team-release changelog --dry-run
+atrelease changelog [directory]
+atrelease changelog --since=v0.9.0
+atrelease changelog --dry-run
 ```
 
-### `agent-team-release readme`
+### `atrelease readme`
 
 Update README badges and version references.
 
 ```bash
-agent-team-release readme [directory]
-agent-team-release readme --version=v1.0.0
-agent-team-release readme --dry-run
+atrelease readme [directory]
+atrelease readme --version=v1.0.0
+atrelease readme --dry-run
 ```
 
-### `agent-team-release roadmap`
+### `atrelease roadmap`
 
 Update roadmap using sroadmap.
 
 ```bash
-agent-team-release roadmap [directory]
-agent-team-release roadmap --dry-run
+atrelease roadmap [directory]
+atrelease roadmap --dry-run
 ```
 
-### `agent-team-release version`
+### `atrelease version`
 
 Show version information.
 
 ```bash
-agent-team-release version
+atrelease version
 ```
 
 ## Global Flags
@@ -287,7 +287,7 @@ To run agent-team-release automatically before every `git push`:
 # Create the hook
 cat > .git/hooks/pre-push << 'EOF'
 #!/bin/bash
-exec agent-team-release check
+exec atrelease check
 EOF
 
 # Make it executable
@@ -375,8 +375,8 @@ Use `--interactive` flag to enable Q&A mode where Release Agent can:
 - Get user approval before making changes
 
 ```bash
-agent-team-release check --interactive
-agent-team-release release v1.0.0 --interactive
+atrelease check --interactive
+atrelease release v1.0.0 --interactive
 ```
 
 ## Examples
@@ -384,7 +384,7 @@ agent-team-release release v1.0.0 --interactive
 ### Go Project
 
 ```
-$ agent-team-release check
+$ atrelease check
 === Pre-push Checks ===
 
 Detecting languages...
@@ -409,7 +409,7 @@ All pre-push checks passed!
 ### Comprehensive Validation
 
 ```
-$ agent-team-release validate --version=v1.0.0
+$ atrelease validate --version=v1.0.0
 
 === Release Validation: v1.0.0 ===
 
@@ -428,7 +428,7 @@ $ agent-team-release validate --version=v1.0.0
 ### Full Release
 
 ```
-$ agent-team-release release v1.0.0 --verbose
+$ atrelease release v1.0.0 --verbose
 
 [1/9] Validating version...
       ✓ Version v1.0.0 is valid and available

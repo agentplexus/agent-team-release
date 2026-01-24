@@ -43,7 +43,7 @@ Release Agent Team provides a modular architecture for release automation with v
 ```
 github.com/agentplexus/agent-team-release/
 ├── cmd/
-│   └── releaseagent/           # CLI entry point
+│   └── atrelease/              # CLI entry point
 │       ├── main.go             # Main entry
 │       ├── root.go             # Root command with global flags
 │       ├── check.go            # check subcommand
@@ -571,7 +571,7 @@ roadmap:
 
 ## Release Workflow
 
-The `agent-team-release release` command executes a 9-step workflow:
+The `atrelease release` command executes a 9-step workflow:
 
 ```
 1. Validate version      [REQUIRED]  Check format, ensure tag doesn't exist
@@ -868,7 +868,7 @@ Claude Code → Task tool → Sub-agent (e.g., qa)
                               ↓
                          Bash tool
                               ↓
-                    agent-team-release validate --area=qa
+                    atrelease validate --area=qa
                               ↓
                     pkg/checks, pkg/workflow, etc. (Go code)
 ```
@@ -889,7 +889,7 @@ Claude Code → Task tool → Sub-agent (e.g., qa)
 |--------|---------------|-------------------|
 | Sub-agents spawned | ✓ Yes | ✓ Yes |
 | DAG orchestration | ✓ Yes | ✓ Yes |
-| Commands run by agents | `agent-team-release validate --area=qa` | `go build && go test && golangci-lint run` |
+| Commands run by agents | `atrelease validate --area=qa` | `go build && go test && golangci-lint run` |
 | Output format | TOON/JSON (structured) | Raw command output |
 | Language detection | Automatic via `pkg/detect` | Manual or per-spec |
 | Interactive proposals | ✓ Supported | ✗ Not available |

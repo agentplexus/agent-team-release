@@ -84,13 +84,13 @@ Create and push release tags
 
 **Version:** 0.3.0
 
-### [x] `agent-team-release check` subcommand
+### [x] `atrelease check` subcommand
 
 Move validation to check subcommand
 
 **Version:** 0.3.0
 
-### [x] `agent-team-release validate` subcommand
+### [x] `atrelease validate` subcommand
 
 Comprehensive Go/No-Go validation across 4 areas
 
@@ -170,7 +170,7 @@ pkg/workflow with Workflow/Runner for multi-step releases
 
 **Version:** 0.3.0
 
-### [x] `agent-team-release release` command
+### [x] `atrelease release` command
 
 Full release workflow with version argument
 

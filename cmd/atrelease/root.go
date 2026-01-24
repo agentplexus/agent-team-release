@@ -33,7 +33,7 @@ var (
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
-	Use:   "agent-team-release",
+	Use:   "atrelease",
 	Short: "Autonomous release preparation agent",
 	Long: `Release Agent validates code quality, generates changelogs, updates documentation,
 and manages the complete release lifecycle for multi-language repositories.

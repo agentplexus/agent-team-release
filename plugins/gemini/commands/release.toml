@@ -17,9 +17,9 @@ instructions = "Execute the complete release workflow for the specified version.
 [[examples]]
 description = 'Create a release'
 input = '/release-agent:release v0.9.0'
-output = 'Executes: releaseagent release v0.9.0 --verbose'
+output = 'Executes: atrelease release v0.9.0 --verbose'
 
 [[examples]]
 description = 'Dry run'
-input = 'releaseagent release v1.0.0 --dry-run'
+input = 'atrelease release v1.0.0 --dry-run'
 output = 'Preview changes without executing'

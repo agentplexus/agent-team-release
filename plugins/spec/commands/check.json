@@ -11,12 +11,12 @@
     "Check code formatting",
     "Report pass/fail status for each check"
   ],
-  "dependencies": ["agent-team-release"],
+  "dependencies": ["atrelease"],
   "examples": [
     {
       "description": "Run checks",
       "input": "/release-agent:check",
-      "output": "agent-team-release check --verbose"
+      "output": "atrelease check --verbose"
     }
   ]
 }

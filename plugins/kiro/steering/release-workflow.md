@@ -50,7 +50,7 @@ schangelog parse-commits --since=$(git describe --tags --abbrev=0)
 Run all validation before proceeding:
 
 ```bash
-agent-team-release check --verbose
+atrelease check --verbose
 ```
 
 This runs:
@@ -74,10 +74,10 @@ Full release with all steps:
 
 ```bash
 # Dry run first
-agent-team-release release v1.2.3 --dry-run --verbose
+atrelease release v1.2.3 --dry-run --verbose
 
 # Execute release
-agent-team-release release v1.2.3 --verbose
+atrelease release v1.2.3 --verbose
 ```
 
 ## CI Verification

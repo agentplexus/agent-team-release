@@ -185,7 +185,7 @@
     },
     {
       "id": "check-subcommand",
-      "title": "`agent-team-release check` subcommand",
+      "title": "`atrelease check` subcommand",
       "description": "Move validation to check subcommand",
       "status": "completed",
       "version": "0.3.0",
@@ -196,7 +196,7 @@
     },
     {
       "id": "validate-subcommand",
-      "title": "`agent-team-release validate` subcommand",
+      "title": "`atrelease validate` subcommand",
       "description": "Comprehensive Go/No-Go validation across 4 areas",
       "status": "completed",
       "version": "0.3.0",
@@ -306,7 +306,7 @@
     },
     {
       "id": "release-command",
-      "title": "`agent-team-release release` command",
+      "title": "`atrelease release` command",
       "description": "Full release workflow with version argument",
       "status": "completed",
       "version": "0.3.0",

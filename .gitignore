@@ -1,5 +1,6 @@
 # Binaries
 prepush
+atrelease
 *.exe
 *.exe~
 *.dll
@@ -22,7 +23,6 @@ prepush
 # OS
 .DS_Store
 Thumbs.db
-agent-team-release
 
 # Built documentation (use gh-pages branch)
 site/

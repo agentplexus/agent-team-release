@@ -10,11 +10,11 @@
   "skills": "skills",
   "agents": "agents",
   "hooks": "hooks/hooks.json",
-  "context": "# Release Agent Team\n\nThis plugin provides a multi-agent team for automating software release workflows.\n\n## Available Commands\n\n- `/agent-team-release:release <version>` - Execute full release workflow\n- `/agent-team-release:check` - Run validation checks\n- `/agent-team-release:changelog <version>` - Generate changelog\n- `/agent-team-release:version-next` - Suggest next version\n\n## Agent Team\n\n- PM - Product scope and versioning\n- QA - Build, test, lint validation\n- Documentation - Docs completeness\n- Security - Vulnerability scanning\n- Release - Git and CI validation\n- Coordinator - Orchestrates all agents\n\n## Supported Languages\n\n- Go (build, test, golangci-lint, gofmt)\n- TypeScript/JavaScript (ESLint, Prettier, npm test)\n\n## Dependencies\n\n- `agent-team-release` - Release automation CLI\n- `schangelog` - Changelog generation\n- `git` - Version control\n- `gh` - GitHub CLI",
+  "context": "# Release Agent Team\n\nThis plugin provides a multi-agent team for automating software release workflows.\n\n## Available Commands\n\n- `/agent-team-release:release <version>` - Execute full release workflow\n- `/agent-team-release:check` - Run validation checks\n- `/agent-team-release:changelog <version>` - Generate changelog\n- `/agent-team-release:version-next` - Suggest next version\n\n## Agent Team\n\n- PM - Product scope and versioning\n- QA - Build, test, lint validation\n- Documentation - Docs completeness\n- Security - Vulnerability scanning\n- Release - Git and CI validation\n- Coordinator - Orchestrates all agents\n\n## Supported Languages\n\n- Go (build, test, golangci-lint, gofmt)\n- TypeScript/JavaScript (ESLint, Prettier, npm test)\n\n## Dependencies\n\n- `atrelease` - Release automation CLI\n- `schangelog` - Changelog generation\n- `git` - Version control\n- `gh` - GitHub CLI",
   "dependencies": [
     {"name": "git", "command": "git"},
     {"name": "gh", "command": "gh"},
-    {"name": "agent-team-release", "command": "agent-team-release"},
+    {"name": "atrelease", "command": "atrelease"},
     {"name": "schangelog", "command": "schangelog"},
     {"name": "sroadmap", "command": "sroadmap", "optional": true},
     {"name": "golangci-lint", "command": "golangci-lint", "optional": true}

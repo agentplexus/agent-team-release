@@ -33,7 +33,7 @@ if echo "$COMMAND" | grep -qE "git\s+tag\s+-d|git\s+push.*--delete.*tag"; then
 fi
 
 # Validate version format for release commands
-if echo "$COMMAND" | grep -qE "releaseagent\s+release\s+"; then
+if echo "$COMMAND" | grep -qE "atrelease\s+release\s+"; then
     VERSION=$(echo "$COMMAND" | grep -oE "v?[0-9]+\.[0-9]+\.[0-9]+(-[a-zA-Z0-9.]+)?")
     if [ -n "$VERSION" ]; then
         # Ensure version starts with 'v'

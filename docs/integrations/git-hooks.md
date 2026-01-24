@@ -11,7 +11,7 @@ Create `.git/hooks/pre-push` manually:
 ```bash
 cat > .git/hooks/pre-push << 'EOF'
 #!/bin/bash
-exec agent-team-release check
+exec atrelease check
 EOF
 
 chmod +x .git/hooks/pre-push
@@ -25,7 +25,7 @@ Create a symlink to the Release Agent binary:
 ln -sf $(which agent-team-release) .git/hooks/pre-push
 ```
 
-Note: This runs `agent-team-release` with no arguments, which defaults to `check`.
+Note: This runs `atrelease` with no arguments, which defaults to `check`.
 
 ### Option 3: Shared Hooks Directory
 
@@ -38,7 +38,7 @@ mkdir -p .githooks
 # Create the hook
 cat > .githooks/pre-push << 'EOF'
 #!/bin/bash
-exec agent-team-release check
+exec atrelease check
 EOF
 
 chmod +x .githooks/pre-push
@@ -94,14 +94,14 @@ git push -n
 ```bash
 #!/bin/bash
 # Skip tests for faster push (run in CI)
-exec agent-team-release check --no-test
+exec atrelease check --no-test
 ```
 
 ### Verbose Output
 
 ```bash
 #!/bin/bash
-exec agent-team-release check --verbose
+exec atrelease check --verbose
 ```
 
 ### Different Config for Hooks
@@ -109,7 +109,7 @@ exec agent-team-release check --verbose
 ```bash
 #!/bin/bash
 # Use hook-specific config
-RELEASEAGENT_CONFIG=.releaseagent.hooks.yaml exec agent-team-release check
+RELEASEAGENT_CONFIG=.releaseagent.hooks.yaml exec atrelease check
 ```
 
 ## CI Integration
@@ -134,9 +134,9 @@ jobs:
         with:
           go-version: '1.21'
       - name: Install Release Agent
-        run: go install github.com/grokify/release-agent/cmd/releaseagent@latest
+        run: go install github.com/agentplexus/agent-team-release/cmd/atrelease@latest
       - name: Run checks
-        run: agent-team-release check
+        run: atrelease check
 ```
 
 ## Troubleshooting
@@ -157,7 +157,7 @@ The hook runs in the repository root. Use absolute paths if needed:
 ```bash
 #!/bin/bash
 cd "$(git rev-parse --show-toplevel)"
-exec agent-team-release check
+exec atrelease check
 ```
 
 ### Release Agent Not Found
@@ -167,7 +167,7 @@ Ensure Release Agent is in your PATH:
 ```bash
 #!/bin/bash
 export PATH="$HOME/go/bin:$PATH"
-exec agent-team-release check
+exec atrelease check
 ```
 
 ### Slow Hooks
@@ -177,7 +177,7 @@ For faster feedback, skip time-consuming checks:
 ```bash
 #!/bin/bash
 # Fast checks only - full checks run in CI
-exec agent-team-release check --no-test --no-coverage
+exec atrelease check --no-test --no-coverage
 ```
 
 ## Team Guidelines

@@ -19,6 +19,9 @@
         { "description": "`allowedTools` field in agent specs for declaring read-only tool restrictions", "commit": "" }
       ],
       "changed": [
+        { "description": "Project renamed from `release-agent-team` to `agent-team-release`", "breaking": true, "commit": "99926c9" },
+        { "description": "Binary and `cmd/` directory renamed from `agent-team-release` / `cmd/releaseagent` to `atrelease` / `cmd/atrelease`", "breaking": true, "commit": "" },
+        { "description": "Homebrew formula renamed from `agent-team-release` to `atrelease`", "breaking": true, "commit": "" },
         { "description": "Kiro agent JSON files restructured from inline prompts to structured format with `tools` and `allowedTools` arrays", "commit": "" },
         { "description": "Claude plugin removed hooks reference from plugin.json", "commit": "" },
         { "description": "Claude release-coordinator agent refactored with streamlined instructions", "commit": "" },
@@ -28,6 +31,7 @@
         { "description": "Added Claude Code sub-agent spawning section to TRD", "commit": "e69176b" }
       ],
       "dependencies": [
+        { "description": "Updated Go module dependencies", "commit": "34aa944" },
         { "description": "Updated Go versions in `release.yaml` CI workflow", "commit": "7bd6a87" }
       ]
     },

@@ -11,9 +11,9 @@ before:
     - go generate ./...
 
 builds:
-  - id: agent-team-release
-    main: ./cmd/releaseagent
-    binary: agent-team-release
+  - id: atrelease
+    main: ./cmd/atrelease
+    binary: atrelease
     env:
       - CGO_ENABLED=0
     goos:
@@ -31,9 +31,9 @@ builds:
     mod_timestamp: '{{ .CommitTimestamp }}'
 
 archives:
-  - id: agent-team-release
+  - id: atrelease
     builds:
-      - agent-team-release
+      - atrelease
     format: tar.gz
     name_template: >-
       {{ .ProjectName }}_
@@ -104,17 +104,17 @@ release:
 
     ```bash
     # Go install
-    go install github.com/agentplexus/agent-team-release/cmd/releaseagent@{{ .Tag }}
+    go install github.com/agentplexus/agent-team-release/cmd/atrelease@{{ .Tag }}
 
     # Homebrew (macOS/Linux)
     brew tap agentplexus/tap
-    brew install agent-team-release
+    brew install atrelease
     ```
 
 brews:
-  - name: agent-team-release
+  - name: atrelease
     ids:
-      - agent-team-release
+      - atrelease
     repository:
       owner: agentplexus
       name: homebrew-tap
@@ -127,9 +127,9 @@ brews:
       - name: git
       - name: gh
     test: |
-      system "#{bin}/agent-team-release", "version"
+      system "#{bin}/atrelease", "version"
     install: |
-      bin.install "agent-team-release"
+      bin.install "atrelease"
 
 announce:
   skip: true

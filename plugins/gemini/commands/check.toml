@@ -10,4 +10,4 @@ instructions = "Run all validation checks for the current repository without mak
 [[examples]]
 description = 'Run checks'
 input = '/release-agent:check'
-output = 'releaseagent check --verbose'
+output = 'atrelease check --verbose'
