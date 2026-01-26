@@ -2,98 +2,102 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://agentplexus.github.io/agent-team-release/</loc>
-         <lastmod>2026-01-24</lastmod>
+         <lastmod>2026-01-26</lastmod>
     </url>
     <url>
          <loc>https://agentplexus.github.io/agent-team-release/configuration/</loc>
-         <lastmod>2026-01-24</lastmod>
+         <lastmod>2026-01-26</lastmod>
     </url>
     <url>
          <loc>https://agentplexus.github.io/agent-team-release/example-report-2/</loc>
-         <lastmod>2026-01-24</lastmod>
+         <lastmod>2026-01-26</lastmod>
     </url>
     <url>
          <loc>https://agentplexus.github.io/agent-team-release/example-report/</loc>
-         <lastmod>2026-01-24</lastmod>
+         <lastmod>2026-01-26</lastmod>
     </url>
     <url>
          <loc>https://agentplexus.github.io/agent-team-release/orchestration/</loc>
-         <lastmod>2026-01-24</lastmod>
+         <lastmod>2026-01-26</lastmod>
     </url>
     <url>
          <loc>https://agentplexus.github.io/agent-team-release/output-formats/</loc>
-         <lastmod>2026-01-24</lastmod>
+         <lastmod>2026-01-26</lastmod>
     </url>
     <url>
          <loc>https://agentplexus.github.io/agent-team-release/commands/</loc>
-         <lastmod>2026-01-24</lastmod>
+         <lastmod>2026-01-26</lastmod>
     </url>
     <url>
          <loc>https://agentplexus.github.io/agent-team-release/commands/changelog/</loc>
-         <lastmod>2026-01-24</lastmod>
+         <lastmod>2026-01-26</lastmod>
     </url>
     <url>
          <loc>https://agentplexus.github.io/agent-team-release/commands/check/</loc>
-         <lastmod>2026-01-24</lastmod>
+         <lastmod>2026-01-26</lastmod>
     </url>
     <url>
          <loc>https://agentplexus.github.io/agent-team-release/commands/readme/</loc>
-         <lastmod>2026-01-24</lastmod>
+         <lastmod>2026-01-26</lastmod>
     </url>
     <url>
          <loc>https://agentplexus.github.io/agent-team-release/commands/release/</loc>
-         <lastmod>2026-01-24</lastmod>
+         <lastmod>2026-01-26</lastmod>
     </url>
     <url>
          <loc>https://agentplexus.github.io/agent-team-release/commands/roadmap/</loc>
-         <lastmod>2026-01-24</lastmod>
+         <lastmod>2026-01-26</lastmod>
     </url>
     <url>
          <loc>https://agentplexus.github.io/agent-team-release/commands/validate/</loc>
-         <lastmod>2026-01-24</lastmod>
+         <lastmod>2026-01-26</lastmod>
     </url>
     <url>
          <loc>https://agentplexus.github.io/agent-team-release/commands/version/</loc>
-         <lastmod>2026-01-24</lastmod>
+         <lastmod>2026-01-26</lastmod>
     </url>
     <url>
          <loc>https://agentplexus.github.io/agent-team-release/getting-started/installation/</loc>
-         <lastmod>2026-01-24</lastmod>
+         <lastmod>2026-01-26</lastmod>
     </url>
     <url>
          <loc>https://agentplexus.github.io/agent-team-release/getting-started/quickstart/</loc>
-         <lastmod>2026-01-24</lastmod>
+         <lastmod>2026-01-26</lastmod>
     </url>
     <url>
          <loc>https://agentplexus.github.io/agent-team-release/integrations/claude-code/</loc>
-         <lastmod>2026-01-24</lastmod>
+         <lastmod>2026-01-26</lastmod>
     </url>
     <url>
          <loc>https://agentplexus.github.io/agent-team-release/integrations/git-hooks/</loc>
-         <lastmod>2026-01-24</lastmod>
+         <lastmod>2026-01-26</lastmod>
     </url>
     <url>
          <loc>https://agentplexus.github.io/agent-team-release/releases/v0.1.0/</loc>
-         <lastmod>2026-01-24</lastmod>
+         <lastmod>2026-01-26</lastmod>
     </url>
     <url>
          <loc>https://agentplexus.github.io/agent-team-release/releases/v0.2.0/</loc>
-         <lastmod>2026-01-24</lastmod>
+         <lastmod>2026-01-26</lastmod>
     </url>
     <url>
          <loc>https://agentplexus.github.io/agent-team-release/releases/v0.3.0/</loc>
-         <lastmod>2026-01-24</lastmod>
+         <lastmod>2026-01-26</lastmod>
     </url>
     <url>
          <loc>https://agentplexus.github.io/agent-team-release/releases/v0.4.0/</loc>
-         <lastmod>2026-01-24</lastmod>
+         <lastmod>2026-01-26</lastmod>
     </url>
     <url>
          <loc>https://agentplexus.github.io/agent-team-release/releases/v0.5.0/</loc>
-         <lastmod>2026-01-24</lastmod>
+         <lastmod>2026-01-26</lastmod>
     </url>
     <url>
          <loc>https://agentplexus.github.io/agent-team-release/releases/v0.6.0/</loc>
-         <lastmod>2026-01-24</lastmod>
+         <lastmod>2026-01-26</lastmod>
+    </url>
+    <url>
+         <loc>https://agentplexus.github.io/agent-team-release/releases/v0.7.0/</loc>
+         <lastmod>2026-01-26</lastmod>
     </url>
 </urlset>
