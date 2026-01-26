@@ -9,6 +9,7 @@ import (
 	"github.com/agentplexus/agent-team-release/pkg/checks"
 	"github.com/agentplexus/agent-team-release/pkg/config"
 	"github.com/agentplexus/agent-team-release/pkg/detect"
+	"github.com/agentplexus/assistantkit/requirements"
 )
 
 // Check command flags
@@ -72,6 +73,15 @@ func runCheck(cmd *cobra.Command, args []string) {
 		cfg.Verbose = true
 	}
 
+	// Check if releasekit is available, prompt for installation if not
+	prompter := requirements.NewCLIPrompter()
+	result := requirements.EnsureRequirements([]string{"releasekit"}, prompter)
+	if !result.AllSatisfied() {
+		fmt.Fprintf(os.Stderr, "Cannot proceed without required tools\n")
+		fmt.Fprint(os.Stderr, requirements.FormatMissingError(result))
+		os.Exit(1)
+	}
+
 	// Detect languages
 	fmt.Println("=== Pre-push Checks ===")
 	fmt.Println()
@@ -94,70 +104,23 @@ func runCheck(cmd *cobra.Command, args []string) {
 	}
 	fmt.Println()
 
-	// Build checkers based on detections
-	var allResults []checks.Result
-
-	// Go checks
-	if detect.HasLanguage(detections, detect.Go) && cfg.IsLanguageEnabled("go") {
-		langCfg := cfg.GetLanguageConfig("go")
-		opts := checks.Options{
-			Test:              !noTest && *langCfg.Test,
-			Lint:              !noLint && *langCfg.Lint,
-			Format:            !noFormat && *langCfg.Format,
-			Coverage:          coverage || (langCfg.Coverage != nil && *langCfg.Coverage),
-			Verbose:           cfg.Verbose,
-			GoExcludeCoverage: langCfg.ExcludeCoverage,
-		}
-		if opts.GoExcludeCoverage == "" {
-			opts.GoExcludeCoverage = "cmd"
-		}
-
-		fmt.Println("Running Go checks...")
-		checker := &checks.GoChecker{}
-		for _, d := range detect.GetByLanguage(detections, detect.Go) {
-			results := checker.Check(d.Path, opts)
-			allResults = append(allResults, results...)
-		}
-		fmt.Println()
+	// Build options from flags and config
+	opts := checks.Options{
+		Test:    !noTest,
+		Lint:    !noLint,
+		Format:  !noFormat,
+		Coverage: coverage,
+		Verbose: cfg.Verbose,
 	}
 
-	// TypeScript checks
-	if detect.HasLanguage(detections, detect.TypeScript) && cfg.IsLanguageEnabled("typescript") {
-		langCfg := cfg.GetLanguageConfig("typescript")
-		opts := checks.Options{
-			Test:    !noTest && *langCfg.Test,
-			Lint:    !noLint && *langCfg.Lint,
-			Format:  !noFormat && *langCfg.Format,
-			Verbose: cfg.Verbose,
-		}
-
-		fmt.Println("Running TypeScript checks...")
-		checker := &checks.TypeScriptChecker{}
-		for _, d := range detect.GetByLanguage(detections, detect.TypeScript) {
-			results := checker.Check(d.Path, opts)
-			allResults = append(allResults, results...)
-		}
-		fmt.Println()
+	// Run releasekit validate (auto-detects languages)
+	fmt.Println("Running checks via releasekit...")
+	allResults, err := checks.RunReleasekit(dir, opts)
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error running releasekit: %v\n", err)
+		os.Exit(1)
 	}
-
-	// JavaScript checks (use TypeScript checker)
-	if detect.HasLanguage(detections, detect.JavaScript) && cfg.IsLanguageEnabled("javascript") {
-		langCfg := cfg.GetLanguageConfig("javascript")
-		opts := checks.Options{
-			Test:    !noTest && *langCfg.Test,
-			Lint:    !noLint && *langCfg.Lint,
-			Format:  !noFormat && *langCfg.Format,
-			Verbose: cfg.Verbose,
-		}
-
-		fmt.Println("Running JavaScript checks...")
-		checker := &checks.TypeScriptChecker{}
-		for _, d := range detect.GetByLanguage(detections, detect.JavaScript) {
-			results := checker.Check(d.Path, opts)
-			allResults = append(allResults, results...)
-		}
-		fmt.Println()
-	}
+	fmt.Println()
 
 	// Print summary
 	if goNoGoMode {

@@ -17,6 +17,7 @@ import (
 	"github.com/agentplexus/agent-team-release/pkg/config"
 	"github.com/agentplexus/agent-team-release/pkg/detect"
 	"github.com/agentplexus/agent-team-release/pkg/report"
+	"github.com/agentplexus/assistantkit/requirements"
 )
 
 // Validate command flags
@@ -100,9 +101,9 @@ func runValidate(cmd *cobra.Command, args []string) {
 		fmt.Fprintf(os.Stderr, "Warning: error detecting languages: %v\n", err)
 	}
 
-	fmt.Println("╔════════════════════════════════════════════════════════════════════════╗")
-	fmt.Println("║                     RELEASE VALIDATION STARTING                        ║")
-	fmt.Println("╚════════════════════════════════════════════════════════════════════════╝")
+	fmt.Println("╔══════════════════════════════════════════════════════════════════════════════╗")
+	fmt.Println("║                       RELEASE VALIDATION STARTING                            ║")
+	fmt.Println("╚══════════════════════════════════════════════════════════════════════════════╝")
 	fmt.Println()
 
 	// PM Area (runs first - other agents depend on PM)
@@ -263,62 +264,60 @@ func getGitRemoteProject(dir string) string {
 	return url
 }
 
-// runQAChecks runs all QA checks for detected languages.
+// runQAChecks runs all QA checks for detected languages using releasekit.
+// It shells out to the releasekit CLI for language-specific validation.
 func runQAChecks(dir string, detections []detect.Detection, cfg *config.Config) []checks.Result {
 	var results []checks.Result
 
-	// Go checks
-	if detect.HasLanguage(detections, detect.Go) && cfg.IsLanguageEnabled("go") {
+	// Check if releasekit is available, prompt for installation if not
+	if !checks.ReleasekitAvailable() {
+		prompter := requirements.NewCLIPrompter()
+		reqResult := requirements.EnsureRequirements([]string{"releasekit"}, prompter)
+		if !reqResult.AllSatisfied() {
+			return []checks.Result{{
+				Name:    "QA: releasekit",
+				Skipped: true,
+				Reason:  "releasekit CLI not installed",
+			}}
+		}
+	}
+
+	// Determine which languages are enabled and build options
+	hasGo := detect.HasLanguage(detections, detect.Go) && cfg.IsLanguageEnabled("go")
+	hasTS := detect.HasLanguage(detections, detect.TypeScript) && cfg.IsLanguageEnabled("typescript")
+	hasJS := detect.HasLanguage(detections, detect.JavaScript) && cfg.IsLanguageEnabled("javascript")
+
+	if !hasGo && !hasTS && !hasJS {
+		return results // No supported languages detected
+	}
+
+	// Build options from config (use Go config as primary, others are similar)
+	opts := checks.Options{
+		Test:    true,
+		Lint:    true,
+		Format:  true,
+		Verbose: cfg.Verbose,
+	}
+
+	if hasGo {
 		langCfg := cfg.GetLanguageConfig("go")
-		opts := checks.Options{
-			Test:              *langCfg.Test,
-			Lint:              *langCfg.Lint,
-			Format:            *langCfg.Format,
-			Coverage:          langCfg.Coverage != nil && *langCfg.Coverage,
-			Verbose:           cfg.Verbose,
-			GoExcludeCoverage: langCfg.ExcludeCoverage,
-		}
-		if opts.GoExcludeCoverage == "" {
-			opts.GoExcludeCoverage = "cmd"
-		}
-
-		checker := &checks.GoChecker{}
-		for _, d := range detect.GetByLanguage(detections, detect.Go) {
-			results = append(results, checker.Check(d.Path, opts)...)
-		}
+		opts.Test = *langCfg.Test
+		opts.Lint = *langCfg.Lint
+		opts.Format = *langCfg.Format
+		opts.Coverage = langCfg.Coverage != nil && *langCfg.Coverage
 	}
 
-	// TypeScript checks
-	if detect.HasLanguage(detections, detect.TypeScript) && cfg.IsLanguageEnabled("typescript") {
-		langCfg := cfg.GetLanguageConfig("typescript")
-		opts := checks.Options{
-			Test:    *langCfg.Test,
-			Lint:    *langCfg.Lint,
-			Format:  *langCfg.Format,
-			Verbose: cfg.Verbose,
-		}
-
-		checker := &checks.TypeScriptChecker{}
-		for _, d := range detect.GetByLanguage(detections, detect.TypeScript) {
-			results = append(results, checker.Check(d.Path, opts)...)
-		}
+	// Run releasekit validate on the directory
+	// releasekit auto-detects languages, so we just call it once
+	releasekitResults, err := checks.RunReleasekit(dir, opts)
+	if err != nil {
+		return []checks.Result{{
+			Name:   "QA: releasekit",
+			Passed: false,
+			Output: fmt.Sprintf("releasekit failed: %v", err),
+		}}
 	}
 
-	// JavaScript checks
-	if detect.HasLanguage(detections, detect.JavaScript) && cfg.IsLanguageEnabled("javascript") {
-		langCfg := cfg.GetLanguageConfig("javascript")
-		opts := checks.Options{
-			Test:    *langCfg.Test,
-			Lint:    *langCfg.Lint,
-			Format:  *langCfg.Format,
-			Verbose: cfg.Verbose,
-		}
-
-		checker := &checks.TypeScriptChecker{}
-		for _, d := range detect.GetByLanguage(detections, detect.JavaScript) {
-			results = append(results, checker.Check(d.Path, opts)...)
-		}
-	}
-
+	results = append(results, releasekitResults...)
 	return results
 }

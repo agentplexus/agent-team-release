@@ -7,9 +7,9 @@ import (
 
 	"github.com/agentplexus/agent-team-release/pkg/actions"
 	"github.com/agentplexus/agent-team-release/pkg/checks"
-	"github.com/agentplexus/agent-team-release/pkg/config"
 	"github.com/agentplexus/agent-team-release/pkg/detect"
 	"github.com/agentplexus/agent-team-release/pkg/git"
+	"github.com/agentplexus/assistantkit/requirements"
 )
 
 // ReleaseWorkflow creates a workflow for releasing a new version.
@@ -133,17 +133,24 @@ func checkWorkingDirectory(ctx *Context) error {
 	return nil
 }
 
-// runValidationChecks runs all validation checks.
+// runValidationChecks runs all validation checks using releasekit CLI.
 func runValidationChecks(ctx *Context) error {
 	if ctx.SkipChecks {
 		ctx.Log("  Skipping validation checks (--skip-checks)")
 		return nil
 	}
 
-	// Load config
-	cfg, _ := config.Load(ctx.Dir)
+	// Check if releasekit is available, prompt for installation if not
+	if !checks.ReleasekitAvailable() {
+		prompter := requirements.NewCLIPrompter()
+		reqResult := requirements.EnsureRequirements([]string{"releasekit"}, prompter)
+		if !reqResult.AllSatisfied() {
+			ctx.Log("  Warning: releasekit CLI not installed, skipping validation")
+			return nil
+		}
+	}
 
-	// Detect languages
+	// Detect languages to see if there's anything to check
 	detections, err := detect.Detect(ctx.Dir)
 	if err != nil {
 		return fmt.Errorf("failed to detect languages: %w", err)
@@ -154,7 +161,9 @@ func runValidationChecks(ctx *Context) error {
 		return nil
 	}
 
-	var allResults []checks.Result
+	ctx.Log("  Running releasekit validate...")
+
+	// Build options
 	opts := checks.Options{
 		Test:    true,
 		Lint:    true,
@@ -162,35 +171,15 @@ func runValidationChecks(ctx *Context) error {
 		Verbose: ctx.Verbose,
 	}
 
-	// Run checks for each detected language
-	for _, d := range detections {
-		ctx.Log("  Checking %s in %s...", d.Language, d.Path)
-
-		var checker checks.Checker
-		switch d.Language {
-		case detect.Go:
-			if cfg.IsLanguageEnabled("go") {
-				checker = &checks.GoChecker{}
-			}
-		case detect.TypeScript, detect.JavaScript:
-			langName := "typescript"
-			if d.Language == detect.JavaScript {
-				langName = "javascript"
-			}
-			if cfg.IsLanguageEnabled(langName) {
-				checker = &checks.TypeScriptChecker{}
-			}
-		}
-
-		if checker != nil {
-			results := checker.Check(d.Path, opts)
-			allResults = append(allResults, results...)
-		}
+	// Run releasekit validate (it auto-detects languages)
+	results, err := checks.RunReleasekit(ctx.Dir, opts)
+	if err != nil {
+		return fmt.Errorf("releasekit failed: %w", err)
 	}
 
 	// Count results
 	failed := 0
-	for _, r := range allResults {
+	for _, r := range results {
 		if !r.Passed && !r.Skipped && !r.Warning {
 			failed++
 			ctx.Log("    ✗ %s: %s", r.Name, r.Output)

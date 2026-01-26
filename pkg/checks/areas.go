@@ -123,21 +123,22 @@ func ComputeAreaStatus(results []Result) AreaStatus {
 // PrintValidationReport prints a comprehensive Go/No-Go report organized by area.
 func PrintValidationReport(report *ValidationReport) {
 	fmt.Println()
-	fmt.Println("╔════════════════════════════════════════════════════════════════════════╗")
+	fmt.Println("╔══════════════════════════════════════════════════════════════════════════════╗")
 	if report.Version != "" {
-		fmt.Printf("║           RELEASE VALIDATION: %-40s ║\n", report.Version)
+		fmt.Printf("║             RELEASE VALIDATION: %-42s ║\n", report.Version)
 	} else {
-		fmt.Println("║                      RELEASE VALIDATION                                ║")
+		fmt.Println("║                        RELEASE VALIDATION                                    ║")
 	}
-	fmt.Println("╠════════════════════════════════════════════════════════════════════════╣")
-	fmt.Println("║  Assumes: Engineering ✅ SIGNED OFF | Product ✅ SIGNED OFF            ║")
-	fmt.Println("╠════════════════════════════════════════════════════════════════════════╣")
+	fmt.Println("╠══════════════════════════════════════════════════════════════════════════════╣")
+	fmt.Println("║  Assumes: Engineering ✅ SIGNED OFF | Product ✅ SIGNED OFF                  ║")
+	fmt.Println("╠══════════════════════════════════════════════════════════════════════════════╣")
 
 	for _, area := range report.Areas {
 		// Area header
+		// Box is 78 chars. Emoji displays as 2 but counts as 1, so reduce padding by 1
 		icon := area.Status.Icon()
-		fmt.Printf("║ %s %-8s %-60s ║\n", icon, area.Status, string(area.Area))
-		fmt.Println("║ ──────────────────────────────────────────────────────────────────── ║")
+		fmt.Printf("║ %s %-8s %-62s ║\n", icon, area.Status, string(area.Area))
+		fmt.Println("║ ────────────────────────────────────────────────────────────────────────── ║")
 
 		// Individual checks
 		for _, r := range area.Results {
@@ -157,24 +158,25 @@ func PrintValidationReport(report *ValidationReport) {
 
 			// Truncate name if too long
 			name := r.Name
-			if len(name) > 50 {
-				name = name[:47] + "..."
+			if len(name) > 52 {
+				name = name[:49] + "..."
 			}
-			fmt.Printf("║   %s %-6s %-56s ║\n", checkIcon, checkStatus, name)
+			// Emoji displays as 2 but counts as 1, so reduce padding by 1
+			fmt.Printf("║   %s %-6s %-58s ║\n", checkIcon, checkStatus, name)
 		}
-		fmt.Println("║                                                                        ║")
+		fmt.Println("║                                                                              ║")
 	}
 
-	fmt.Println("╠════════════════════════════════════════════════════════════════════════╣")
+	fmt.Println("╠══════════════════════════════════════════════════════════════════════════════╣")
 
 	// Final verdict
 	if report.IsGo() {
-		fmt.Println("║                       🚀 ALL SYSTEMS GO 🚀                             ║")
-		fmt.Println("║                    RELEASE VALIDATION: APPROVED                        ║")
+		fmt.Println("║                         🚀 ALL SYSTEMS GO 🚀                               ║")
+		fmt.Println("║                      RELEASE VALIDATION: APPROVED                          ║")
 	} else {
-		fmt.Println("║                      🛑 NO-GO FOR RELEASE 🛑                            ║")
-		fmt.Println("║                  RELEASE VALIDATION: NOT APPROVED                      ║")
+		fmt.Println("║                        🛑 NO-GO FOR RELEASE 🛑                              ║")
+		fmt.Println("║                    RELEASE VALIDATION: NOT APPROVED                        ║")
 	}
-	fmt.Println("╚════════════════════════════════════════════════════════════════════════╝")
+	fmt.Println("╚══════════════════════════════════════════════════════════════════════════════╝")
 	fmt.Println()
 }
