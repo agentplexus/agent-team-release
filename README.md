@@ -468,8 +468,11 @@ Release v1.0.0 complete!
 |------|---------|
 | `git` | Version control operations |
 | `gh` | GitHub CLI for CI status |
+| `releasekit` | Language validation (build, test, lint) |
 
 ### Language-Specific
+
+These tools are invoked by `releasekit` for language validation:
 
 | Tool | Language | Purpose |
 |------|----------|---------|
@@ -497,6 +500,7 @@ Release v1.0.0 complete!
 
 ## Related Tools
 
+- [releasekit](https://github.com/grokify/releasekit) - Release management toolkit for language validation
 - [schangelog](https://github.com/grokify/structured-changelog) - Structured changelog management
 - [sroadmap](https://github.com/grokify/structured-roadmap) - Structured roadmap management
 - [gocoverbadge](https://github.com/grokify/gocoverbadge) - Generate coverage badges

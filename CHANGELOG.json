@@ -6,26 +6,59 @@
   "commit_convention": "conventional",
   "releases": [
     {
+      "version": "v0.7.0",
+      "date": "2026-01-26",
+      "highlights": [
+        { "description": "Integrate releasekit CLI for language-specific validation checks", "commit": "ed7da9c" },
+        { "description": "Restructure plugins with canonical specs directory", "commit": "5761d0a" }
+      ],
+      "added": [
+        { "description": "releasekit CLI integration for Go and TypeScript/JavaScript validation", "commit": "ed7da9c" },
+        { "description": "Canonical `specs/` directory with plugin.json, commands, deployments, skills", "commit": "5761d0a" },
+        { "description": "scripts/generate-plugins.sh for plugin generation from specs", "commit": "5761d0a" },
+        { "description": "Gemini agent toml files (documentation, pm, qa, release, security, release-coordinator)", "commit": "5761d0a" },
+        { "description": "Deployment specs for cloud and local environments", "commit": "5761d0a" }
+      ],
+      "changed": [
+        { "description": "Plugin layout restructured - specs moved from plugins/spec to specs/", "commit": "5761d0a" },
+        { "description": "Agent documentation significantly expanded with detailed workflows", "commit": "813cc53" }
+      ],
+      "removed": [
+        { "description": "pkg/checks/golang.go - replaced by releasekit integration", "commit": "747b7c4" },
+        { "description": "pkg/checks/typescript.go - replaced by releasekit integration", "commit": "747b7c4" },
+        { "description": "plugins/spec/ directory - consolidated to specs/", "commit": "5761d0a" },
+        { "description": "plugins/generate/main.go - replaced by scripts/generate-plugins.sh", "commit": "5761d0a" },
+        { "description": "plugins/claude/README.md and plugins/gemini/README.md", "commit": "5761d0a" },
+        { "description": "plugins/kiro/steering/release-workflow.md", "commit": "5761d0a" }
+      ],
+      "fixed": [
+        { "description": "Remove unused helper functions in releasekit.go", "commit": "14b6fb2" }
+      ],
+      "dependencies": [
+        { "description": "Bump github.com/agentplexus/multi-agent-spec/sdk/go to v0.5.0", "commit": "ea734a4" }
+      ]
+    },
+    {
       "version": "v0.6.0",
       "date": "2026-01-24",
       "highlights": [
-        { "description": "New `install` CLI command for deploying platform-specific agent configurations with plan/apply workflow" },
-        { "description": "Kiro agents and steering files embedded into binary for zero-configuration installation" }
+        { "description": "New `install` CLI command for deploying platform-specific agent configurations with plan/apply workflow", "commit": "a07def7" },
+        { "description": "Kiro agents and steering files embedded into binary for zero-configuration installation", "commit": "a07def7" }
       ],
       "added": [
-        { "description": "`install kiro` CLI command with plan/apply workflow for deploying agent configs to `~/.kiro/`", "commit": "" },
-        { "description": "Go embed package (`plugins/kiro`) to bundle Kiro agent and steering files into the binary", "commit": "" },
-        { "description": "Skill specifications in `specs/skills/` for commit-classification and version-analysis", "commit": "" },
-        { "description": "`allowedTools` field in agent specs for declaring read-only tool restrictions", "commit": "" }
+        { "description": "`install kiro` CLI command with plan/apply workflow for deploying agent configs to `~/.kiro/`", "commit": "a07def7" },
+        { "description": "Go embed package (`plugins/kiro`) to bundle Kiro agent and steering files into the binary", "commit": "a07def7" },
+        { "description": "Skill specifications in `specs/skills/` for commit-classification and version-analysis", "commit": "6a1ef4d" },
+        { "description": "`allowedTools` field in agent specs for declaring read-only tool restrictions", "commit": "5336159" }
       ],
       "changed": [
         { "description": "Project renamed from `release-agent-team` to `agent-team-release`", "breaking": true, "commit": "99926c9" },
-        { "description": "Binary and `cmd/` directory renamed from `agent-team-release` / `cmd/releaseagent` to `atrelease` / `cmd/atrelease`", "breaking": true, "commit": "" },
-        { "description": "Homebrew formula renamed from `agent-team-release` to `atrelease`", "breaking": true, "commit": "" },
-        { "description": "Kiro agent JSON files restructured from inline prompts to structured format with `tools` and `allowedTools` arrays", "commit": "" },
-        { "description": "Claude plugin removed hooks reference from plugin.json", "commit": "" },
-        { "description": "Claude release-coordinator agent refactored with streamlined instructions", "commit": "" },
-        { "description": "Kiro README simplified to focus on essential installation info", "commit": "" }
+        { "description": "Binary and `cmd/` directory renamed from `agent-team-release` / `cmd/releaseagent` to `atrelease` / `cmd/atrelease`", "breaking": true, "commit": "51bb23f" },
+        { "description": "Homebrew formula renamed from `agent-team-release` to `atrelease`", "breaking": true, "commit": "51bb23f" },
+        { "description": "Kiro agent JSON files restructured from inline prompts to structured format with `tools` and `allowedTools` arrays", "commit": "5a14430" },
+        { "description": "Claude plugin removed hooks reference from plugin.json", "commit": "5336159" },
+        { "description": "Claude release-coordinator agent refactored with streamlined instructions", "commit": "5336159" },
+        { "description": "Kiro README simplified to focus on essential installation info", "commit": "5a14430" }
       ],
       "documentation": [
         { "description": "Added Claude Code sub-agent spawning section to TRD", "commit": "e69176b" }
