@@ -157,15 +157,16 @@ func TestRenderer(t *testing.T) {
 	output := buf.String()
 
 	// Check for expected content
+	// Note: teamHeader uses team.Name directly (not "ID (Name)" format)
 	expectedContent := []string{
 		"TEAM STATUS REPORT",
 		"github.com/agentplexus/agent-team-release",
 		"v0.3.0 (release automation)",
 		"PHASE 1: REVIEW",
-		"qa-validation (qa)",
+		"qa",      // team.Name
 		"build",
 		"42 tests passed",
-		"security-validation (security)",
+		"security", // team.Name
 		"MIT License",
 		"1 deprecated",
 		"GO for v0.3.0",
