@@ -45,7 +45,7 @@ func (a *ReadmeAction) Run(dir string, opts Options) Result {
 
 	// Update version references if version is specified
 	if opts.Version != "" {
-		output.WriteString(fmt.Sprintf("Updating version references to %s...\n", opts.Version))
+		fmt.Fprintf(&output, "Updating version references to %s...\n", opts.Version)
 
 		// Update @latest or @vX.Y.Z in go install commands
 		goInstallRegex := regexp.MustCompile(`go install ([^@]+)@v?[\d.]+`)
@@ -83,9 +83,9 @@ func (a *ReadmeAction) Run(dir string, opts Options) Result {
 		result := runCommand("gocoverbadge", dir, "gocoverbadge", args...)
 		if result.Success {
 			changes = append(changes, "Updated coverage badge")
-			output.WriteString(result.Output + "\n")
+			fmt.Fprintf(&output, "%s\n", result.Output)
 		} else {
-			output.WriteString(fmt.Sprintf("Warning: gocoverbadge failed: %s\n", result.Output))
+			fmt.Fprintf(&output, "Warning: gocoverbadge failed: %s\n", result.Output)
 		}
 	}
 
@@ -103,7 +103,7 @@ func (a *ReadmeAction) Run(dir string, opts Options) Result {
 	if opts.DryRun {
 		output.WriteString("\n[Dry run] Would make these changes:\n")
 		for _, change := range changes {
-			output.WriteString(fmt.Sprintf("  - %s\n", change))
+			fmt.Fprintf(&output, "  - %s\n", change)
 		}
 		return Result{
 			Name:    "readme",
@@ -125,7 +125,7 @@ func (a *ReadmeAction) Run(dir string, opts Options) Result {
 		}
 		output.WriteString("\nUpdated README.md:\n")
 		for _, change := range changes {
-			output.WriteString(fmt.Sprintf("  - %s\n", change))
+			fmt.Fprintf(&output, "  - %s\n", change)
 		}
 	}
 
@@ -159,13 +159,13 @@ func (a *ReadmeAction) Propose(dir string, opts Options) ([]Proposal, error) {
 		goInstallRegex := regexp.MustCompile(`go install ([^@]+)@v?[\d.]+`)
 		if goInstallRegex.MatchString(newContent) {
 			newContent = goInstallRegex.ReplaceAllString(newContent, "go install $1@"+opts.Version)
-			description.WriteString(fmt.Sprintf("\n  - Update go install version to %s", opts.Version))
+			fmt.Fprintf(&description, "\n  - Update go install version to %s", opts.Version)
 		}
 
 		versionBadgeRegex := regexp.MustCompile(`version-v[\d.]+-`)
 		if versionBadgeRegex.MatchString(newContent) {
 			newContent = versionBadgeRegex.ReplaceAllString(newContent, "version-"+opts.Version+"-")
-			description.WriteString(fmt.Sprintf("\n  - Update version badge to %s", opts.Version))
+			fmt.Fprintf(&description, "\n  - Update version badge to %s", opts.Version)
 		}
 	}
 

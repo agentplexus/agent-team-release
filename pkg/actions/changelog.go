@@ -48,7 +48,7 @@ func (a *ChangelogAction) Run(dir string, opts Options) Result {
 	var output strings.Builder
 
 	// Step 1: Parse commits
-	output.WriteString(fmt.Sprintf("Parsing commits since %s...\n", since))
+	fmt.Fprintf(&output, "Parsing commits since %s...\n", since)
 	parseArgs := []string{"parse-commits", "--since=" + since, "--format=toon"}
 	parseResult := runCommand("parse-commits", dir, "schangelog", parseArgs...)
 	if !parseResult.Success {

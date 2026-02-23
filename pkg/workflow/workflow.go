@@ -204,9 +204,9 @@ func (r *Runner) runStep(step *Step, ctx *Context) StepResult {
 func (wr *WorkflowResult) Summary() string {
 	var sb strings.Builder
 
-	sb.WriteString(fmt.Sprintf("Workflow: %s\n", wr.Name))
-	sb.WriteString(fmt.Sprintf("Status: %s\n", statusEmoji(wr.Success)))
-	sb.WriteString(fmt.Sprintf("Duration: %s\n", wr.Duration.Round(time.Millisecond)))
+	fmt.Fprintf(&sb, "Workflow: %s\n", wr.Name)
+	fmt.Fprintf(&sb, "Status: %s\n", statusEmoji(wr.Success))
+	fmt.Fprintf(&sb, "Duration: %s\n", wr.Duration.Round(time.Millisecond))
 	sb.WriteString("\nSteps:\n")
 
 	for _, step := range wr.Steps {
@@ -216,7 +216,7 @@ func (wr *WorkflowResult) Summary() string {
 		} else if !step.Success {
 			status = "✗"
 		}
-		sb.WriteString(fmt.Sprintf("  %s %s (%s)\n", status, step.Name, step.Duration.Round(time.Millisecond)))
+		fmt.Fprintf(&sb, "  %s %s (%s)\n", status, step.Name, step.Duration.Round(time.Millisecond))
 
 		for _, sub := range step.SubSteps {
 			subStatus := "✓"
@@ -225,7 +225,7 @@ func (wr *WorkflowResult) Summary() string {
 			} else if !sub.Success {
 				subStatus = "✗"
 			}
-			sb.WriteString(fmt.Sprintf("    %s %s\n", subStatus, sub.Name))
+			fmt.Fprintf(&sb, "    %s %s\n", subStatus, sub.Name)
 		}
 	}
 
