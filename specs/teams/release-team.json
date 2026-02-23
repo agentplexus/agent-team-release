@@ -13,7 +13,7 @@
   ],
   "orchestrator": "release-coordinator",
   "workflow": {
-    "type": "dag",
+    "type": "graph",
     "steps": [
       {
         "name": "pm-validation",
