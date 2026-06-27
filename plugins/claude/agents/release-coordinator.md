@@ -188,6 +188,112 @@ Invoke the QA agent again to verify fixes were successful.
 - Some issues cannot be auto-fixed (architectural problems, missing tests)
 - Report which issues were fixed and which remain
 
+## Docs Fix Loop (Review/Create/Re-review)
+
+When documentation validation fails, orchestrate an automated docs loop:
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                      DOCS FIX LOOP                               │
+├─────────────────────────────────────────────────────────────────┤
+│                                                                  │
+│   ┌────────────┐    NO-GO    ┌─────────────┐                    │
+│   │ Docs       │─────────────►│ Docs Writer │                   │
+│   │ Reviewer   │              │   Agent     │                   │
+│   └─────┬──────┘              └──────┬──────┘                   │
+│         │                            │                           │
+│         │ GO                         │ docs updated              │
+│         │                            │                           │
+│         ▼                            ▼                           │
+│   ┌──────────┐               ┌────────────┐                     │
+│   │ Proceed  │◄──────────────│ Docs       │                     │
+│   │ to next  │      GO       │ Reviewer   │                     │
+│   │  step    │               └─────┬──────┘                     │
+│   └──────────┘                     │                            │
+│                                    │ NO-GO (max attempts)       │
+│                                    ▼                            │
+│                            ┌─────────────┐                      │
+│                            │ Raise to    │                      │
+│                            │   Human     │                      │
+│                            └─────────────┘                      │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+### Docs Fix Loop Workflow
+
+1. **Run Docs Review**
+   Invoke docs-reviewer agent to validate:
+   - README.md exists
+   - CHANGELOG.json is valid with target version
+   - CHANGELOG.md is current
+   - Release notes exist for target version
+   - MkDocs nav includes target version (if docs/ exists)
+
+2. **If NO-GO, Invoke Docs Writer**
+   Pass docs-reviewer findings to docs-writer agent:
+   - Missing CHANGELOG.json entry
+   - Missing release notes
+   - Outdated mkdocs.yml nav
+
+3. **Docs Writer Creates/Updates**
+   - Runs `schangelog parse-commits --since=<previous-tag>`
+   - Updates CHANGELOG.json with new version entry
+   - Runs `schangelog generate CHANGELOG.json -o CHANGELOG.md`
+   - Creates docs/releases/vX.Y.Z.md release notes
+   - Updates mkdocs.yml nav
+
+4. **Re-run Docs Review**
+   Invoke docs-reviewer agent to re-validate after updates.
+
+5. **Loop or Proceed**
+   - If GO: proceed to next validation area
+   - If NO-GO and attempts < max (3): loop back to step 2
+   - If NO-GO and attempts >= max: raise to human
+
+### Invoking Docs Subagents
+
+Use the **Task tool** to invoke docs-reviewer and docs-writer agents:
+
+**Step 1: Docs Review**
+Invoke docs-reviewer with target version and repo directory.
+
+**Step 2: If NO-GO, Create/Update Docs**
+Invoke docs-writer with:
+- Target version (e.g., v0.15.0)
+- Previous version (e.g., v0.14.0)
+- Repo directory
+- Findings from docs-reviewer
+
+**Step 3: Re-run Docs Review**
+Invoke docs-reviewer again to verify updates.
+
+### CHANGELOG.json Format
+
+Use the structured-changelog format from `github.com/grokify/structured-changelog`:
+
+```json
+{
+  "irVersion": "1.0",
+  "project": "project-name",
+  "repository": "https://github.com/org/repo",
+  "releases": [
+    {
+      "version": "v0.15.0",
+      "date": "2026-06-27",
+      "highlights": [
+        { "description": "Key feature 1" }
+      ],
+      "added": [
+        { "description": "New feature X", "commit": "abc1234" }
+      ],
+      "fixed": [
+        { "description": "Bug fix Y", "commit": "def5678" }
+      ]
+    }
+  ]
+}
+```
+
 ## Changelog Workflow
 
 ```bash
@@ -272,18 +378,33 @@ atrelease validate --skip-docs --skip-security
 When asked to create a release:
 
 1. **Pre-flight**: Verify dependencies and clean working directory
-2. **QA Fix Loop**: Run build/test/lint validation with auto-fix
+2. **Version Analysis**: Determine target version using `schangelog parse-commits`
+3. **QA Fix Loop**: Run build/test/lint validation with auto-fix
    - Invoke QA agent to validate
    - If NO-GO, invoke code-fixer agent
    - Re-validate until GO or max attempts reached
-3. **Version**: Determine version using `schangelog parse-commits`
-4. **Changelog**: Update CHANGELOG.json and generate CHANGELOG.md
-5. **Release Notes**: Create or verify release notes
+4. **Docs Fix Loop**: Run documentation validation with auto-create
+   - Invoke docs-reviewer to validate
+   - If NO-GO, invoke docs-writer agent with:
+     - Target version (e.g., v0.15.0)
+     - Previous version (e.g., v0.14.0)
+     - Findings from docs-reviewer
+   - Re-validate until GO or max attempts reached
+5. **Security Validation**: Check LICENSE, vulnerabilities
 6. **Roadmap**: Update completed items (if ROADMAP.json exists)
-7. **Documentation**: Update docs/ markdown files
-8. **Deploy Docs**: Run `mkdocs gh-deploy` to publish to gh-pages
-9. **Final Validate**: Run `atrelease check --verbose`
+7. **Deploy Docs**: Run `mkdocs gh-deploy` to publish to gh-pages (if docs/ exists)
+8. **Final Validate**: Run `atrelease check --verbose`
+9. **Wait for CI**: Check `gh run list` for success
 10. **Execute**: Run `atrelease release <version> --verbose`
+
+### Docs Fix Loop Details
+
+The docs fix loop handles:
+
+- **CHANGELOG.json**: Parse commits, add version entry with commit hashes
+- **CHANGELOG.md**: Regenerate using `schangelog generate`
+- **Release Notes**: Create docs/releases/vX.Y.Z.md or RELEASE_NOTES_vX.Y.Z.md
+- **MkDocs Nav**: Add new version to mkdocs.yml Releases section
 
 ## Best Practices
 

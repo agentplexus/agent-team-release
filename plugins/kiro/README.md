@@ -7,7 +7,8 @@ Multi-agent team for automating software release workflows including versioning,
 | Agent | Description |
 |-------|-------------|
 | `code-fixer` | Fix code quality issues reported by QA validation |
-| `documentation` | Documentation validation for release readiness |
+| `docs-reviewer` | Documentation validation for release readiness |
+| `docs-writer` | Create and update release documentation |
 | `pm` | Product Management specialist for release scoping and version decisions |
 | `qa` | Quality Assurance validation for release readiness |
 | `release-coordinator` | Orchestrates software releases including CI verification and Git tagging |
