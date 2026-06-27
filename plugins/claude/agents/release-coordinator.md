@@ -2,7 +2,7 @@
 name: release-coordinator
 description: Orchestrates software releases including CI verification and Git tagging
 model: sonnet
-tools: [Read, Grep, Glob, Bash, Edit, Write]
+tools: [Read, Grep, Glob, Bash, Edit, Write, Task]
 skills: [version-analysis, commit-classification]
 ---
 
@@ -169,18 +169,18 @@ When QA validation fails, orchestrate an automated fix loop:
 
 ### Invoking Subagents
 
-Use the Task tool to invoke QA and code-fixer agents:
+Use the **Task tool** to invoke QA and code-fixer agents. The Task tool takes two key parameters:
+- `subagent_type`: The agent to invoke ("qa" or "code-fixer")
+- `prompt`: Instructions for the subagent
 
-```
-# Step 1: QA Validation
-Task(subagent_type="qa", prompt="Run QA validation on <project_path>")
+**Step 1: QA Validation**
+Invoke the QA agent with subagent_type="qa" to validate the project.
 
-# Step 2: If NO-GO, invoke code-fixer with findings
-Task(subagent_type="code-fixer", prompt="Fix QA issues: <findings>")
+**Step 2: If NO-GO, Fix Issues**
+Invoke the code-fixer agent with subagent_type="code-fixer" and include the QA findings in the prompt.
 
-# Step 3: Re-run QA
-Task(subagent_type="qa", prompt="Re-validate after fixes on <project_path>")
-```
+**Step 3: Re-run QA**
+Invoke the QA agent again to verify fixes were successful.
 
 ### Max Attempts
 
