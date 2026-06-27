@@ -10,13 +10,13 @@
       
       
       
-        <link rel="canonical" href="https://plexusone.github.io/agent-team-release/orchestration/">
+        <link rel="canonical" href="https://plexusone.github.io/agent-team-release/qa-fix-loop/">
       
       
-        <link rel="prev" href="../output-formats/">
+        <link rel="prev" href="../orchestration/">
       
       
-        <link rel="next" href="../qa-fix-loop/">
+        <link rel="next" href="../docs-fix-loop/">
       
       
         
@@ -27,7 +27,7 @@
     
     
       
-        <title>Orchestration - Release Agent Team</title>
+        <title>QA Fix Loop - Release Agent Team</title>
       
     
     
@@ -80,7 +80,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#release-team-orchestration" class="md-skip">
+        <a href="#qa-fix-loop" class="md-skip">
           Skip to content
         </a>
       
@@ -121,7 +121,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Orchestration
+              QA Fix Loop
             
           </span>
         </div>
@@ -807,6 +807,34 @@
                 
   
   
+  
+  
+    <li class="md-nav__item">
+      <a href="../orchestration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Orchestration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
     
   
   
@@ -826,7 +854,7 @@
   <span class="md-ellipsis">
     
   
-    Orchestration
+    QA Fix Loop
   
 
     
@@ -844,7 +872,7 @@
   <span class="md-ellipsis">
     
   
-    Orchestration
+    QA Fix Loop
   
 
     
@@ -870,22 +898,77 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#group-1-sequential" class="md-nav__link">
+  <a href="#overview" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Group 1 (Sequential)
+        Overview
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Group 1 (Sequential)">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Architecture
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#flow-diagram" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Flow Diagram
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#agent-responsibilities" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Agent Responsibilities
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Agent Responsibilities">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#task-pm-validation" class="md-nav__link">
+  <a href="#qa-agent-validation" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Task: pm-validation
+        QA Agent (Validation)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#code-fixer-agent-remediation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Code-Fixer Agent (Remediation)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#release-coordinator-orchestration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Release-Coordinator (Orchestration)
       
     </span>
   </a>
@@ -898,22 +981,22 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#parallel-group-2" class="md-nav__link">
+  <a href="#configuration" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Parallel Group 2
+        Configuration
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Parallel Group 2">
+    <nav class="md-nav" aria-label="Configuration">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#task-qa-validation" class="md-nav__link">
+  <a href="#max-attempts" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Task: qa-validation
+        Max Attempts
       
     </span>
   </a>
@@ -921,10 +1004,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#task-docs-validation" class="md-nav__link">
+  <a href="#supported-languages" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Task: docs-validation
+        Supported Languages
       
     </span>
   </a>
@@ -937,22 +1020,22 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#execution-flow" class="md-nav__link">
+  <a href="#usage" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Execution Flow
+        Usage
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Execution Flow">
+    <nav class="md-nav" aria-label="Usage">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#human-in-the-loop-prompts" class="md-nav__link">
+  <a href="#via-release-coordinator" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Human-in-the-Loop Prompts
+        Via Release-Coordinator
       
     </span>
   </a>
@@ -960,10 +1043,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#phase-1-phase-2-transition" class="md-nav__link">
+  <a href="#manual-steps" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Phase 1 → Phase 2 Transition
+        Manual Steps
       
     </span>
   </a>
@@ -976,10 +1059,21 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#expected-status-report" class="md-nav__link">
+  <a href="#example-output" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Expected Status Report
+        Example Output
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#see-also" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        See Also
       
     </span>
   </a>
@@ -990,34 +1084,6 @@
   
 </nav>
       
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../qa-fix-loop/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    QA Fix Loop
-  
-
-    
-  </span>
-  
-  
-
-      </a>
     </li>
   
 
@@ -1487,22 +1553,77 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#group-1-sequential" class="md-nav__link">
+  <a href="#overview" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Group 1 (Sequential)
+        Overview
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Group 1 (Sequential)">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Architecture
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#flow-diagram" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Flow Diagram
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#agent-responsibilities" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Agent Responsibilities
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Agent Responsibilities">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#task-pm-validation" class="md-nav__link">
+  <a href="#qa-agent-validation" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Task: pm-validation
+        QA Agent (Validation)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#code-fixer-agent-remediation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Code-Fixer Agent (Remediation)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#release-coordinator-orchestration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Release-Coordinator (Orchestration)
       
     </span>
   </a>
@@ -1515,22 +1636,22 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#parallel-group-2" class="md-nav__link">
+  <a href="#configuration" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Parallel Group 2
+        Configuration
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Parallel Group 2">
+    <nav class="md-nav" aria-label="Configuration">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#task-qa-validation" class="md-nav__link">
+  <a href="#max-attempts" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Task: qa-validation
+        Max Attempts
       
     </span>
   </a>
@@ -1538,10 +1659,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#task-docs-validation" class="md-nav__link">
+  <a href="#supported-languages" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Task: docs-validation
+        Supported Languages
       
     </span>
   </a>
@@ -1554,22 +1675,22 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#execution-flow" class="md-nav__link">
+  <a href="#usage" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Execution Flow
+        Usage
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Execution Flow">
+    <nav class="md-nav" aria-label="Usage">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#human-in-the-loop-prompts" class="md-nav__link">
+  <a href="#via-release-coordinator" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Human-in-the-Loop Prompts
+        Via Release-Coordinator
       
     </span>
   </a>
@@ -1577,10 +1698,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#phase-1-phase-2-transition" class="md-nav__link">
+  <a href="#manual-steps" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Phase 1 → Phase 2 Transition
+        Manual Steps
       
     </span>
   </a>
@@ -1593,10 +1714,21 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#expected-status-report" class="md-nav__link">
+  <a href="#example-output" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Expected Status Report
+        Example Output
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#see-also" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        See Also
       
     </span>
   </a>
@@ -1623,396 +1755,306 @@
   
 
 
-<h1 id="release-team-orchestration">Release Team Orchestration<a class="headerlink" href="#release-team-orchestration" title="Permanent link">&para;</a></h1>
-<p>Release validation and deployment workflow</p>
-<p><strong>Process:</strong> hierarchical
-<strong>Manager:</strong> release-coordinator</p>
-<hr />
-<h2 id="group-1-sequential">Group 1 (Sequential)<a class="headerlink" href="#group-1-sequential" title="Permanent link">&para;</a></h2>
-<p>PM validation runs first to determine the target version.</p>
-<h3 id="task-pm-validation">Task: pm-validation<a class="headerlink" href="#task-pm-validation" title="Permanent link">&para;</a></h3>
-<p>Product scope and version recommendation</p>
-<p><strong>Instructions:</strong></p>
-<p>Use the Task tool to spawn subagent <code>pm</code>:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>Task tool:
-<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>  subagent_type: general-purpose
-<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>  description: &quot;Product scope and version recommendation&quot;
-<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>  prompt: |
-<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>    You are the pm specialist. Read your instructions from validation/specs/pm.md
-<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>
-<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>    Execute the following subtasks and report Go/No-Go for each:
-<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>    - version-recommendation
-<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>    - release-scope
-<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>    - changelog-quality
-<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>    - breaking-changes
-<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>    - roadmap-alignment
-<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>    - deprecation-notices
-<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>
-<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>    Output the recommended version number (e.g., v0.3.0) for use by downstream tasks.
+<h1 id="qa-fix-loop">QA Fix Loop<a class="headerlink" href="#qa-fix-loop" title="Permanent link">&para;</a></h1>
+<p>The release-coordinator orchestrates an automated <strong>build/test/lint/fix/retest loop</strong> to ensure code quality before release.</p>
+<h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h2>
+<p>When QA validation fails, the release-coordinator automatically invokes the code-fixer agent to resolve issues, then re-runs QA validation. This loop continues until all checks pass or maximum attempts are reached.</p>
+<h2 id="architecture">Architecture<a class="headerlink" href="#architecture" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>┌─────────────────────────────────────────────────────────────────────────────┐
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>│                           QA FIX LOOP                                       │
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>│                    (Orchestrated by release-coordinator)                    │
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>├─────────────────────────────────────────────────────────────────────────────┤
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>│                                                                             │
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>│                         ┌───────────────────┐                               │
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>│                         │ release-coordinator│                               │
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>│                         │   (orchestrator)  │                               │
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>│                         └─────────┬─────────┘                               │
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>│                                   │                                         │
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>│                    ┌──────────────┼──────────────┐                         │
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>│                    │              │              │                         │
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>│                    ▼              ▼              ▼                         │
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>│              ┌──────────┐  ┌──────────┐  ┌──────────┐                      │
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>│              │ QA Agent │  │Code-Fixer│  │ QA Agent │                      │
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>│              │(validate)│  │  Agent   │  │(re-test) │                      │
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>│              └────┬─────┘  └────┬─────┘  └────┬─────┘                      │
+<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>│                   │             │             │                            │
+<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>│                   ▼             ▼             ▼                            │
+<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>│              ┌─────────┐  ┌─────────┐  ┌─────────┐                         │
+<a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a>│              │• build  │  │• errcheck│  │• build  │                        │
+<a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a>│              │• test   │  │• gosec   │  │• test   │                        │
+<a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a>│              │• lint   │  │• format  │  │• lint   │                        │
+<a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a>│              │• format │  │• unused  │  │• format │                        │
+<a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a>│              │• mod    │  │• mod tidy│  │• mod    │                        │
+<a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a>│              └─────────┘  └─────────┘  └─────────┘                         │
+<a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a>│                                                                             │
+<a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a>└─────────────────────────────────────────────────────────────────────────────┘
 </code></pre></div>
-<p><strong>Subtasks:</strong></p>
+<h2 id="flow-diagram">Flow Diagram<a class="headerlink" href="#flow-diagram" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>                              START
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>                                │
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>                                ▼
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>                    ┌───────────────────────┐
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>                    │   Pre-flight Checks   │
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>                    │  (clean working dir)  │
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>                    └───────────┬───────────┘
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>                                │
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>                                ▼
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>              ┌─────────────────────────────────────┐
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>              │         INVOKE QA AGENT             │
+<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>              │  • go build ./...                   │
+<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>              │  • go test -v ./...                 │
+<a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a>              │  • golangci-lint run                │
+<a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a>              │  • gofmt -l .                       │
+<a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a>              │  • go mod tidy -diff                │
+<a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a>              └─────────────────┬───────────────────┘
+<a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a>                                │
+<a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a>                                ▼
+<a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a>                         ┌──────────────┐
+<a id="__codelineno-1-21" name="__codelineno-1-21" href="#__codelineno-1-21"></a>                         │  QA Status?  │
+<a id="__codelineno-1-22" name="__codelineno-1-22" href="#__codelineno-1-22"></a>                         └──────┬───────┘
+<a id="__codelineno-1-23" name="__codelineno-1-23" href="#__codelineno-1-23"></a>                                │
+<a id="__codelineno-1-24" name="__codelineno-1-24" href="#__codelineno-1-24"></a>                 ┌──────────────┼──────────────┐
+<a id="__codelineno-1-25" name="__codelineno-1-25" href="#__codelineno-1-25"></a>                 │              │              │
+<a id="__codelineno-1-26" name="__codelineno-1-26" href="#__codelineno-1-26"></a>                 ▼              │              ▼
+<a id="__codelineno-1-27" name="__codelineno-1-27" href="#__codelineno-1-27"></a>            ┌────────┐         │         ┌────────┐
+<a id="__codelineno-1-28" name="__codelineno-1-28" href="#__codelineno-1-28"></a>            │   GO   │         │         │ NO-GO  │
+<a id="__codelineno-1-29" name="__codelineno-1-29" href="#__codelineno-1-29"></a>            └────┬───┘         │         └────┬───┘
+<a id="__codelineno-1-30" name="__codelineno-1-30" href="#__codelineno-1-30"></a>                 │             │              │
+<a id="__codelineno-1-31" name="__codelineno-1-31" href="#__codelineno-1-31"></a>                 │             │              ▼
+<a id="__codelineno-1-32" name="__codelineno-1-32" href="#__codelineno-1-32"></a>                 │             │    ┌─────────────────┐
+<a id="__codelineno-1-33" name="__codelineno-1-33" href="#__codelineno-1-33"></a>                 │             │    │ attempts &lt; max? │
+<a id="__codelineno-1-34" name="__codelineno-1-34" href="#__codelineno-1-34"></a>                 │             │    └────────┬────────┘
+<a id="__codelineno-1-35" name="__codelineno-1-35" href="#__codelineno-1-35"></a>                 │             │             │
+<a id="__codelineno-1-36" name="__codelineno-1-36" href="#__codelineno-1-36"></a>                 │             │      ┌──────┴──────┐
+<a id="__codelineno-1-37" name="__codelineno-1-37" href="#__codelineno-1-37"></a>                 │             │      │             │
+<a id="__codelineno-1-38" name="__codelineno-1-38" href="#__codelineno-1-38"></a>                 │             │      ▼             ▼
+<a id="__codelineno-1-39" name="__codelineno-1-39" href="#__codelineno-1-39"></a>                 │             │    ┌────┐      ┌──────┐
+<a id="__codelineno-1-40" name="__codelineno-1-40" href="#__codelineno-1-40"></a>                 │             │    │YES │      │  NO  │
+<a id="__codelineno-1-41" name="__codelineno-1-41" href="#__codelineno-1-41"></a>                 │             │    └──┬─┘      └──┬───┘
+<a id="__codelineno-1-42" name="__codelineno-1-42" href="#__codelineno-1-42"></a>                 │             │       │           │
+<a id="__codelineno-1-43" name="__codelineno-1-43" href="#__codelineno-1-43"></a>                 │             │       ▼           ▼
+<a id="__codelineno-1-44" name="__codelineno-1-44" href="#__codelineno-1-44"></a>                 │             │  ┌─────────────────────────┐
+<a id="__codelineno-1-45" name="__codelineno-1-45" href="#__codelineno-1-45"></a>                 │             │  │  INVOKE CODE-FIXER      │
+<a id="__codelineno-1-46" name="__codelineno-1-46" href="#__codelineno-1-46"></a>                 │             │  │  • Fix errcheck errors  │
+<a id="__codelineno-1-47" name="__codelineno-1-47" href="#__codelineno-1-47"></a>                 │             │  │  • Fix gosec issues     │
+<a id="__codelineno-1-48" name="__codelineno-1-48" href="#__codelineno-1-48"></a>                 │             │  │  • Fix format issues    │
+<a id="__codelineno-1-49" name="__codelineno-1-49" href="#__codelineno-1-49"></a>                 │             │  │  • Remove unused code   │
+<a id="__codelineno-1-50" name="__codelineno-1-50" href="#__codelineno-1-50"></a>                 │             │  │  • Run go mod tidy      │
+<a id="__codelineno-1-51" name="__codelineno-1-51" href="#__codelineno-1-51"></a>                 │             │  └───────────┬─────────────┘
+<a id="__codelineno-1-52" name="__codelineno-1-52" href="#__codelineno-1-52"></a>                 │             │              │
+<a id="__codelineno-1-53" name="__codelineno-1-53" href="#__codelineno-1-53"></a>                 │             │              │ loop back
+<a id="__codelineno-1-54" name="__codelineno-1-54" href="#__codelineno-1-54"></a>                 │             │              │
+<a id="__codelineno-1-55" name="__codelineno-1-55" href="#__codelineno-1-55"></a>                 │             └──────────────┘
+<a id="__codelineno-1-56" name="__codelineno-1-56" href="#__codelineno-1-56"></a>                 │
+<a id="__codelineno-1-57" name="__codelineno-1-57" href="#__codelineno-1-57"></a>                 ▼                             ▼
+<a id="__codelineno-1-58" name="__codelineno-1-58" href="#__codelineno-1-58"></a>    ┌────────────────────────┐    ┌────────────────────────┐
+<a id="__codelineno-1-59" name="__codelineno-1-59" href="#__codelineno-1-59"></a>    │  PROCEED TO RELEASE    │    │   RAISE TO HUMAN       │
+<a id="__codelineno-1-60" name="__codelineno-1-60" href="#__codelineno-1-60"></a>    │  • Version             │    │   • Report unfixed     │
+<a id="__codelineno-1-61" name="__codelineno-1-61" href="#__codelineno-1-61"></a>    │  • Changelog           │    │   • Suggest manual fix │
+<a id="__codelineno-1-62" name="__codelineno-1-62" href="#__codelineno-1-62"></a>    │  • Release notes       │    │   • List attempts      │
+<a id="__codelineno-1-63" name="__codelineno-1-63" href="#__codelineno-1-63"></a>    │  • Documentation       │    └────────────────────────┘
+<a id="__codelineno-1-64" name="__codelineno-1-64" href="#__codelineno-1-64"></a>    │  • Git tag             │
+<a id="__codelineno-1-65" name="__codelineno-1-65" href="#__codelineno-1-65"></a>    └────────────────────────┘
+</code></pre></div>
+<h2 id="agent-responsibilities">Agent Responsibilities<a class="headerlink" href="#agent-responsibilities" title="Permanent link">&para;</a></h2>
+<h3 id="qa-agent-validation">QA Agent (Validation)<a class="headerlink" href="#qa-agent-validation" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
 <tr>
-<th>Subtask</th>
-<th>Type</th>
+<th>Check</th>
+<th>Command</th>
 <th>Required</th>
-<th>Expected</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>version-recommendation</td>
-<td>command</td>
-<td>Yes</td>
-<td>Recommended version determined</td>
-</tr>
-<tr>
-<td>release-scope</td>
-<td>file</td>
-<td>No</td>
-<td>Scope aligned with roadmap</td>
-</tr>
-<tr>
-<td>changelog-quality</td>
-<td>file</td>
-<td>Yes</td>
-<td>Entries are user-facing and...</td>
-</tr>
-<tr>
-<td>breaking-changes</td>
-<td>command</td>
-<td>Yes</td>
-<td>All breaking changes docume...</td>
-</tr>
-<tr>
-<td>roadmap-alignment</td>
-<td>file</td>
-<td>No</td>
-<td>Release aligns with roadmap</td>
-</tr>
-<tr>
-<td>deprecation-notices</td>
-<td>pattern</td>
-<td>No</td>
-<td>Deprecations documented</td>
-</tr>
-</tbody>
-</table>
-<p><strong>Sign-off:</strong> GO if all 3 required subtasks pass. Optional subtasks report WARN on failure.</p>
-<p><strong>Output:</strong> Confirmed version number (e.g., <code>v0.3.0</code>) passed to downstream tasks.</p>
-<hr />
-<h2 id="parallel-group-2">Parallel Group 2<a class="headerlink" href="#parallel-group-2" title="Permanent link">&para;</a></h2>
-<p>These tasks can run concurrently using parallel Task tool calls. They depend on pm-validation completing first.</p>
-<p><strong>Requires:</strong> pm-validation (must be GO)</p>
-<h3 id="task-qa-validation">Task: qa-validation<a class="headerlink" href="#task-qa-validation" title="Permanent link">&para;</a></h3>
-<p>Quality Assurance validation</p>
-<p><strong>Instructions:</strong></p>
-<p>Use the Task tool to spawn subagent <code>qa</code>:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>Task tool:
-<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>  subagent_type: general-purpose
-<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>  description: &quot;Quality Assurance validation&quot;
-<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>  prompt: |
-<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>    You are the qa specialist. Read your instructions from validation/specs/qa.md
-<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>
-<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>    Execute the following subtasks and report Go/No-Go for each:
-<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>    - build
-<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>    - tests
-<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>    - lint
-<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>    - format
-<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>    - mod-tidy
-<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>    - error-handling
-<a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a>    - local-replace
-<a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a>
-<a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a>    Target version: {VERSION from pm-validation}
-</code></pre></div>
-<p><strong>Subtasks:</strong></p>
-<table>
-<thead>
-<tr>
-<th>Subtask</th>
-<th>Type</th>
-<th>Required</th>
-<th>Expected</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>build</td>
-<td>command</td>
+<td><code>go build ./...</code></td>
 <td>Yes</td>
-<td>No errors</td>
 </tr>
 <tr>
 <td>tests</td>
-<td>command</td>
+<td><code>go test -v ./...</code></td>
 <td>Yes</td>
-<td>All tests pass</td>
 </tr>
 <tr>
 <td>lint</td>
-<td>command</td>
+<td><code>golangci-lint run</code></td>
 <td>Yes</td>
-<td>No lint errors</td>
 </tr>
 <tr>
 <td>format</td>
-<td>command</td>
+<td><code>gofmt -l .</code></td>
 <td>Yes</td>
-<td>No output (all files forma...</td>
 </tr>
 <tr>
 <td>mod-tidy</td>
-<td>command</td>
+<td><code>go mod tidy -diff</code></td>
 <td>Yes</td>
-<td>No diff output</td>
 </tr>
 <tr>
 <td>error-handling</td>
-<td>pattern</td>
+<td>Pattern: <code>_ = err</code></td>
 <td>Yes</td>
-<td>No matches (errors should...</td>
 </tr>
 <tr>
 <td>local-replace</td>
-<td>pattern</td>
+<td>Pattern: <code>replace .* =&gt; ./</code></td>
 <td>Yes</td>
-<td>No matches</td>
 </tr>
 </tbody>
 </table>
-<p><strong>Sign-off:</strong> GO if all 7 required subtasks pass. Optional subtasks report WARN on failure.</p>
-<h3 id="task-docs-validation">Task: docs-validation<a class="headerlink" href="#task-docs-validation" title="Permanent link">&para;</a></h3>
-<p>Documentation validation</p>
-<p><strong>Instructions:</strong></p>
-<p>Use the Task tool to spawn subagent <code>documentation</code>:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>Task tool:
-<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>  subagent_type: general-purpose
-<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>  description: &quot;Documentation validation&quot;
-<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>  prompt: |
-<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>    You are the documentation specialist. Read your instructions from validation/specs/documentation.md
+<p>The QA agent is <strong>read-only</strong> - it validates and reports but does not modify code.</p>
+<h3 id="code-fixer-agent-remediation">Code-Fixer Agent (Remediation)<a class="headerlink" href="#code-fixer-agent-remediation" title="Permanent link">&para;</a></h3>
+<p>The code-fixer agent has <strong>write access</strong> and fixes issues following the error handling priority:</p>
+<table>
+<thead>
+<tr>
+<th>Priority</th>
+<th>Approach</th>
+<th>When to Use</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Panic</td>
+<td>Error should never happen (invariant violation)</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Return Error</td>
+<td>Function signature can return error</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Modify Function</td>
+<td>Function can be changed to return error</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Log Error</td>
+<td>Interface compliance requires no error return</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Raise to Human</td>
+<td>Cannot be auto-fixed</td>
+</tr>
+</tbody>
+</table>
+<p>Common fixes applied:</p>
+<table>
+<thead>
+<tr>
+<th>Issue</th>
+<th>Fix</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>errcheck</td>
+<td>Add error handling</td>
+</tr>
+<tr>
+<td>G306</td>
+<td>Change permissions to 0o600</td>
+</tr>
+<tr>
+<td>G115</td>
+<td>Add bounds check or nolint</td>
+</tr>
+<tr>
+<td>unused</td>
+<td>Remove unused code</td>
+</tr>
+<tr>
+<td>format</td>
+<td>Run gofmt</td>
+</tr>
+</tbody>
+</table>
+<h3 id="release-coordinator-orchestration">Release-Coordinator (Orchestration)<a class="headerlink" href="#release-coordinator-orchestration" title="Permanent link">&para;</a></h3>
+<p>The release-coordinator invokes subagents using the Task tool:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1">// Step 1: Validate</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="nx">Task</span><span class="p">(</span><span class="nx">subagent_type</span><span class="p">=</span><span class="s">&quot;qa&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">prompt</span><span class="p">=</span><span class="s">&quot;Run QA validation...&quot;</span><span class="p">)</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="c1">// Step 2: Fix (if NO-GO)</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="nx">Task</span><span class="p">(</span><span class="nx">subagent_type</span><span class="p">=</span><span class="s">&quot;code-fixer&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">prompt</span><span class="p">=</span><span class="s">&quot;Fix issues: &lt;findings&gt;&quot;</span><span class="p">)</span>
 <a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>
-<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>    Execute the following subtasks and report Go/No-Go for each:
-<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>    - readme
-<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>    - changelog-md
-<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>    - changelog-json
-<a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a>    - release-notes
-<a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a>    - prd
-<a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a>    - trd
-<a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a>
-<a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a>    Target version: {VERSION from pm-validation}
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="c1">// Step 3: Re-validate</span>
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="nx">Task</span><span class="p">(</span><span class="nx">subagent_type</span><span class="p">=</span><span class="s">&quot;qa&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">prompt</span><span class="p">=</span><span class="s">&quot;Re-validate after fixes...&quot;</span><span class="p">)</span>
 </code></pre></div>
-<p><strong>Subtasks:</strong></p>
-<table>
-<thead>
-<tr>
-<th>Subtask</th>
-<th>Type</th>
-<th>Required</th>
-<th>Expected</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>readme</td>
-<td>file</td>
-<td>Yes</td>
-<td>Pass</td>
-</tr>
-<tr>
-<td>changelog-md</td>
-<td>file</td>
-<td>Yes</td>
-<td>Pass</td>
-</tr>
-<tr>
-<td>changelog-json</td>
-<td>file</td>
-<td>No</td>
-<td>Pass</td>
-</tr>
-<tr>
-<td>release-notes</td>
-<td>pattern</td>
-<td>Yes</td>
-<td>Pass</td>
-</tr>
-<tr>
-<td>prd</td>
-<td>file</td>
-<td>No</td>
-<td>Pass</td>
-</tr>
-<tr>
-<td>trd</td>
-<td>file</td>
-<td>No</td>
-<td>Pass</td>
-</tr>
-</tbody>
-</table>
-<p><strong>Sign-off:</strong> GO if all 3 required subtasks pass. Optional subtasks report WARN on failure.</p>
-<hr />
-<h2 id="execution-flow">Execution Flow<a class="headerlink" href="#execution-flow" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>═══════════════════════════════════════════════════════════════
-<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>                        PHASE 1: Review
-<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>═══════════════════════════════════════════════════════════════
+<h2 id="configuration">Configuration<a class="headerlink" href="#configuration" title="Permanent link">&para;</a></h2>
+<h3 id="max-attempts">Max Attempts<a class="headerlink" href="#max-attempts" title="Permanent link">&para;</a></h3>
+<p>Default: <strong>3 fix attempts</strong> before raising to human.</p>
+<p>Some issues cannot be auto-fixed:</p>
+<ul>
+<li>Architectural problems</li>
+<li>Missing test coverage</li>
+<li>Complex refactoring required</li>
+<li>Security issues requiring human judgment</li>
+</ul>
+<h3 id="supported-languages">Supported Languages<a class="headerlink" href="#supported-languages" title="Permanent link">&para;</a></h3>
+<p>Currently supports Go projects:</p>
+<ul>
+<li><code>golangci-lint</code> for linting</li>
+<li><code>gofmt</code> for formatting</li>
+<li><code>go test</code> for testing</li>
+<li><code>go build</code> for compilation</li>
+<li><code>go mod tidy</code> for dependencies</li>
+</ul>
+<h2 id="usage">Usage<a class="headerlink" href="#usage" title="Permanent link">&para;</a></h2>
+<h3 id="via-release-coordinator">Via Release-Coordinator<a class="headerlink" href="#via-release-coordinator" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1"># Full release workflow (includes QA fix loop)</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>Task<span class="o">(</span><span class="nv">subagent_type</span><span class="o">=</span><span class="s2">&quot;release-coordinator&quot;</span>,
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">     </span><span class="nv">prompt</span><span class="o">=</span><span class="s2">&quot;Run release workflow on /path/to/project&quot;</span><span class="o">)</span>
 <a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>
-<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>                    ┌─────────────────┐
-<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>                    │  pm-validation  │
-<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>                    │   (version)     │
-<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>                    └────────┬────────┘
-<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>                             │
-<a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>              ┌──────────────┼──────────────┐
-<a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a>              ▼              ▼              ▼
-<a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a>       ┌──────────┐   ┌──────────┐   ┌──────────┐
-<a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a>       │    qa    │   │   docs   │   │ security │
-<a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a>       └────┬─────┘   └────┬─────┘   └────┬─────┘
-<a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a>            │              │              │
-<a id="__codelineno-3-16" name="__codelineno-3-16" href="#__codelineno-3-16"></a>            └──────────────┼──────────────┘
-<a id="__codelineno-3-17" name="__codelineno-3-17" href="#__codelineno-3-17"></a>                           ▼
-<a id="__codelineno-3-18" name="__codelineno-3-18" href="#__codelineno-3-18"></a>                    ┌─────────────────┐
-<a id="__codelineno-3-19" name="__codelineno-3-19" href="#__codelineno-3-19"></a>                    │ release-valid.  │
-<a id="__codelineno-3-20" name="__codelineno-3-20" href="#__codelineno-3-20"></a>                    └─────────────────┘
-<a id="__codelineno-3-21" name="__codelineno-3-21" href="#__codelineno-3-21"></a>
-<a id="__codelineno-3-22" name="__codelineno-3-22" href="#__codelineno-3-22"></a>        ▼▼▼ Fix issues and commit changes ▼▼▼
-<a id="__codelineno-3-23" name="__codelineno-3-23" href="#__codelineno-3-23"></a>
-<a id="__codelineno-3-24" name="__codelineno-3-24" href="#__codelineno-3-24"></a>═══════════════════════════════════════════════════════════════
-<a id="__codelineno-3-25" name="__codelineno-3-25" href="#__codelineno-3-25"></a>                     PHASE 2: Finalize
-<a id="__codelineno-3-26" name="__codelineno-3-26" href="#__codelineno-3-26"></a>═══════════════════════════════════════════════════════════════
-<a id="__codelineno-3-27" name="__codelineno-3-27" href="#__codelineno-3-27"></a>
-<a id="__codelineno-3-28" name="__codelineno-3-28" href="#__codelineno-3-28"></a>                    ┌─────────────────┐
-<a id="__codelineno-3-29" name="__codelineno-3-29" href="#__codelineno-3-29"></a>                    │changelog-finalize│
-<a id="__codelineno-3-30" name="__codelineno-3-30" href="#__codelineno-3-30"></a>                    │ (link commits)  │
-<a id="__codelineno-3-31" name="__codelineno-3-31" href="#__codelineno-3-31"></a>                    └────────┬────────┘
-<a id="__codelineno-3-32" name="__codelineno-3-32" href="#__codelineno-3-32"></a>                             ▼
-<a id="__codelineno-3-33" name="__codelineno-3-33" href="#__codelineno-3-33"></a>                    ┌─────────────────┐
-<a id="__codelineno-3-34" name="__codelineno-3-34" href="#__codelineno-3-34"></a>                    │ execute-release │
-<a id="__codelineno-3-35" name="__codelineno-3-35" href="#__codelineno-3-35"></a>                    │  (tag &amp; push)   │
-<a id="__codelineno-3-36" name="__codelineno-3-36" href="#__codelineno-3-36"></a>                    └─────────────────┘
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="c1"># Just QA fix loop</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>Task<span class="o">(</span><span class="nv">subagent_type</span><span class="o">=</span><span class="s2">&quot;release-coordinator&quot;</span>,
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="w">     </span><span class="nv">prompt</span><span class="o">=</span><span class="s2">&quot;Run QA fix loop on /path/to/project&quot;</span><span class="o">)</span>
 </code></pre></div>
-<h3 id="human-in-the-loop-prompts">Human-in-the-Loop Prompts<a class="headerlink" href="#human-in-the-loop-prompts" title="Permanent link">&para;</a></h3>
-<p>During Phase 1, agents may require human input:</p>
-<table>
-<thead>
-<tr>
-<th>Agent</th>
-<th>Trigger</th>
-<th>Prompt</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>PM</td>
-<td>CHANGELOG.json missing target version</td>
-<td>Create entry (auto-generate / manual / abort)</td>
-</tr>
-<tr>
-<td>PM</td>
-<td>Uncommitted changes only</td>
-<td>Confirm version recommendation</td>
-</tr>
-<tr>
-<td>Docs</td>
-<td>Release notes missing (major/minor)</td>
-<td>Create release notes at correct path</td>
-</tr>
-</tbody>
-</table>
-<p><strong>CHANGELOG.json creation workflow:</strong></p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>PM detects missing v0.2.0 entry
-<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>         │
-<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>         ▼
-<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>  ┌─────────────────┐
-<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>  │  HITL Prompt:   │
-<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>  │  1. Auto-generate│
-<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>  │  2. Manual entry │
-<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>  │  3. Abort        │
-<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>  └────────┬────────┘
-<a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>           │
-<a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a>     ┌─────┴─────┐
-<a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a>     ▼           ▼
-<a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a>Auto-generate  Manual
-<a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a>     │           │
-<a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a>     ▼           ▼
-<a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a>Draft entry   Human types
-<a id="__codelineno-4-17" name="__codelineno-4-17" href="#__codelineno-4-17"></a>     │        entries
-<a id="__codelineno-4-18" name="__codelineno-4-18" href="#__codelineno-4-18"></a>     ▼           │
-<a id="__codelineno-4-19" name="__codelineno-4-19" href="#__codelineno-4-19"></a>Human reviews ◄──┘
-<a id="__codelineno-4-20" name="__codelineno-4-20" href="#__codelineno-4-20"></a>     │
-<a id="__codelineno-4-21" name="__codelineno-4-21" href="#__codelineno-4-21"></a>     ▼
-<a id="__codelineno-4-22" name="__codelineno-4-22" href="#__codelineno-4-22"></a>Write CHANGELOG.json
-<a id="__codelineno-4-23" name="__codelineno-4-23" href="#__codelineno-4-23"></a>     │
-<a id="__codelineno-4-24" name="__codelineno-4-24" href="#__codelineno-4-24"></a>     ▼
-<a id="__codelineno-4-25" name="__codelineno-4-25" href="#__codelineno-4-25"></a>Continue validation
+<h3 id="manual-steps">Manual Steps<a class="headerlink" href="#manual-steps" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="c1"># Step 1: Run QA validation</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>golangci-lint<span class="w"> </span>run
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>go<span class="w"> </span><span class="nb">test</span><span class="w"> </span>-v<span class="w"> </span>./...
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>gofmt<span class="w"> </span>-l<span class="w"> </span>.
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="c1"># Step 2: Fix issues (or invoke code-fixer)</span>
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="c1"># ... apply fixes ...</span>
+<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>
+<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="c1"># Step 3: Re-validate</span>
+<a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>golangci-lint<span class="w"> </span>run
+<a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a>go<span class="w"> </span><span class="nb">test</span><span class="w"> </span>-v<span class="w"> </span>./...
 </code></pre></div>
-<h3 id="phase-1-phase-2-transition">Phase 1 → Phase 2 Transition<a class="headerlink" href="#phase-1-phase-2-transition" title="Permanent link">&para;</a></h3>
-<p>After Phase 1 validations pass:</p>
-<ol>
-<li>Fix any issues identified by agents</li>
-<li><strong>Break changes into topical commits</strong> (see release.md for commit conventions)</li>
-<li>Commit all fixes with conventional commit messages</li>
-<li><code>changelog-finalize</code> populates commit hashes in CHANGELOG.json</li>
-<li><code>changelog-finalize</code> generates CHANGELOG.md</li>
-<li><code>changelog-finalize</code> commits changelog updates</li>
-<li><code>execute-release</code> creates and pushes the tag</li>
-</ol>
-<hr />
-<h2 id="expected-status-report">Expected Status Report<a class="headerlink" href="#expected-status-report" title="Permanent link">&para;</a></h2>
-<p><strong>Report width:</strong> 78 characters (fits 80-column terminals)</p>
-<p><strong>Status message guidelines:</strong>
-- Check name column: 22 characters max
-- Status icon + label: 8 characters (e.g., <code>🟢 GO</code>)
-- Message column: ~35 characters max</p>
-<p>After execution, report status in this format:</p>
+<h2 id="example-output">Example Output<a class="headerlink" href="#example-output" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>╔════════════════════════════════════════════════════════════════════════════╗
-<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>║                            TEAM STATUS REPORT                              ║
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>║                           QA FIX LOOP                                      ║
 <a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>╠════════════════════════════════════════════════════════════════════════════╣
-<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>║ Project: github.com/grokify/release-agent                                  ║
-<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>║ Target:  v0.3.0                                                            ║
-<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>╠════════════════════════════════════════════════════════════════════════════╣
-<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>║ PHASE 1: REVIEW                                                            ║
-<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>╠════════════════════════════════════════════════════════════════════════════╣
-<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>║ pm-validation (pm)                                                         ║
-<a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a>║   version-recommendation   🟢 GO    v0.3.0 (minor bump)                    ║
-<a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a>║   release-scope            🟢 GO    (optional)                             ║
-<a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a>║   changelog-quality        🟢 GO    Highlights present                     ║
-<a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a>║   breaking-changes         🟢 GO    None detected                          ║
-<a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a>║   roadmap-alignment        🟢 GO    (optional)                             ║
-<a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a>║   deprecation-notices      🟢 GO    (optional)                             ║
-<a id="__codelineno-5-16" name="__codelineno-5-16" href="#__codelineno-5-16"></a>╠════════════════════════════════════════════════════════════════════════════╣
-<a id="__codelineno-5-17" name="__codelineno-5-17" href="#__codelineno-5-17"></a>║ qa-validation (qa)                                                         ║
-<a id="__codelineno-5-18" name="__codelineno-5-18" href="#__codelineno-5-18"></a>║   build                    🟢 GO                                           ║
-<a id="__codelineno-5-19" name="__codelineno-5-19" href="#__codelineno-5-19"></a>║   tests                    🟢 GO                                           ║
-<a id="__codelineno-5-20" name="__codelineno-5-20" href="#__codelineno-5-20"></a>║   lint                     🟢 GO                                           ║
-<a id="__codelineno-5-21" name="__codelineno-5-21" href="#__codelineno-5-21"></a>║   format                   🟢 GO                                           ║
-<a id="__codelineno-5-22" name="__codelineno-5-22" href="#__codelineno-5-22"></a>║   mod-tidy                 🟢 GO                                           ║
-<a id="__codelineno-5-23" name="__codelineno-5-23" href="#__codelineno-5-23"></a>║   error-handling           🟢 GO                                           ║
-<a id="__codelineno-5-24" name="__codelineno-5-24" href="#__codelineno-5-24"></a>║   local-replace            🟢 GO                                           ║
-<a id="__codelineno-5-25" name="__codelineno-5-25" href="#__codelineno-5-25"></a>╠════════════════════════════════════════════════════════════════════════════╣
-<a id="__codelineno-5-26" name="__codelineno-5-26" href="#__codelineno-5-26"></a>║ docs-validation (documentation)                                            ║
-<a id="__codelineno-5-27" name="__codelineno-5-27" href="#__codelineno-5-27"></a>║   readme                   🟢 GO    340 lines, comprehensive               ║
-<a id="__codelineno-5-28" name="__codelineno-5-28" href="#__codelineno-5-28"></a>║   changelog-md             🟢 GO    v0.3.0 documented                      ║
-<a id="__codelineno-5-29" name="__codelineno-5-29" href="#__codelineno-5-29"></a>║   changelog-json           🟢 GO    (optional)                             ║
-<a id="__codelineno-5-30" name="__codelineno-5-30" href="#__codelineno-5-30"></a>║   release-notes            🟢 GO    docs/releases/v0.3.0.md                ║
-<a id="__codelineno-5-31" name="__codelineno-5-31" href="#__codelineno-5-31"></a>║   prd                      🟡 SKIP  (optional)                             ║
-<a id="__codelineno-5-32" name="__codelineno-5-32" href="#__codelineno-5-32"></a>║   trd                      🟡 SKIP  (optional)                             ║
-<a id="__codelineno-5-33" name="__codelineno-5-33" href="#__codelineno-5-33"></a>╠════════════════════════════════════════════════════════════════════════════╣
-<a id="__codelineno-5-34" name="__codelineno-5-34" href="#__codelineno-5-34"></a>║ PHASE 2: FINALIZE                                                          ║
-<a id="__codelineno-5-35" name="__codelineno-5-35" href="#__codelineno-5-35"></a>╠════════════════════════════════════════════════════════════════════════════╣
-<a id="__codelineno-5-36" name="__codelineno-5-36" href="#__codelineno-5-36"></a>║ changelog-finalize (release)                                               ║
-<a id="__codelineno-5-37" name="__codelineno-5-37" href="#__codelineno-5-37"></a>║   link-commits             🟢 GO    12 commits linked                      ║
-<a id="__codelineno-5-38" name="__codelineno-5-38" href="#__codelineno-5-38"></a>║   generate-changelog       🟢 GO    CHANGELOG.md updated                   ║
-<a id="__codelineno-5-39" name="__codelineno-5-39" href="#__codelineno-5-39"></a>║   commit-changelog         🟢 GO    Committed abc1234                      ║
-<a id="__codelineno-5-40" name="__codelineno-5-40" href="#__codelineno-5-40"></a>╠════════════════════════════════════════════════════════════════════════════╣
-<a id="__codelineno-5-41" name="__codelineno-5-41" href="#__codelineno-5-41"></a>║ execute-release (release-coordinator)                                      ║
-<a id="__codelineno-5-42" name="__codelineno-5-42" href="#__codelineno-5-42"></a>║   ci-status                🟢 GO    CI passed                              ║
-<a id="__codelineno-5-43" name="__codelineno-5-43" href="#__codelineno-5-43"></a>║   create-tag               🟢 GO    v0.3.0 created                         ║
-<a id="__codelineno-5-44" name="__codelineno-5-44" href="#__codelineno-5-44"></a>║   push-tag                 🟢 GO    Pushed to origin                       ║
-<a id="__codelineno-5-45" name="__codelineno-5-45" href="#__codelineno-5-45"></a>╠════════════════════════════════════════════════════════════════════════════╣
-<a id="__codelineno-5-46" name="__codelineno-5-46" href="#__codelineno-5-46"></a>║                          🚀 TEAM: GO for v0.3.0 🚀                         ║
-<a id="__codelineno-5-47" name="__codelineno-5-47" href="#__codelineno-5-47"></a>╚════════════════════════════════════════════════════════════════════════════╝
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>║ Project: github.com/plexusone/omnivoice-core                              ║
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>╠════════════════════════════════════════════════════════════════════════════╣
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>║ ATTEMPT 1                                                                  ║
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>╠════════════════════════════════════════════════════════════════════════════╣
+<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>║ QA Validation:     🔴 NO-GO (17 issues)                                   ║
+<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>║   errcheck         9 issues                                                ║
+<a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a>║   gosec G306       3 issues                                                ║
+<a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a>║   gosec G115       4 issues                                                ║
+<a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a>║   unused           1 issue                                                 ║
+<a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a>╠════════════════════════════════════════════════════════════════════════════╣
+<a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a>║ Code-Fixer:        ✓ 17 fixes applied                                     ║
+<a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a>╠════════════════════════════════════════════════════════════════════════════╣
+<a id="__codelineno-5-16" name="__codelineno-5-16" href="#__codelineno-5-16"></a>║ QA Re-validation:  🟢 GO                                                  ║
+<a id="__codelineno-5-17" name="__codelineno-5-17" href="#__codelineno-5-17"></a>╠════════════════════════════════════════════════════════════════════════════╣
+<a id="__codelineno-5-18" name="__codelineno-5-18" href="#__codelineno-5-18"></a>║                         ✓ QA FIX LOOP COMPLETE                            ║
+<a id="__codelineno-5-19" name="__codelineno-5-19" href="#__codelineno-5-19"></a>║                           Proceeding to release                            ║
+<a id="__codelineno-5-20" name="__codelineno-5-20" href="#__codelineno-5-20"></a>╚════════════════════════════════════════════════════════════════════════════╝
 </code></pre></div>
+<h2 id="see-also">See Also<a class="headerlink" href="#see-also" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="../orchestration/">Orchestration</a> - Multi-agent coordination</li>
+<li><a href="../configuration/">Configuration</a> - Tool configuration</li>
+<li><a href="getting-started/index.md">Getting Started</a> - Quick start guide</li>
+</ul>
 
 
 
