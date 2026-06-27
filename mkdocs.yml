@@ -78,6 +78,7 @@ nav:
   - Architecture:
       - Orchestration: orchestration.md
       - QA Fix Loop: qa-fix-loop.md
+      - Docs Fix Loop: docs-fix-loop.md
   - Integrations:
       - Claude Code: integrations/claude-code.md
       - Git Hooks: integrations/git-hooks.md
