@@ -7,9 +7,8 @@
       "platform": "claude-code",
       "mode": "single-process",
       "priority": "p1",
-      "output": ".claude/agents",
+      "output": ".claude",
       "config": {
-        "agentDir": ".claude/agents",
         "format": "markdown"
       }
     },
@@ -18,9 +17,8 @@
       "platform": "claude-code",
       "mode": "single-process",
       "priority": "p1",
-      "output": "plugins/claude/agents",
+      "output": "plugins/claude",
       "config": {
-        "agentDir": "plugins/claude/agents",
         "format": "markdown"
       }
     },
@@ -29,9 +27,8 @@
       "platform": "kiro-cli",
       "mode": "single-process",
       "priority": "p1",
-      "output": "plugins/kiro/agents",
+      "output": "plugins/kiro",
       "config": {
-        "pluginDir": "plugins/kiro",
         "format": "json"
       }
     },
@@ -42,8 +39,7 @@
       "priority": "p2",
       "output": "plugins/gemini",
       "config": {
-        "model": "gemini-2.0-flash",
-        "configDir": ".gemini"
+        "model": "gemini-2.0-flash"
       }
     }
   ]
