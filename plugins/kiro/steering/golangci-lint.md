@@ -1,15 +1,6 @@
----
-name: golangci-lint
-description: Run golangci-lint and fix Go lint errors with proper error handling patterns
-triggers: [lint, golangci-lint, linter, go lint]
-dependencies: [golangci-lint]
----
-
 # Golangci Lint
 
 Run golangci-lint and fix Go lint errors with proper error handling patterns
-
-## Instructions
 
 # Go Lint Skill
 
@@ -267,4 +258,3 @@ if fix.HasHelper() {
 - Lint fixes: `github.com/grokify/mogo/lintfix`
 - Gosec helpers: `github.com/grokify/mogo/lintfix/gosec`
 - Canonical source: `github.com/plexusone/assistantkit/capabilities/go`
-

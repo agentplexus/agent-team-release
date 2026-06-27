@@ -1,0 +1,12 @@
+{
+  "name": "agent-team-release",
+  "version": "1.0.0",
+  "description": "Multi-agent team for automating software release workflows including versioning, changelog generation, CI verification, security scanning, and Git tagging",
+  "author": "plexusone",
+  "license": "Apache-2.0",
+  "repository": "https://github.com/plexusone/agent-team-release",
+  "homepage": "https://github.com/plexusone/agent-team-release",
+  "commands": "./commands/",
+  "skills": "./skills/",
+  "agents": "./agents/"
+}
