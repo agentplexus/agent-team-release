@@ -77,6 +77,7 @@ nav:
   - Output Formats: output-formats.md
   - Architecture:
       - Orchestration: orchestration.md
+      - QA Fix Loop: qa-fix-loop.md
   - Integrations:
       - Claude Code: integrations/claude-code.md
       - Git Hooks: integrations/git-hooks.md
