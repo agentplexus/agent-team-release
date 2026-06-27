@@ -26,45 +26,77 @@ Release Agent Team validates code quality, generates changelogs, updates documen
 
 ## Agent Workflow
 
-Release Agent Team uses a DAG (Directed Acyclic Graph) workflow with 6 specialized agents:
+Release Agent Team uses a DAG (Directed Acyclic Graph) workflow with specialized agents and automated fix loops:
 
 ```mermaid
 graph TD
     PM[PM Agent<br/>version & scope] --> QA[QA Agent<br/>build, test, lint]
-    PM --> Docs[Documentation Agent<br/>README, changelog, release notes]
+    PM --> DocsReview[Docs Reviewer<br/>validate docs]
     PM --> Security[Security Agent<br/>license, vulns, secrets]
     PM --> Release[Release Agent<br/>git status, CI config]
 
-    QA --> Release
-    Docs --> Release
-    Security --> Release
+    QA -->|NO-GO| CodeFixer[Code-Fixer<br/>fix lint errors]
+    CodeFixer -->|re-test| QA
+
+    DocsReview -->|NO-GO| DocsWriter[Docs Writer<br/>create/update docs]
+    DocsWriter -->|re-review| DocsReview
 
     QA --> Coordinator[Release Coordinator<br/>execute release]
-    Docs --> Coordinator
+    DocsReview --> Coordinator
     Security --> Coordinator
     Release --> Coordinator
 
     style PM fill:#e1f5fe,color:#01579b
     style QA fill:#fff3e0,color:#e65100
-    style Docs fill:#e8f5e9,color:#1b5e20
+    style DocsReview fill:#e8f5e9,color:#1b5e20
+    style DocsWriter fill:#c8e6c9,color:#1b5e20
+    style CodeFixer fill:#ffe0b2,color:#e65100
     style Security fill:#fce4ec,color:#880e4f
     style Release fill:#f3e5f5,color:#4a148c
     style Coordinator fill:#fff8e1,color:#f57f17
 ```
 
+### Validation Agents
+
 | Agent | Role | Checks |
 |-------|------|--------|
 | **PM** | Product Management | Version recommendation, release scope, changelog quality, breaking changes |
 | **QA** | Quality Assurance | Build, tests, lint, format, error handling, mod tidy |
-| **Documentation** | Documentation | README, PRD, TRD, release notes, CHANGELOG |
+| **Docs Reviewer** | Documentation Validation | README, CHANGELOG.json, release notes, mkdocs nav |
 | **Security** | Security | LICENSE, vulnerability scan, dependency audit, secret detection |
 | **Release** | Release Management | Version availability, git status, CI configuration |
-| **Coordinator** | Orchestration | Executes release workflow after all validations pass |
 
-The workflow ensures:
+### Fix Loop Agents
+
+| Agent | Role | Triggered By |
+|-------|------|--------------|
+| **Code-Fixer** | Fix lint/build errors | QA NO-GO |
+| **Docs Writer** | Create/update release docs | Docs Reviewer NO-GO |
+| **Coordinator** | Orchestrate fix loops & release | All validations |
+
+### Automated Fix Loops
+
+The release-coordinator orchestrates two automated fix loops:
+
+**QA Fix Loop** (qa → code-fixer → qa):
+
+- Triggered when QA validation fails (lint errors, format issues)
+- Code-fixer applies automatic fixes (errcheck, gosec, gofmt)
+- Re-runs QA validation until GO or max attempts reached
+
+**Docs Fix Loop** (docs-reviewer → docs-writer → docs-reviewer):
+
+- Triggered when documentation is incomplete
+- Docs-writer creates CHANGELOG entries, release notes, mkdocs nav
+- Re-validates until all documentation checks pass
+
+See [QA Fix Loop](https://plexusone.dev/agent-team-release/qa-fix-loop) and [Docs Fix Loop](https://plexusone.dev/agent-team-release/docs-fix-loop) for details.
+
+### Workflow Guarantees
 
 - **PM runs first** - Validates version and scope before other checks
 - **QA, Docs, Security run in parallel** - Independent validation after PM approval
+- **Fix loops auto-remediate** - Reduces manual intervention
 - **Release runs after all validations** - Confirms release readiness
 - **Coordinator executes last** - Only proceeds when all teams report GO
 

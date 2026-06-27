@@ -103,29 +103,55 @@ Task tool:
 
 ### Task: docs-validation
 
-Documentation validation
+Documentation validation using the Docs Fix Loop (docs-reviewer → docs-writer → docs-reviewer).
 
 **Instructions:**
 
-Use the Task tool to spawn subagent `documentation`:
+Use the Task tool to spawn subagent `docs-reviewer`:
 
 ```
 Task tool:
-  subagent_type: general-purpose
+  subagent_type: docs-reviewer
   description: "Documentation validation"
   prompt: |
-    You are the documentation specialist. Read your instructions from validation/specs/documentation.md
-
-    Execute the following subtasks and report Go/No-Go for each:
-    - readme
-    - changelog-md
-    - changelog-json
-    - release-notes
-    - prd
-    - trd
+    Review documentation for {VERSION} release in {REPO_PATH}
 
     Target version: {VERSION from pm-validation}
+    Previous version: {PREVIOUS_TAG}
+
+    Check:
+    - README.md exists
+    - CHANGELOG.json validation (schangelog validate)
+    - CHANGELOG.md exists and contains target version
+    - Release notes exist (docs/releases/v{VERSION}.md)
+    - mkdocs.yml nav includes target version
+
+    Report GO/NO-GO status with specific findings.
 ```
+
+If NO-GO, invoke `docs-writer` to create/update documentation:
+
+```
+Task tool:
+  subagent_type: docs-writer
+  description: "Create release documentation"
+  prompt: |
+    Create documentation for {VERSION} release in {REPO_PATH}
+
+    Target version: {VERSION}
+    Previous version: {PREVIOUS_TAG}
+    Findings: {FINDINGS from docs-reviewer}
+
+    Steps:
+    1. Parse commits: schangelog parse-commits --since={PREVIOUS_TAG}
+    2. Update CHANGELOG.json with new version entry
+    3. Generate CHANGELOG.md: schangelog generate CHANGELOG.json -o CHANGELOG.md
+    4. Create docs/releases/v{VERSION}.md
+    5. Update mkdocs.yml nav
+    6. Validate: schangelog validate CHANGELOG.json
+```
+
+Then re-run `docs-reviewer` to verify. Loop until GO or max attempts.
 
 **Subtasks:**
 
@@ -133,12 +159,11 @@ Task tool:
 |---------|------|----------|----------|
 | readme | file | Yes | Pass |
 | changelog-md | file | Yes | Pass |
-| changelog-json | file | No | Pass |
-| release-notes | pattern | Yes | Pass |
-| prd | file | No | Pass |
-| trd | file | No | Pass |
+| changelog-json | command | Yes | schangelog validate passes |
+| release-notes | file | Yes | Pass |
+| mkdocs-nav | file | No | Pass |
 
-**Sign-off:** GO if all 3 required subtasks pass. Optional subtasks report WARN on failure.
+**Sign-off:** GO if all required subtasks pass. See [Docs Fix Loop](docs-fix-loop.md) for details.
 
 ---
 
@@ -146,7 +171,7 @@ Task tool:
 
 ```
 ═══════════════════════════════════════════════════════════════
-                        PHASE 1: Review
+                        PHASE 1: Review + Fix Loops
 ═══════════════════════════════════════════════════════════════
 
                     ┌─────────────────┐
@@ -156,17 +181,25 @@ Task tool:
                              │
               ┌──────────────┼──────────────┐
               ▼              ▼              ▼
-       ┌──────────┐   ┌──────────┐   ┌──────────┐
-       │    qa    │   │   docs   │   │ security │
-       └────┬─────┘   └────┬─────┘   └────┬─────┘
-            │              │              │
-            └──────────────┼──────────────┘
-                           ▼
+       ┌──────────┐   ┌──────────────┐   ┌──────────┐
+       │    qa    │   │docs-reviewer │   │ security │
+       └────┬─────┘   └──────┬───────┘   └────┬─────┘
+            │                │                │
+            │ NO-GO?         │ NO-GO?         │
+            ▼                ▼                │
+       ┌──────────┐   ┌──────────────┐        │
+       │code-fixer│   │ docs-writer  │        │
+       └────┬─────┘   └──────┬───────┘        │
+            │                │                │
+            │ re-test        │ re-review      │
+            └───► qa ◄───────┴───► docs ◄─────┘
+                             │
+                             ▼
                     ┌─────────────────┐
                     │ release-valid.  │
                     └─────────────────┘
 
-        ▼▼▼ Fix issues and commit changes ▼▼▼
+        ▼▼▼ Automated fix loops reduce manual intervention ▼▼▼
 
 ═══════════════════════════════════════════════════════════════
                      PHASE 2: Finalize
@@ -297,3 +330,11 @@ After execution, report status in this format:
 ║                          🚀 TEAM: GO for v0.3.0 🚀                         ║
 ╚════════════════════════════════════════════════════════════════════════════╝
 ```
+
+---
+
+## See Also
+
+- [QA Fix Loop](qa-fix-loop.md) - Automated build/test/lint fix cycle
+- [Docs Fix Loop](docs-fix-loop.md) - Automated documentation creation cycle
+- [Configuration](configuration.md) - Tool configuration options
