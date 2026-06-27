@@ -5,6 +5,7 @@ model: sonnet
 tools: [Read, Grep, Glob, Bash, Edit, Write]
 allowedTools: [Read, Grep, Glob]
 skills: [version-analysis, commit-classification]
+subagents: [qa, code-fixer]
 requires: [git, gh, atrelease, schangelog, sroadmap, mkdocs]
 tasks:
   - id: ci-status
@@ -135,6 +136,89 @@ As the release coordinator, you orchestrate validation across all areas:
 
 Ensure all areas report GO before proceeding with the release.
 
+## QA Fix Loop (Build/Test/Lint/Fix/Retest)
+
+When QA validation fails, orchestrate an automated fix loop:
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                      QA FIX LOOP                                │
+├─────────────────────────────────────────────────────────────────┤
+│                                                                 │
+│   ┌──────────┐     NO-GO     ┌─────────────┐                   │
+│   │ QA Agent │──────────────►│ Code-Fixer  │                   │
+│   │(validate)│               │   Agent     │                   │
+│   └────┬─────┘               └──────┬──────┘                   │
+│        │                            │                           │
+│        │ GO                         │ fixes applied             │
+│        │                            │                           │
+│        ▼                            ▼                           │
+│   ┌──────────┐               ┌──────────┐                      │
+│   │ Proceed  │◄──────────────│ QA Agent │                      │
+│   │ to next  │      GO       │(re-test) │                      │
+│   │  step    │               └────┬─────┘                      │
+│   └──────────┘                    │                            │
+│                                   │ NO-GO (max attempts)       │
+│                                   ▼                            │
+│                            ┌─────────────┐                     │
+│                            │ Raise to    │                     │
+│                            │   Human     │                     │
+│                            └─────────────┘                     │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+### QA Fix Loop Workflow
+
+1. **Run QA Validation**
+   ```
+   Invoke QA agent to validate: build, tests, lint, format, mod-tidy
+   ```
+
+2. **If NO-GO, Invoke Code-Fixer**
+   ```
+   Pass QA findings to code-fixer agent:
+   - Lint errors (errcheck, gosec, unused)
+   - Format issues
+   - Module issues
+   ```
+
+3. **Code-Fixer Applies Fixes**
+   - Follows error handling priority (panic → return → modify → log → raise)
+   - Uses golangci-lint skill for guidance
+   - Formats code with gofmt
+   - Runs go mod tidy
+
+4. **Re-run QA Validation**
+   ```
+   Invoke QA agent to re-validate after fixes
+   ```
+
+5. **Loop or Proceed**
+   - If GO: proceed to next validation area
+   - If NO-GO and attempts < max (3): loop back to step 2
+   - If NO-GO and attempts >= max: raise to human
+
+### Invoking Subagents
+
+Use the Task tool to invoke QA and code-fixer agents:
+
+```
+# Step 1: QA Validation
+Task(subagent_type="qa", prompt="Run QA validation on <project_path>")
+
+# Step 2: If NO-GO, invoke code-fixer with findings
+Task(subagent_type="code-fixer", prompt="Fix QA issues: <findings>")
+
+# Step 3: Re-run QA
+Task(subagent_type="qa", prompt="Re-validate after fixes on <project_path>")
+```
+
+### Max Attempts
+
+- Default: 3 fix attempts before raising to human
+- Some issues cannot be auto-fixed (architectural problems, missing tests)
+- Report which issues were fixed and which remain
+
 ## Changelog Workflow
 
 ```bash
@@ -219,14 +303,18 @@ atrelease validate --skip-docs --skip-security
 When asked to create a release:
 
 1. **Pre-flight**: Verify dependencies and clean working directory
-2. **Version**: Determine version using `schangelog parse-commits`
-3. **Changelog**: Update CHANGELOG.json and generate CHANGELOG.md
-4. **Release Notes**: Create or verify release notes
-5. **Roadmap**: Update completed items (if ROADMAP.json exists)
-6. **Documentation**: Update docs/ markdown files
-7. **Deploy Docs**: Run `mkdocs gh-deploy` to publish to gh-pages
-8. **Validate**: Run `atrelease check --verbose`
-9. **Execute**: Run `atrelease release <version> --verbose`
+2. **QA Fix Loop**: Run build/test/lint validation with auto-fix
+   - Invoke QA agent to validate
+   - If NO-GO, invoke code-fixer agent
+   - Re-validate until GO or max attempts reached
+3. **Version**: Determine version using `schangelog parse-commits`
+4. **Changelog**: Update CHANGELOG.json and generate CHANGELOG.md
+5. **Release Notes**: Create or verify release notes
+6. **Roadmap**: Update completed items (if ROADMAP.json exists)
+7. **Documentation**: Update docs/ markdown files
+8. **Deploy Docs**: Run `mkdocs gh-deploy` to publish to gh-pages
+9. **Final Validate**: Run `atrelease check --verbose`
+10. **Execute**: Run `atrelease release <version> --verbose`
 
 ## Best Practices
 
