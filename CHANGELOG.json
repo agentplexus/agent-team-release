@@ -6,6 +6,43 @@
   "commitConvention": "conventional",
   "releases": [
     {
+      "version": "v0.9.0",
+      "date": "2026-06-28",
+      "highlights": [
+        { "description": "REAL/VEAL autonomous loop patterns for automated fix cycles" },
+        { "description": "Loop specifications for QA, docs, and security validation" },
+        { "description": "Agents enriched with loop participation instructions" }
+      ],
+      "added": [
+        { "description": "REAL/VEAL loop specifications in `specs/loops/`", "commit": "da8edef" },
+        { "description": "`qa-fix.yaml` - VEAL loop for QA validation (validator: qa, actor: code-fixer)", "commit": "da8edef" },
+        { "description": "`docs-fix.yaml` - VEAL loop for documentation validation (validator: docs-reviewer, actor: docs-writer)", "commit": "da8edef" },
+        { "description": "`security-fix.yaml` - VEAL loop for security scanning (validator: security, actor: code-fixer)", "commit": "da8edef" },
+        { "description": "`docs-next-version.yaml` - REAL loop for release notes creation", "commit": "da8edef" },
+        { "description": "Loop participation instructions injected into validator/actor agents", "commit": "ea13491" },
+        { "description": "Docs-reviewer agent with docs-fix loop participation", "commit": "ac629f8" },
+        { "description": "Docs-writer agent with docs-fix loop participation", "commit": "180890f" },
+        { "description": "Example docs-fix-loop reports showing loop execution", "commit": "13d73d7" }
+      ],
+      "changed": [
+        { "description": "Release-coordinator orchestrates VEAL loops with max_attempts and escalation", "commit": "5a51be3" },
+        { "description": "All validation agents include loop participation sections", "commit": "ea13491" }
+      ],
+      "dependencies": [
+        { "description": "`assistantkit` v0.13.0 → v0.14.0 (loops package)", "commit": "431158f" },
+        { "description": "`multi-agent-spec` v0.8.0 → v0.9.0 (loop schema)", "commit": "431158f" }
+      ],
+      "documentation": [
+        { "description": "Updated README with fix loop workflow diagram", "commit": "aaa9469" },
+        { "description": "Added docs-fix-loop.md orchestration documentation", "commit": "052ffba" },
+        { "description": "Updated orchestration.md with loop details", "commit": "aaa9469" }
+      ],
+      "infrastructure": [
+        { "description": "Regenerated Claude Code and Kiro CLI plugins", "commit": "302a389" },
+        { "description": "Regenerated plugins with loop instructions", "commit": "ea13491" }
+      ]
+    },
+    {
       "version": "v0.8.0",
       "date": "2026-03-02",
       "highlights": [

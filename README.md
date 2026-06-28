@@ -92,6 +92,19 @@ The release-coordinator orchestrates two automated fix loops:
 
 See [QA Fix Loop](https://plexusone.dev/agent-team-release/qa-fix-loop) and [Docs Fix Loop](https://plexusone.dev/agent-team-release/docs-fix-loop) for details.
 
+### Loop Specifications
+
+Fix loops are formally defined using REAL/VEAL patterns in `specs/loops/`:
+
+| Loop | Type | Validator | Actor | max_attempts |
+|------|------|-----------|-------|--------------|
+| `qa-fix` | VEAL | qa | code-fixer | 3 |
+| `docs-fix` | VEAL | docs-reviewer | docs-writer | 3 |
+| `security-fix` | VEAL | security | code-fixer | 3 |
+| `docs-next-version` | REAL | - | docs-writer | 5 |
+
+Loops are bounded by `max_attempts` and escalate to human when exceeded.
+
 ### Workflow Guarantees
 
 - **PM runs first** - Validates version and scope before other checks
