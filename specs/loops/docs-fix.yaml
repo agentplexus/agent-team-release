@@ -1,0 +1,79 @@
+# Docs Fix Loop - VEAL Pattern
+# Validates documentation completeness and automatically creates/updates docs
+
+name: docs-fix
+type: VEAL
+description: |
+  Documentation validation and fix loop for releases.
+  Validates README, CHANGELOG, release notes, and MkDocs configuration.
+  Automatically creates/updates documentation through docs-writer agent.
+
+validator: docs-reviewer
+actor: docs-writer
+
+max_attempts: 3
+escalation: human
+
+success_criteria: |
+  All documentation checks pass with GO status:
+  - README.md exists and is current
+  - CHANGELOG.json is valid with target version entry
+  - CHANGELOG.md is generated and current
+  - Release notes exist for target version
+  - MkDocs navigation includes target version (if applicable)
+
+inputs:
+  - name: target_version
+    type: string
+    description: The version being released (e.g., v1.2.0)
+    required: true
+  - name: previous_version
+    type: string
+    description: The previous version tag for changelog generation
+    required: true
+
+checks:
+  - id: readme
+    description: Verify README.md exists
+    type: file
+    file: README.md
+    required: true
+    expected: File exists
+
+  - id: changelog-json
+    description: Validate CHANGELOG.json structure and version entry
+    type: command
+    command: schangelog validate CHANGELOG.json
+    required: true
+    expected: Valid structure with target version entry
+
+  - id: changelog-md
+    description: Verify CHANGELOG.md contains target version
+    type: pattern
+    pattern: "## \\[v?\\d+\\.\\d+\\.\\d+\\]"
+    files: CHANGELOG.md
+    required: true
+    expected: Target version section exists
+
+  - id: release-notes
+    description: Verify release notes exist for target version
+    type: file
+    file: docs/releases/${target_version}.md
+    required: false  # Optional for patch releases
+    expected: Release notes file exists
+
+  - id: mkdocs
+    description: Verify MkDocs nav includes target version
+    type: pattern
+    pattern: "- ${target_version}"
+    files: mkdocs.yml
+    required: false  # Only if mkdocs.yml exists
+    expected: Version appears in navigation
+
+outputs:
+  - name: changelog_updated
+    type: boolean
+    description: Whether CHANGELOG was created or updated
+  - name: release_notes_path
+    type: string
+    description: Path to the release notes file

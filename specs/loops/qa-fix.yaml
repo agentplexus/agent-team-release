@@ -1,0 +1,75 @@
+# QA Fix Loop - VEAL Pattern
+# Validates code quality and automatically fixes issues
+
+name: qa-fix
+type: VEAL
+description: |
+  QA validation and fix loop for Go projects.
+  Validates build, tests, lint, format, and error handling.
+  Automatically fixes issues through code-fixer agent.
+
+validator: qa
+actor: code-fixer
+
+max_attempts: 3
+escalation: human
+
+success_criteria: |
+  All checks pass with GO status:
+  - Code builds without errors
+  - All tests pass
+  - No lint errors
+  - Code is properly formatted
+  - No unhandled errors
+
+checks:
+  - id: build
+    description: Verify code compiles
+    type: command
+    command: go build ./...
+    required: true
+    expected: Exit code 0, no compilation errors
+
+  - id: tests
+    description: Run test suite
+    type: command
+    command: go test -v ./...
+    required: true
+    expected: All tests pass
+
+  - id: lint
+    description: Run golangci-lint
+    type: command
+    command: golangci-lint run
+    required: true
+    expected: No lint errors
+
+  - id: format
+    description: Check code formatting
+    type: command
+    command: gofmt -l .
+    required: true
+    expected: No files need formatting
+
+  - id: mod-tidy
+    description: Verify go.mod is tidy
+    type: command
+    command: go mod tidy -diff
+    required: true
+    expected: No changes needed
+
+  - id: error-handling
+    description: Check for ignored errors
+    type: pattern
+    pattern: "_ = err"
+    files: "**/*.go"
+    required: true
+    expected: No occurrences of ignored errors
+
+  - id: local-replace
+    description: Check for local replace directives
+    type: pattern
+    pattern: "replace .* => \\./"
+    files: go.mod
+    required: true
+    expected: No local replace directives

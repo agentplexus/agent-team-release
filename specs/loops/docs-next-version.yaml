@@ -1,0 +1,69 @@
+# Docs Next Version Loop - REAL Pattern
+# Mission-driven loop for preparing documentation for the next release
+
+name: docs-next-version
+type: REAL
+description: |
+  Mission-driven documentation preparation loop.
+  Analyzes commits since last release and prepares comprehensive
+  documentation for the next version including changelog, release notes,
+  and user guides.
+
+actor: docs-writer
+
+mission: |
+  Prepare complete documentation for the next release version.
+
+  Tasks:
+  1. Analyze commits since the previous release tag
+  2. Classify commits by type (feat, fix, docs, etc.)
+  3. Generate structured CHANGELOG.json entry
+  4. Generate CHANGELOG.md from JSON
+  5. Create release notes with highlights, features, fixes
+  6. Update MkDocs navigation if applicable
+  7. Identify any breaking changes and document migration steps
+
+  Quality requirements:
+  - All significant changes must be documented
+  - Breaking changes must have migration guides
+  - Release notes should be human-readable
+  - CHANGELOG.json must validate with schangelog
+
+max_attempts: 3
+escalation: human
+
+success_criteria: |
+  Documentation is complete and accurate:
+  - CHANGELOG.json validates successfully
+  - CHANGELOG.md is generated and readable
+  - Release notes exist with all sections filled
+  - Breaking changes have migration documentation
+  - Human review approves the documentation
+
+inputs:
+  - name: target_version
+    type: string
+    description: The version being prepared (e.g., v1.2.0)
+    required: true
+  - name: previous_version
+    type: string
+    description: The previous version tag
+    required: true
+  - name: release_type
+    type: string
+    description: Type of release (major, minor, patch)
+    required: false
+
+outputs:
+  - name: changelog_entry
+    type: object
+    description: The structured changelog entry created
+  - name: release_notes_path
+    type: string
+    description: Path to the release notes file
+  - name: breaking_changes
+    type: array
+    description: List of breaking changes identified
+  - name: highlights
+    type: array
+    description: Key highlights for the release
