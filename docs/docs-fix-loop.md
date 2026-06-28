@@ -2,6 +2,14 @@
 
 The release-coordinator orchestrates an automated **review/create/re-review loop** to ensure release documentation is complete before tagging.
 
+!!! info "VEAL Pattern"
+    This loop implements the **VEAL (Validate Eval Act Loop)** pattern from [multi-agent-spec](https://github.com/plexusone/multi-agent-spec). The formal specification is in [`specs/loops/docs-fix.yaml`](https://github.com/plexusone/agent-team-release/blob/main/specs/loops/docs-fix.yaml).
+
+    - **Validator:** docs-reviewer (read-only)
+    - **Actor:** docs-writer (write access)
+    - **max_attempts:** 3
+    - **Escalation:** human
+
 ## Overview
 
 When documentation validation fails, the release-coordinator automatically invokes the docs-writer agent to create or update documentation, then re-runs validation. This loop continues until all documentation checks pass or maximum attempts are reached.

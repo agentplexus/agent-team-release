@@ -8,6 +8,7 @@ Release Agent validates code quality, generates changelogs, updates documentatio
 
 - **Auto-detection** - Detects Go, TypeScript, JavaScript, Python, Rust, Swift
 - **Validation checks** - Build, test, lint, format, security, documentation checks
+- **Automated fix loops** - VEAL pattern loops for QA and docs that auto-remediate issues
 - **Monorepo support** - Handles repositories with multiple languages
 - **Changelog generation** - Integrates with schangelog for automated changelogs
 - **Documentation updates** - Updates README badges and version references

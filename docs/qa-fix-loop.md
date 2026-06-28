@@ -2,6 +2,14 @@
 
 The release-coordinator orchestrates an automated **build/test/lint/fix/retest loop** to ensure code quality before release.
 
+!!! info "VEAL Pattern"
+    This loop implements the **VEAL (Validate Eval Act Loop)** pattern from [multi-agent-spec](https://github.com/plexusone/multi-agent-spec). The formal specification is in [`specs/loops/qa-fix.yaml`](https://github.com/plexusone/agent-team-release/blob/main/specs/loops/qa-fix.yaml).
+
+    - **Validator:** qa (read-only)
+    - **Actor:** code-fixer (write access)
+    - **max_attempts:** 3
+    - **Escalation:** human
+
 ## Overview
 
 When QA validation fails, the release-coordinator automatically invokes the code-fixer agent to resolve issues, then re-runs QA validation. This loop continues until all checks pass or maximum attempts are reached.
