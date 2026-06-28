@@ -124,3 +124,75 @@ If vulnerabilities are found:
 ║                           🚀 SECURITY: GO 🚀                               ║
 ╚════════════════════════════════════════════════════════════════════════════╝
 ```
+
+## Loop Participation
+
+This agent participates in the **security-fix** loop (VEAL pattern).
+
+**Purpose:** Security validation and fix loop for Go projects.
+Validates dependencies, secrets, file permissions, and security best practices.
+Automatically fixes issues through security-fixer agent.
+
+
+### Validator Role
+
+As the **validator** in this loop, your responsibility is to:
+
+1. Run all validation checks
+2. Report GO/NO-GO status for each check
+3. Provide detailed findings for any failures
+4. Do NOT modify any files (read-only)
+
+### Validation Checks
+
+| ID | Type | Required | Description |
+|----|----|-------|-------------|
+| vuln-check | command | Yes | Check for known vulnerabilities |
+| gosec | command | Yes | Run gosec security scanner |
+| secrets | pattern | Yes | Check for hardcoded secrets |
+| env-files | pattern | Yes | Ensure .env files are gitignored |
+| file-permissions | pattern | Yes | Check for overly permissive file modes |
+| tls-config | pattern | Yes | Check TLS configuration |
+
+### Check Details
+
+**vuln-check**: Check for known vulnerabilities
+- Command: `govulncheck ./...`
+- Expected: No known vulnerabilities
+
+**gosec**: Run gosec security scanner
+- Command: `gosec -quiet ./...`
+- Expected: No high/critical severity issues
+
+**secrets**: Check for hardcoded secrets
+- Pattern: `(password|secret|api_key|apikey|token)\s*[:=]\s*["'][^"']+["']`
+- Files: `**/*.go`
+- Expected: No hardcoded secrets
+
+**env-files**: Ensure .env files are gitignored
+- Pattern: `\.env`
+- Files: `.gitignore`
+- Expected: .env pattern in .gitignore
+
+**file-permissions**: Check for overly permissive file modes
+- Pattern: `0o?777|0o?666`
+- Files: `**/*.go`
+- Expected: No world-writable permissions
+
+**tls-config**: Check TLS configuration
+- Pattern: `InsecureSkipVerify:\s*true`
+- Files: `**/*.go`
+- Expected: No insecure TLS configurations
+
+
+**Max Attempts:** 3
+**Escalation Policy:** human
+
+**Success Criteria:**
+All security checks pass with GO status:
+- No known vulnerabilities in dependencies
+- No hardcoded secrets or credentials
+- Proper file permissions (no overly permissive modes)
+- gosec passes without critical issues
+
+

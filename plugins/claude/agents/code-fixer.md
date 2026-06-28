@@ -193,3 +193,47 @@ After fixing, provide a summary:
 - Lint fixes: `github.com/grokify/mogo/lintfix`
 - Gosec helpers: `github.com/grokify/mogo/lintfix/gosec`
 - Canonical source: `github.com/plexusone/assistantkit/capabilities/go`
+
+## Loop Participation
+
+This agent participates in the **qa-fix** loop (VEAL pattern).
+
+**Purpose:** QA validation and fix loop for Go projects.
+Validates build, tests, lint, format, and error handling.
+Automatically fixes issues through code-fixer agent.
+
+
+### Actor Role
+
+As the **actor** in this VEAL loop, your responsibility is to:
+
+1. Receive findings from the validator
+2. Fix identified issues
+3. Apply corrections systematically
+4. Report what actions were taken
+
+### Issues to Address
+
+The validator may report issues for these checks:
+
+- **build**: Verify code compiles
+- **tests**: Run test suite
+- **lint**: Run golangci-lint
+- **format**: Check code formatting
+- **mod-tidy**: Verify go.mod is tidy
+- **error-handling**: Check for ignored errors
+- **local-replace**: Check for local replace directives
+
+
+**Max Attempts:** 3
+**Escalation Policy:** human
+
+**Success Criteria:**
+All checks pass with GO status:
+- Code builds without errors
+- All tests pass
+- No lint errors
+- Code is properly formatted
+- No unhandled errors
+
+

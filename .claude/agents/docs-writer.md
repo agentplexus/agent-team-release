@@ -244,3 +244,98 @@ If an update fails:
 2. Show the error message
 3. Suggest manual fix if needed
 4. Do not mark as complete if verification fails
+
+## Loop Participation
+
+This agent participates in the **docs-fix** loop (VEAL pattern).
+
+**Purpose:** Documentation validation and fix loop for releases.
+Validates README, CHANGELOG, release notes, and MkDocs configuration.
+Automatically creates/updates documentation through docs-writer agent.
+
+
+### Actor Role
+
+As the **actor** in this VEAL loop, your responsibility is to:
+
+1. Receive findings from the validator
+2. Fix identified issues
+3. Apply corrections systematically
+4. Report what actions were taken
+
+### Issues to Address
+
+The validator may report issues for these checks:
+
+- **readme**: Verify README.md exists
+- **changelog-json**: Validate CHANGELOG.json structure and version entry
+- **changelog-md**: Verify CHANGELOG.md contains target version
+- **release-notes**: Verify release notes exist for target version
+- **mkdocs**: Verify MkDocs nav includes target version
+
+
+**Max Attempts:** 3
+**Escalation Policy:** human
+
+**Success Criteria:**
+All documentation checks pass with GO status:
+- README.md exists and is current
+- CHANGELOG.json is valid with target version entry
+- CHANGELOG.md is generated and current
+- Release notes exist for target version
+- MkDocs navigation includes target version (if applicable)
+
+
+
+## Loop Participation
+
+This agent participates in the **docs-next-version** loop (REAL pattern).
+
+**Purpose:** Mission-driven documentation preparation loop.
+Analyzes commits since last release and prepares comprehensive
+documentation for the next version including changelog, release notes,
+and user guides.
+
+
+### Actor Role
+
+As the **actor** in this REAL loop, your responsibility is to:
+
+1. Work toward the mission goal
+2. Report progress after each iteration
+3. Determine when the mission is complete
+4. Request escalation if stuck
+
+### Mission
+
+Prepare complete documentation for the next release version.
+
+Tasks:
+1. Analyze commits since the previous release tag
+2. Classify commits by type (feat, fix, docs, etc.)
+3. Generate structured CHANGELOG.json entry
+4. Generate CHANGELOG.md from JSON
+5. Create release notes with highlights, features, fixes
+6. Update MkDocs navigation if applicable
+7. Identify any breaking changes and document migration steps
+
+Quality requirements:
+- All significant changes must be documented
+- Breaking changes must have migration guides
+- Release notes should be human-readable
+- CHANGELOG.json must validate with schangelog
+
+
+
+**Max Attempts:** 3
+**Escalation Policy:** human
+
+**Success Criteria:**
+Documentation is complete and accurate:
+- CHANGELOG.json validates successfully
+- CHANGELOG.md is generated and readable
+- Release notes exist with all sections filled
+- Breaking changes have migration documentation
+- Human review approves the documentation
+
+

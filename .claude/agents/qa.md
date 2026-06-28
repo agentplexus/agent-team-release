@@ -147,3 +147,79 @@ Never silently discard errors. If ignoring, document why with a comment.
 ║                             🛑 QA: NO-GO 🛑                                ║
 ╚════════════════════════════════════════════════════════════════════════════╝
 ```
+
+## Loop Participation
+
+This agent participates in the **qa-fix** loop (VEAL pattern).
+
+**Purpose:** QA validation and fix loop for Go projects.
+Validates build, tests, lint, format, and error handling.
+Automatically fixes issues through code-fixer agent.
+
+
+### Validator Role
+
+As the **validator** in this loop, your responsibility is to:
+
+1. Run all validation checks
+2. Report GO/NO-GO status for each check
+3. Provide detailed findings for any failures
+4. Do NOT modify any files (read-only)
+
+### Validation Checks
+
+| ID | Type | Required | Description |
+|----|----|-------|-------------|
+| build | command | Yes | Verify code compiles |
+| tests | command | Yes | Run test suite |
+| lint | command | Yes | Run golangci-lint |
+| format | command | Yes | Check code formatting |
+| mod-tidy | command | Yes | Verify go.mod is tidy |
+| error-handling | pattern | Yes | Check for ignored errors |
+| local-replace | pattern | Yes | Check for local replace directives |
+
+### Check Details
+
+**build**: Verify code compiles
+- Command: `go build ./...`
+- Expected: Exit code 0, no compilation errors
+
+**tests**: Run test suite
+- Command: `go test -v ./...`
+- Expected: All tests pass
+
+**lint**: Run golangci-lint
+- Command: `golangci-lint run`
+- Expected: No lint errors
+
+**format**: Check code formatting
+- Command: `gofmt -l .`
+- Expected: No files need formatting
+
+**mod-tidy**: Verify go.mod is tidy
+- Command: `go mod tidy -diff`
+- Expected: No changes needed
+
+**error-handling**: Check for ignored errors
+- Pattern: `_ = err`
+- Files: `**/*.go`
+- Expected: No occurrences of ignored errors
+
+**local-replace**: Check for local replace directives
+- Pattern: `replace .* => \./`
+- Files: `go.mod`
+- Expected: No local replace directives
+
+
+**Max Attempts:** 3
+**Escalation Policy:** human
+
+**Success Criteria:**
+All checks pass with GO status:
+- Code builds without errors
+- All tests pass
+- No lint errors
+- Code is properly formatted
+- No unhandled errors
+
+
