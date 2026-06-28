@@ -1841,6 +1841,16 @@
 
 <h1 id="docs-fix-loop">Docs Fix Loop<a class="headerlink" href="#docs-fix-loop" title="Permanent link">&para;</a></h1>
 <p>The release-coordinator orchestrates an automated <strong>review/create/re-review loop</strong> to ensure release documentation is complete before tagging.</p>
+<div class="admonition info">
+<p class="admonition-title">VEAL Pattern</p>
+<p>This loop implements the <strong>VEAL (Validate Eval Act Loop)</strong> pattern from <a href="https://github.com/plexusone/multi-agent-spec">multi-agent-spec</a>. The formal specification is in <a href="https://github.com/plexusone/agent-team-release/blob/main/specs/loops/docs-fix.yaml"><code>specs/loops/docs-fix.yaml</code></a>.</p>
+<ul>
+<li><strong>Validator:</strong> docs-reviewer (read-only)</li>
+<li><strong>Actor:</strong> docs-writer (write access)</li>
+<li><strong>max_attempts:</strong> 3</li>
+<li><strong>Escalation:</strong> human</li>
+</ul>
+</div>
 <h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h2>
 <p>When documentation validation fails, the release-coordinator automatically invokes the docs-writer agent to create or update documentation, then re-runs validation. This loop continues until all documentation checks pass or maximum attempts are reached.</p>
 <h2 id="architecture">Architecture<a class="headerlink" href="#architecture" title="Permanent link">&para;</a></h2>

@@ -1785,6 +1785,16 @@
 
 <h1 id="qa-fix-loop">QA Fix Loop<a class="headerlink" href="#qa-fix-loop" title="Permanent link">&para;</a></h1>
 <p>The release-coordinator orchestrates an automated <strong>build/test/lint/fix/retest loop</strong> to ensure code quality before release.</p>
+<div class="admonition info">
+<p class="admonition-title">VEAL Pattern</p>
+<p>This loop implements the <strong>VEAL (Validate Eval Act Loop)</strong> pattern from <a href="https://github.com/plexusone/multi-agent-spec">multi-agent-spec</a>. The formal specification is in <a href="https://github.com/plexusone/agent-team-release/blob/main/specs/loops/qa-fix.yaml"><code>specs/loops/qa-fix.yaml</code></a>.</p>
+<ul>
+<li><strong>Validator:</strong> qa (read-only)</li>
+<li><strong>Actor:</strong> code-fixer (write access)</li>
+<li><strong>max_attempts:</strong> 3</li>
+<li><strong>Escalation:</strong> human</li>
+</ul>
+</div>
 <h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h2>
 <p>When QA validation fails, the release-coordinator automatically invokes the code-fixer agent to resolve issues, then re-runs QA validation. This loop continues until all checks pass or maximum attempts are reached.</p>
 <h2 id="architecture">Architecture<a class="headerlink" href="#architecture" title="Permanent link">&para;</a></h2>
