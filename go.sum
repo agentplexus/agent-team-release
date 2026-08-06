@@ -11,8 +11,8 @@ github.com/invopop/jsonschema v0.14.0 h1:MHQqLhvpNUZfw+hM3AZDYK7jxO8FZoQeQM77g8i
 github.com/invopop/jsonschema v0.14.0/go.mod h1:ygm6C2EaVNMBDPpaPlnOA2pFAxBnxGjFlMZABxm9n2I=
 github.com/pb33f/ordered-map/v2 v2.3.1 h1:5319HDO0aw4DA4gzi+zv4FXU9UlSs3xGZ40wcP1nBjY=
 github.com/pb33f/ordered-map/v2 v2.3.1/go.mod h1:qxFQgd0PkVUtOMCkTapqotNgzRhMPL7VvaHKbd1HnmQ=
-github.com/plexusone/assistantkit v0.14.0 h1:ZUxDX6h6RH+a+YlGE4Vmx1qx7/lXZYWga3Z8BolyGj8=
-github.com/plexusone/assistantkit v0.14.0/go.mod h1:j3HPDvFj8HpG3uCW6sq7RRYcCoQXpXciPdb1tf/Iflg=
+github.com/plexusone/assistantkit v0.15.0 h1:4IuYf+MUPXXyquLZwV6WeXeqCZfnTewFLX5ttqvmYjU=
+github.com/plexusone/assistantkit v0.15.0/go.mod h1:gs8jqYvzKSJr1qf/8n/JB1XaTv6z1C/MRkXn9Hh6lIg=
 github.com/plexusone/multi-agent-spec v0.9.0 h1:wLqR+16hGeG8dX4pplD0BXt1WH7jl1D9puytevX5Ii4=
 github.com/plexusone/multi-agent-spec v0.9.0/go.mod h1:Me9ARNXFeca9JKhrLIOughraG8Vzsr+tJhKAwBKIYoc=
 github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZbAQM=
