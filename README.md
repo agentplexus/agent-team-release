@@ -425,7 +425,7 @@ claude plugin add github:plexusone/agent-team-release/plugins/claude
 The plugin includes:
 
 - **Commands**: `/release-agent:release`, `/release-agent:check`, `/release-agent:changelog`, `/release-agent:version-next`
-- **Skills**: Version analysis, commit classification
+- **Skills**: Version analysis, commit classification, golangci-lint, docs-release-check
 - **Agents**: Release coordinator subagent for orchestrating complete releases
 
 See [plugins/claude/README.md](plugins/claude/README.md) for full plugin documentation.

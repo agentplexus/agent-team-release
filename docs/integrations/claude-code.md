@@ -89,6 +89,14 @@ Analyzes commits to suggest appropriate version bumps:
 
 Classifies commits by conventional commit type for changelog generation.
 
+### Golangci Lint
+
+Runs `golangci-lint` and fixes reported Go lint errors using the project's error handling priority (panic → return → modify signature → log).
+
+### Docs Release Check
+
+Reviews and fixes documentation for release readiness via a VEAL loop (docs-reviewer validates, docs-writer fixes, repeat until GO), using version analysis and git tags to determine the release range.
+
 ## Release Coordinator Agent
 
 The release coordinator agent can orchestrate complete releases autonomously:
