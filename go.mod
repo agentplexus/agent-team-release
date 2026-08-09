@@ -3,7 +3,7 @@ module github.com/plexusone/agent-team-release
 go 1.26.0
 
 require (
-	github.com/plexusone/assistantkit v0.14.0
+	github.com/plexusone/assistantkit v0.15.0
 	github.com/plexusone/multi-agent-spec v0.9.0
 	github.com/spf13/cobra v1.10.2
 	github.com/toon-format/toon-go v0.0.0-20251202084852-7ca0e27c4e8c
