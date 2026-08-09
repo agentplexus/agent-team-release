@@ -8,5 +8,6 @@
   "homepage": "https://github.com/plexusone/agent-team-release",
   "commands": "./commands/",
   "skills": "./skills/",
-  "agents": "./agents/"
+  "agents": "./agents/",
+  "workflows": "./workflows/"
 }
