@@ -23,22 +23,23 @@ Review and fix documentation for release readiness using a VEAL loop (docs-revie
 
 ## Inputs
 
-The skill accepts optional arguments:
+- `version` - Target version (e.g., `v1.2.0`). **Required.** See "Determine Versions First" below — do not omit this and rely on auto-detection unless you are driving this skill interactively via `/docs-release-check` (not via the `Workflow` tool).
+- `previous` - Previous version tag. Optional; if omitted, resolved from `git describe --tags --abbrev=0`.
 
-- `version` - Target version (e.g., `v1.2.0`). If omitted, uses version analysis to suggest next version.
-- `previous` - Previous version tag. If omitted, uses latest git tag.
+## Determine Versions First (do this before invoking anything)
+
+The `version` you pass is what every check in this skill validates against — the changelog entry, the release notes filename, the mkdocs nav entry. **There is no safe "figure it out later" path.**
+
+1. If the caller (user or orchestrating agent) already gave you a version, use it.
+2. Otherwise, resolve it yourself before proceeding:
+   - `git tag --sort=-v:refname | head -1` (or `git describe --tags --abbrev=0`) for the previous version
+   - `schangelog parse-commits --since=<previous-tag>` to inspect commits since then
+   - Apply the [version-analysis](../skills/version-analysis.md) rules (feat→minor, fix→patch, breaking→major) to suggest the next version
+   - Confirm the suggested version with the user before proceeding — never guess silently
+
+**Never invoke this skill's `Workflow` step without a resolved `version`.** The underlying `docs-release-check` Workflow accepts `args.version`; if it's omitted, the workflow defaults to the literal string `"unreleased"` and reviews against that — which is not a real version, so nothing meaningful is checked, `ready: true` comes back trivially on the first pass, and no CHANGELOG entry, release notes, or nav update is ever created. This failure is silent: the workflow reports success. Always resolve the version first, per steps 1–2 above, then pass it explicitly.
 
 ## Workflow
-
-### Phase 1: Determine Versions
-
-1. If `version` not provided:
-   - Run `schangelog parse-commits --since=<latest-tag>` to analyze commits
-   - Suggest version based on conventional commits (feat→minor, fix→patch, breaking→major)
-   - Confirm with user before proceeding
-
-2. If `previous` not provided:
-   - Use `git describe --tags --abbrev=0` to get latest tag
 
 ### Phase 2: VEAL Loop (docs-fix)
 
@@ -100,6 +101,24 @@ The docs-reviewer validates:
 
 *Release notes required for major/minor, optional for patch.
 
+## Invoking via the Workflow Tool
+
+In Claude Code, this skill runs as the built-in `docs-release-check` Workflow. Always pass `version` explicitly in `args` — see "Determine Versions First" above for why:
+
+```
+Workflow({
+  name: "docs-release-check",
+  args: {
+    repoPath: "/absolute/path/to/repo",   // default "."
+    version: "v1.2.0",                    // REQUIRED — see above
+    previousVersion: "v1.1.0",            // optional, auto-detected from git tags if omitted
+    features: "one feature per line, for context on what to document",
+  },
+})
+```
+
+`repoPath` alone is not a substitute for `version` — the workflow does not derive a version from it. If you're driving the release from a shell already `cd`'d into the target repo, still pass `repoPath` explicitly (do not rely on ambient working directory, which the harness does not guarantee is preserved between tool calls) and always pass `version`.
+
 ## Agent Invocations
 
 ### docs-reviewer (Validator)
@@ -149,7 +168,7 @@ If the loop exceeds 3 attempts without reaching GO status:
 ## Example Usage
 
 ```bash
-# Auto-detect versions
+# Slash command: version auto-detected via version-analysis before the check runs
 /docs-release-check
 
 # Specify target version
@@ -158,6 +177,8 @@ If the loop exceeds 3 attempts without reaching GO status:
 # Specify both versions
 /docs-release-check v1.2.0 v1.1.0
 ```
+
+The bare `/docs-release-check` form is safe only because the command instructions resolve a version first. Do not carry that pattern over to a direct `Workflow({ name: "docs-release-check" })` call with no `args.version` — that path has no auto-detection step and will silently no-op (see "Determine Versions First" above).
 
 ## Integration with Release Skill
 
