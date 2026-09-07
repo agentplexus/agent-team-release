@@ -13,8 +13,8 @@ github.com/pb33f/ordered-map/v2 v2.3.1 h1:5319HDO0aw4DA4gzi+zv4FXU9UlSs3xGZ40wcP
 github.com/pb33f/ordered-map/v2 v2.3.1/go.mod h1:qxFQgd0PkVUtOMCkTapqotNgzRhMPL7VvaHKbd1HnmQ=
 github.com/plexusone/assistantkit v0.15.0 h1:4IuYf+MUPXXyquLZwV6WeXeqCZfnTewFLX5ttqvmYjU=
 github.com/plexusone/assistantkit v0.15.0/go.mod h1:gs8jqYvzKSJr1qf/8n/JB1XaTv6z1C/MRkXn9Hh6lIg=
-github.com/plexusone/multi-agent-spec v0.9.0 h1:wLqR+16hGeG8dX4pplD0BXt1WH7jl1D9puytevX5Ii4=
-github.com/plexusone/multi-agent-spec v0.9.0/go.mod h1:Me9ARNXFeca9JKhrLIOughraG8Vzsr+tJhKAwBKIYoc=
+github.com/plexusone/multi-agent-spec v0.10.0 h1:bAvDTEIrLFRVa6Skk268o+SiBCn8ph4jrF3UvKh7yUM=
+github.com/plexusone/multi-agent-spec v0.10.0/go.mod h1:XLyEqfdOZcd6B91BM6iH0oL8ni3h8PsYiUSpTHwBrcs=
 github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZbAQM=
 github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
 github.com/russross/blackfriday/v2 v2.1.0/go.mod h1:+Rmxgy9KzJVeS9/2gXHxylqXiyQDYRxCVz55jmeOWTM=
