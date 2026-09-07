@@ -28,9 +28,25 @@ export const meta = {
 //   features: string - newline-separated list of new features to document
 //   maxIterations: number - max review/fix cycles (default: 3)
 
-if (!args?.version) {
+// The harness can deliver `args` as a JSON-encoded STRING rather than a parsed
+// object — observed 2026-09-07: an object passed to the Workflow tool arrived
+// here as the string '{"version": "v0.21.0"}', so `args?.version` was always
+// undefined and the guard below rejected every invocation. Normalize the three
+// shapes: parsed object, JSON-string object, bare version string ("v1.2.0").
+let wfArgs = args
+if (typeof wfArgs === 'string') {
+  const s = wfArgs.trim()
+  if (s.startsWith('{')) {
+    try { wfArgs = JSON.parse(s) } catch { wfArgs = {} }
+  } else {
+    wfArgs = /^v?\d+\.\d+\.\d+$/.test(s) ? { version: s } : {}
+  }
+}
+
+if (!wfArgs?.version) {
   throw new Error(
-    "docs-release-check requires args.version (e.g. 'v1.2.0'). " +
+    "docs-release-check requires args.version (e.g. 'v1.2.0'; a bare version string " +
+    "as the whole args value is also accepted). " +
     "It used to default to the literal string 'unreleased' when omitted, which made every " +
     "check vacuous — the review had nothing real to validate against, so it always returned " +
     "ready:true on the first pass without creating a CHANGELOG entry, release notes, or " +
@@ -39,11 +55,11 @@ if (!args?.version) {
   )
 }
 
-const MAX_ITERATIONS = args?.maxIterations || 3
-const repoPath = args?.repoPath || '.'
-const version = args.version
-const previousVersion = args?.previousVersion || ''
-const features = args?.features || ''
+const MAX_ITERATIONS = wfArgs?.maxIterations || 3
+const repoPath = wfArgs?.repoPath || '.'
+const version = wfArgs.version
+const previousVersion = wfArgs?.previousVersion || ''
+const features = wfArgs?.features || ''
 
 const repoPathGuard = `Before doing anything else, run: test -d "${repoPath}" && cd "${repoPath}" && pwd
 If that directory does not exist, or you cannot cd into it, STOP and report it as a blocking
